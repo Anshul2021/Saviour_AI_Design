@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saviour - How's your energy tonight?</title>
+  <meta name="description" content="A warm, quiet energy check to suggest the ideal cooking effort level for tonight.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Physical phone mockup frame container -->
+  <div class="phone-viewport">
+    <div class="phone-notch"></div>
+    
+    <div class="energy-screen-container">
+      
+      <!-- Top header displaying exact time and prompt -->
+      <header class="energy-header">
+        <div class="energy-time" id="live-time">5:00 PM · Monday</div>
+        <h1 class="energy-title">How's your energy tonight?</h1>
+      </header>
+      
+      <!-- Stretched column zones -->
+      <div class="energy-zones" id="energy-zones-wrapper">
+        
+        <!-- Zone 1: Exhausted -->
+        <div class="energy-zone zone-exhausted" id="zone-exhausted" data-energy="exhausted">
+          <div class="zone-content">
+            <h2 class="zone-label">Exhausted</h2>
+            <div class="zone-subtext">Barely standing. Under 10 minutes, zero thinking.</div>
+            <div class="zone-confirmation">Got it. We'll remind you at 6:30.</div>
+          </div>
+        </div>
+        
+        <!-- Wave Divider 1-2 (Flow boundaries) -->
+        <div class="wave-divider-flow wave-1-2">
+          <div class="wave-divider-content">
+            <svg viewBox="0 0 400 60" preserveAspectRatio="none">
+              <!-- Path 1: Base color -->
+              <path class="wave-path wave-path-1" d="M0 15 C 100 0, 250 30, 400 10 L 400 60 L 0 60 Z" fill="#FAF7F2"></path>
+              <!-- Path 2: Surface color -->
+              <path class="wave-path wave-path-2" d="M0 25 C 120 35, 280 15, 400 25 L 400 60 L 0 60 Z" fill="#F0E9DE"></path>
+              <!-- Path 3: Surface Raised (matches Zone 2) -->
+              <path class="wave-path wave-path-3" d="M0 35 C 80 25, 220 45, 400 35 L 400 60 L 0 60 Z" fill="#EDE3D4"></path>
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Zone 2: Okay -->
+        <div class="energy-zone zone-okay" id="zone-okay" data-energy="okay">
+          <div class="zone-content">
+            <h2 class="zone-label">Okay</h2>
+            <div class="zone-subtext">Tired but capable. A warm, simple home meal.</div>
+            <div class="zone-confirmation">Got it. We'll remind you at 6:30.</div>
+          </div>
+        </div>
+        
+        <!-- Wave Divider 2-3 -->
+        <div class="wave-divider-flow wave-2-3">
+          <div class="wave-divider-content">
+            <svg viewBox="0 0 400 60" preserveAspectRatio="none">
+              <!-- Path 1: Base color -->
+              <path class="wave-path wave-path-1" d="M0 15 C 80 5, 220 25, 400 15 L 400 60 L 0 60 Z" fill="#FAF7F2"></path>
+              <!-- Path 2: Surface Raised color -->
+              <path class="wave-path wave-path-2" d="M0 25 C 100 15, 300 35, 400 25 L 400 60 L 0 60 Z" fill="#EDE3D4"></path>
+              <!-- Path 3: Surface color (matches Zone 3) -->
+              <path class="wave-path wave-path-3" d="M0 35 C 120 20, 280 40, 400 30 L 400 60 L 0 60 Z" fill="#F0E9DE"></path>
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Zone 3: Fine -->
+        <div class="energy-zone zone-fine" id="zone-fine" data-energy="fine">
+          <div class="zone-content">
+            <h2 class="zone-label">Fine</h2>
+            <div class="zone-subtext">Feeling decent. Up for a bit of cooking.</div>
+            <div class="zone-confirmation">Got it. We'll remind you at 6:30.</div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+
+  <script src="energy-check.js"></script>
+</body>
+</html>

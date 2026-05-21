@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mise - Setup Complete</title>
+  <meta name="description" content="Your quiet cooking plan is all set up.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Physical phone mockup frame container -->
+  <div class="phone-viewport">
+    <div class="phone-notch"></div>
+    
+    <div class="screen-container" style="justify-content: space-between; height: 100%;">
+      
+      <!-- Top Section -->
+      <div style="text-align: center; margin-top: var(--space-md);">
+        <div class="success-illustration" style="margin-bottom: var(--space-lg); margin-top: var(--space-md);">
+          <div style="width: 72px; height: 72px; border-radius: 50%; background-color: var(--color-success); display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+            <i data-lucide="check" class="icon" style="width: 36px; height: 36px; color: var(--color-base); stroke-width: 3px;"></i>
+          </div>
+        </div>
+        
+        <h1 class="text-display">Setup complete!</h1>
+        <div class="spacer-xs"></div>
+        <p class="text-body-secondary" style="padding: 0 var(--space-sm);">
+          Your personal cooking plan is locked in. We've queued up tonight's meal nudge based on your energy level.
+        </p>
+      </div>
+
+      <!-- Center Summary Card -->
+      <div class="card" style="margin: var(--space-md) 0; padding: var(--space-md); background-color: var(--color-surface); border-radius: 16px; text-align: left;">
+        <div class="text-label" style="margin-bottom: var(--space-xs); font-size: 11px;">Tonight's Setup</div>
+        
+        <!-- Leave Time row -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); border-bottom: 1px solid rgba(46, 42, 36, 0.08); padding-bottom: var(--space-xs);">
+          <span class="text-body-secondary">Leave office time</span>
+          <span class="text-body" style="font-weight: 500;" id="summary-leave-time">7:00 PM</span>
+        </div>
+        
+        <!-- Energy Nudge row -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); border-bottom: 1px solid rgba(46, 42, 36, 0.08); padding-bottom: var(--space-xs);">
+          <span class="text-body-secondary">Energy check nudge</span>
+          <span class="text-body" style="font-weight: 500;" id="summary-nudge-time">6:30 PM</span>
+        </div>
+
+        <!-- Recipe Nudge row -->
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <span class="text-body-secondary">Selected tonight's plan</span>
+          <div style="display: flex; align-items: center; gap: var(--space-xs); margin-top: 4px;">
+            <div id="recipe-color-indicator" style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--color-action);"></div>
+            <span class="text-body" style="font-weight: 500;" id="summary-recipe-name">Warm tomato & white bean stew</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: var(--space-xs); margin-top: var(--space-xs);">
+            <i data-lucide="clock" class="icon" style="width: 14px; height: 14px; color: var(--color-text-secondary);"></i>
+            <span class="text-body-secondary" style="font-size: 13px;" id="summary-recipe-time">12 mins prep & cook</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom CTAs -->
+      <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); margin-top: auto; padding-top: var(--space-sm);">
+        <button id="simulate-nudge-btn" class="btn-primary" style="width: 100%;">
+          <span>Simulate 6:30 PM reminder</span>
+          <i data-lucide="bell" class="icon" style="color: var(--color-base);"></i>
+        </button>
+        
+        <button id="reset-onboarding-btn" class="btn-ghost" style="color: var(--color-text-ghost); font-family: var(--font-family-ui); font-size: 13px; font-weight: 400; background: none; border: none; cursor: pointer; padding: var(--space-xs); text-decoration: none;">
+          Reset onboarding
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Lucide icons
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+
+      // Read values from localStorage
+      const userLeaveTime = localStorage.getItem('userLeaveTime') || '7:00 PM';
+      const userEnergyLevel = localStorage.getItem('userEnergyLevel') || 'okay';
+
+      // Update UI elements
+      document.getElementById('summary-leave-time').textContent = userLeaveTime;
+
+      // Calculate nudge time (30 minutes before leave time)
+      const nudgeTime = calculateNudgeTime(userLeaveTime);
+      document.getElementById('summary-nudge-time').textContent = nudgeTime;
+
+      // Recipe lookup based on energy level
+      let recipeName = "Warm tomato & white bean stew";
+      let recipeTime = "12 mins prep & cook";
+      let indicatorColor = "#E07A55"; // Terracotta (Exhausted)
+
+      if (userEnergyLevel === 'okay') {
+        recipeName = "Dal chawal";
+        recipeTime = "18 mins prep & cook";
+        indicatorColor = "#F5C97A"; // Gold (Okay)
+      } else if (userEnergyLevel === 'fine') {
+        recipeName = "Rajma rice";
+        recipeTime = "35 mins prep & cook";
+        indicatorColor = "#A3C4A8"; // Sage Green (Fine)
+      }
+
+      document.getElementById('summary-recipe-name').textContent = recipeName;
+      document.getElementById('summary-recipe-time').textContent = recipeTime;
+      document.getElementById('recipe-color-indicator').style.backgroundColor = indicatorColor;
+
+      // Click event for simulation button
+      document.getElementById('simulate-nudge-btn').addEventListener('click', () => {
+        window.location.href = 'lock-screen-630.html';
+      });
+
+      // Click event for reset
+      document.getElementById('reset-onboarding-btn').addEventListener('click', () => {
+        localStorage.removeItem('userLeaveTime');
+        localStorage.removeItem('userEnergyLevel');
+        window.location.href = 'index.html';
+      });
+    });
+
+    // Helper to calculate 30 minutes before leave time
+    function calculateNudgeTime(timeStr) {
+      try {
+        const parts = timeStr.split(' ');
+        const timeParts = parts[0].split(':');
+        let hour = parseInt(timeParts[0]);
+        let min = parseInt(timeParts[1]);
+        const isPM = parts[1] === 'PM';
+
+        // Subtract 30 minutes
+        min -= 30;
+        if (min < 0) {
+          min += 60;
+          hour -= 1;
+          if (hour <= 0) {
+            hour = 12;
+          }
+        }
+        
+        // Format minutes
+        const minStr = min.toString().padStart(2, '0');
+        // Format hour
+        const hourStr = hour.toString();
+        const ampm = parts[1]; // keep AM/PM consistent
+
+        return `${hourStr}:${minStr} ${ampm}`;
+      } catch (e) {
+        return "6:30 PM"; // fallback
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tonight — Decision Made</title>
+  <meta name="description" content="Your dinner decision is sorted. Start cooking.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Tonight Screen specific layout & micro-interactions */
+    .tonight-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+      justify-content: space-between;
+      padding: var(--space-xl) 0 var(--space-md) 0;
+    }
+
+    .emoji-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: var(--color-surface-raised);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-md);
+      transition: transform 0.3s ease;
+    }
+
+    .emoji-circle:hover {
+      transform: scale(1.05);
+    }
+
+    .emoji-img {
+      width: 76px;
+      height: 76px;
+      object-fit: contain;
+    }
+
+    .home-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-success);
+      font-family: var(--font-family-ui);
+      font-size: 13px;
+      font-weight: 400;
+      margin-top: 4px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--color-success);
+    }
+
+    /* Ingredient section collapse/expand styles */
+    .ingredients-toggle-wrapper {
+      width: 100%;
+      margin: var(--space-md) 0;
+    }
+
+    .ingredients-toggle-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-family-ui);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: var(--space-xs) var(--space-md);
+      transition: color 0.2s ease;
+      user-select: none;
+    }
+
+    .ingredients-toggle-btn:hover {
+      color: var(--color-text-primary);
+    }
+
+    .ingredients-card {
+      background-color: var(--color-surface);
+      border-radius: 16px;
+      padding: var(--space-md);
+      width: 100%;
+      text-align: left;
+      margin-top: var(--space-xs);
+      
+      /* Expand/collapse animation logic */
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.3s ease,
+                  padding 0.4s ease;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .ingredients-card.expanded {
+      max-height: 400px;
+      opacity: 1;
+      padding-top: var(--space-md);
+      padding-bottom: var(--space-md);
+    }
+
+    .ingredients-header {
+      font-family: var(--font-family-ui);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-ghost);
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
+
+    .ingredient-row-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(46, 42, 36, 0.04);
+    }
+
+    .ingredient-row-item:last-of-type {
+      border-bottom: none;
+      margin-bottom: var(--space-sm);
+    }
+
+    .ingredient-name {
+      font-family: var(--font-family-ui);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+    }
+
+    .ingredient-qty {
+      font-family: var(--font-family-ui);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+    }
+
+    .assumed-caption {
+      font-family: var(--font-family-ui);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--color-text-ghost);
+      display: block;
+      margin-top: var(--space-xs);
+    }
+
+    /* Bottom CTAs */
+    .action-area {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-top: auto;
+    }
+
+    .not-tonight-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-family-ui);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-ghost);
+      cursor: pointer;
+      padding: var(--space-xs);
+      transition: color 0.2s ease;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .not-tonight-btn:hover {
+      color: var(--color-text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Physical phone mockup frame container -->
+  <div class="phone-viewport">
+    <div class="phone-notch"></div>
+    
+    <div class="screen-container">
+      
+      <div class="tonight-container">
+        
+        <!-- Top Section with Info -->
+        <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+          <!-- Centered food emoji container -->
+          <div class="emoji-circle">
+            <img src="https://img.icons8.com/office/80/rice-bowl.png" class="emoji-img" id="meal-emoji">
+          </div>
+          
+          <!-- Meal name & time details -->
+          <h1 class="text-display" id="meal-name" style="margin-bottom: 2px;">Dal Chawal</h1>
+          
+          <div style="font-family: var(--font-family-ui); font-size: 14px; font-weight: 500; color: var(--color-text-secondary);" id="meal-time">
+            20 min
+          </div>
+          
+          <!-- Home status notification dot -->
+          <div class="home-status">
+            <span class="status-dot"></span>
+            <span>Everything is at home</span>
+          </div>
+        </div>
+
+        <!-- Collapsed/Expanded ingredients drawer -->
+        <div class="ingredients-toggle-wrapper">
+          <button class="ingredients-toggle-btn" id="toggle-ingredients" aria-expanded="false">
+            <span id="toggle-arrow">↓</span> <span id="toggle-text">Show ingredients</span>
+          </button>
+          
+          <div class="ingredients-card" id="ingredients-card">
+            <span class="ingredients-header">FOR ONE PERSON — ROUGH GUIDE</span>
+            
+            <div id="ingredients-list">
+              <!-- Populated dynamically via JS -->
+            </div>
+            
+            <span class="assumed-caption">Salt, oil, jeera, hing assumed at home.</span>
+          </div>
+        </div>
+
+        <!-- Bottom Action CTA area -->
+        <div class="action-area">
+          <button id="start-cooking-btn" class="btn-primary" style="width: 100%;">
+            <span>Start Cooking</span>
+          </button>
+          
+          <button id="not-tonight-btn" class="not-tonight-btn">
+            Not tonight
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Read values from localStorage to customize Tonight's suggestion
+      const userEnergyLevel = localStorage.getItem('userEnergyLevel') || 'okay';
+
+      const mealsData = {
+        'exhausted': {
+          name: "Warm tomato & white bean stew",
+          time: "12 min",
+          emoji: "https://img.icons8.com/office/80/rice-bowl.png",
+          ingredients: [
+            { name: "Cannellini beans", qty: "1 tin" },
+            { name: "Cherry tomatoes", qty: "1 tin" },
+            { name: "Garlic", qty: "2 cloves" },
+            { name: "Olive oil", qty: "2 tbsp" },
+            { name: "Crusty bread", qty: "1 slice" }
+          ]
+        },
+        'okay': {
+          name: "Dal Chawal",
+          time: "20 min",
+          emoji: "https://img.icons8.com/emoji/96/curry-rice.png", // icons8 Dal Rice style
+          ingredients: [
+            { name: "Yellow lentils (dal)", qty: "1/2 cup" },
+            { name: "Basmati rice", qty: "1 cup" },
+            { name: "Onion & tomato", qty: "1 small" },
+            { name: "Ghee or oil", qty: "1 tbsp" },
+            { name: "Turmeric & salt", qty: "1/2 tsp" }
+          ]
+        },
+        'fine': {
+          name: "Rajma Rice",
+          time: "35 min",
+          emoji: "https://img.icons8.com/emoji/96/cooked-rice.png",
+          ingredients: [
+            { name: "Red kidney beans (rajma)", qty: "1 cup" },
+            { name: "Basmati rice", qty: "1 cup" },
+            { name: "Onion & tomato", qty: "1 large" },
+            { name: "Ginger-garlic paste", qty: "1 tbsp" },
+            { name: "Spices (garam masala)", qty: "1 tsp" }
+          ]
+        }
+      };
+
+      const selectedMeal = mealsData[userEnergyLevel] || mealsData['okay'];
+
+      // Populate text details
+      document.getElementById('meal-name').textContent = selectedMeal.name;
+      document.getElementById('meal-time').textContent = selectedMeal.time;
+      document.getElementById('meal-emoji').src = selectedMeal.emoji;
+
+      // Populate ingredients table
+      const listContainer = document.getElementById('ingredients-list');
+      listContainer.innerHTML = '';
+      selectedMeal.ingredients.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'ingredient-row-item';
+        
+        const nameEl = document.createElement('span');
+        nameEl.className = 'ingredient-name';
+        nameEl.textContent = item.name;
+        
+        const qtyEl = document.createElement('span');
+        qtyEl.className = 'ingredient-qty';
+        qtyEl.textContent = item.qty;
+        
+        row.appendChild(nameEl);
+        row.appendChild(qtyEl);
+        listContainer.appendChild(row);
+      });
+
+      // 2. Ingredients expandable card toggle interaction
+      const toggleBtn = document.getElementById('toggle-ingredients');
+      const card = document.getElementById('ingredients-card');
+      const arrow = document.getElementById('toggle-arrow');
+      const text = document.getElementById('toggle-text');
+
+      toggleBtn.addEventListener('click', () => {
+        const isExpanded = card.classList.contains('expanded');
+        
+        if (isExpanded) {
+          card.classList.remove('expanded');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          arrow.textContent = '↓';
+          text.textContent = 'Show ingredients';
+        } else {
+          card.classList.add('expanded');
+          toggleBtn.setAttribute('aria-expanded', 'true');
+          arrow.textContent = '↑';
+          text.textContent = 'Hide ingredients';
+        }
+      });
+
+      // 3. CTA Action buttons redirections
+      document.getElementById('start-cooking-btn').addEventListener('click', () => {
+        window.location.href = 'cook.html';
+      });
+
+      document.getElementById('not-tonight-btn').addEventListener('click', () => {
+        // Return to first screen to re-adjust onboarding options
+        window.location.href = 'index.html';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1404,6 +1404,7 @@ input:checked + .slider:before {
   padding-bottom: var(--space-xs);
   scrollbar-width: none; /* Hide scrollbar for Firefox */
   -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+  flex-shrink: 0; /* Prevent flex column parent from compressing this */
 }
 
 .week-strip::-webkit-scrollbar {
@@ -1419,6 +1420,8 @@ input:checked + .slider:before {
   flex-direction: column;
   justify-content: space-between;
   height: 120px;
+  min-height: 120px;
+  flex-shrink: 0;
   transition: background-color 0.2s ease, opacity 0.2s ease;
   cursor: pointer;
 }
@@ -1475,6 +1478,7 @@ input:checked + .slider:before {
   background-color: var(--color-surface);
   border-radius: 16px;
   padding: var(--space-md);
+  flex-shrink: 0;
 }
 
 .streak-left {
@@ -1530,6 +1534,7 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  flex-shrink: 0;
 }
 
 .pantry-row {

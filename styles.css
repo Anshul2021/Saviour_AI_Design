@@ -103,7 +103,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 0 var(--space-lg);
+  padding: 48px var(--space-lg);
   overflow-y: auto;
   position: relative;
 }

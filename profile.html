@@ -21,12 +21,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 48px var(--space-lg) var(--space-sm) var(--space-lg);
-      margin-top: -48px;
-      margin-left: -var(--space-lg);
-      margin-right: -var(--space-lg);
+      padding: var(--space-sm) 0;
       border-bottom: 1.2px solid var(--color-surface);
       margin-bottom: var(--space-md);
+      /* Extend to full bleed by compensating for screen-container padding */
+      margin-left: calc(-1 * var(--space-lg));
+      margin-right: calc(-1 * var(--space-lg));
+      padding-left: var(--space-lg);
+      padding-right: var(--space-lg);
     }
 
     /* Section Header */
@@ -150,7 +152,7 @@
     <div class="phone-notch"></div>
     
     <!-- Screen Content Container -->
-    <div class="screen-container" style="padding-bottom: 80px;">
+    <div class="screen-container" style="padding-bottom: 80px; padding-top: 0;">
       
       <!-- 1. TOP BAR (sticky) -->
       <div class="sticky-top-bar">
@@ -163,9 +165,9 @@
       </div>
 
       <!-- 2. PROFILE HERO ROW -->
-      <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+      <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg); padding-top: var(--space-xs);">
         <!-- Avatar -->
-        <div style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--color-surface-raised); display: flex; align-items: center; justify-content: center; font-family: var(--font-family-display); font-size: 26px; color: var(--color-text-primary); font-variation-settings: 'opsz' 9; user-select: none;">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--color-surface-raised); display: flex; align-items: center; justify-content: center; font-family: var(--font-family-display); font-size: 26px; color: var(--color-text-primary); font-variation-settings: 'opsz' 9; user-select: none; flex-shrink: 0;">
           P
         </div>
         <!-- Meta Details -->
@@ -306,17 +308,18 @@
     </div>
 
     <!-- 7. BOTTOM TAB — Profile active -->
+    <!-- Colors: inactive = --color-text-ghost (#C4B5A5), active = --color-action (#E07A55), bg = --color-base (#FAF7F2), border = --color-surface (#F0E9DE) -->
     <div class="bottom-nav">
       <a href="home.html" class="nav-item">
-        <i data-lucide="home" class="icon"></i>
+        <i data-lucide="home" class="icon" style="width: 22px; height: 22px;"></i>
         <span class="nav-item-label">Home</span>
       </a>
       <a href="grocery.html" class="nav-item">
-        <i data-lucide="shopping-cart" class="icon"></i>
+        <i data-lucide="shopping-cart" class="icon" style="width: 22px; height: 22px;"></i>
         <span class="nav-item-label">Grocery</span>
       </a>
       <a href="profile.html" class="nav-item active">
-        <i data-lucide="user" class="icon"></i>
+        <i data-lucide="user" class="icon" style="width: 22px; height: 22px;"></i>
         <span class="nav-item-label">Profile</span>
       </a>
     </div>

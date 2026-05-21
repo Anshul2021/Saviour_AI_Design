@@ -73,7 +73,7 @@
     <div class="screen-container" style="padding-bottom: 80px;">
       
       <!-- 1. TOP BAR (sticky) -->
-      <div class="sticky-top-bar" style="position: sticky; top: 0; background-color: var(--color-base); z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 48px var(--space-lg) var(--space-sm) var(--space-lg); margin-top: -48px; margin-left: -var(--space-lg); margin-right: -var(--space-lg); border-bottom: 1.2px solid var(--color-surface); margin-bottom: var(--space-md);">
+      <div class="sticky-top-bar" style="position: sticky; top: 0; background-color: var(--color-base); z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: var(--space-sm) var(--space-lg); margin-left: calc(-1 * var(--space-lg)); margin-right: calc(-1 * var(--space-lg)); border-bottom: 1.2px solid var(--color-surface); margin-bottom: var(--space-md);">
         <span style="font-family: var(--font-family-display); font-weight: 400; font-size: 18px; color: var(--color-text-primary);">Mise en Place</span>
         
         <!-- Circular Bell Icon Button with Dot Indicator -->
@@ -235,18 +235,19 @@
 
     </div>
 
-    <!-- 7. BOTTOM TAB -->
+    <!-- 7. BOTTOM TAB — Home active -->
+    <!-- Colors: inactive = --color-text-ghost (#C4B5A5), active = --color-action (#E07A55), bg = --color-base (#FAF7F2), border = --color-surface (#F0E9DE) -->
     <div class="bottom-nav">
       <a href="home.html" class="nav-item active">
-        <i data-lucide="home" class="icon"></i>
+        <i data-lucide="home" class="icon" style="width: 22px; height: 22px;"></i>
         <span class="nav-item-label">Home</span>
       </a>
       <a href="grocery.html" class="nav-item">
-        <i data-lucide="shopping-cart" class="icon"></i>
+        <i data-lucide="shopping-cart" class="icon" style="width: 22px; height: 22px;"></i>
         <span class="nav-item-label">Grocery</span>
       </a>
       <a href="profile.html" class="nav-item">
-        <i data-lucide="user" class="icon"></i>
+        <i data-lucide="user" class="icon" style="width: 22px; height: 22px;"></i>
         <span class="nav-item-label">Profile</span>
       </a>
     </div>

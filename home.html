@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mise en Place — Home</title>
+  <meta name="description" content="A calm cooking companion for exhausted working professionals.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Lucide outline-only icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Section Labels */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--space-lg);
+      margin-bottom: var(--space-sm);
+    }
+    
+    .section-title {
+      font-family: var(--font-family-ui);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-secondary);
+    }
+
+    /* Meta pills in Hero card */
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: var(--color-surface-raised);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-family: var(--font-family-ui);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+    }
+
+    /* Small dot for week strip card indicator */
+    .dot-active {
+      background-color: var(--color-action) !important;
+    }
+
+    /* Animation on hover for elements */
+    .day-card, .streak-card, .pantry-row, .icon-btn-circular {
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
+    }
+
+    .day-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .streak-card:hover {
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Physical phone mockup frame container -->
+  <div class="phone-viewport">
+    <div class="phone-notch"></div>
+    
+    <!-- Screen Content Container (Hiding scrollbar) -->
+    <div class="screen-container" style="padding-bottom: 80px;">
+      
+      <!-- 1. TOP BAR (sticky) -->
+      <div class="sticky-top-bar" style="position: sticky; top: 0; background-color: var(--color-base); z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 48px var(--space-lg) var(--space-sm) var(--space-lg); margin-top: -48px; margin-left: -var(--space-lg); margin-right: -var(--space-lg); border-bottom: 1.2px solid var(--color-surface); margin-bottom: var(--space-md);">
+        <span style="font-family: var(--font-family-display); font-weight: 400; font-size: 18px; color: var(--color-text-primary);">Mise en Place</span>
+        
+        <!-- Circular Bell Icon Button with Dot Indicator -->
+        <div style="position: relative; display: inline-block;">
+          <button class="icon-btn-circular" style="width: 40px; height: 40px; border-radius: 50%; background-color: var(--color-surface); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-text-primary);">
+            <i data-lucide="bell" class="icon" style="width: 20px; height: 20px;"></i>
+          </button>
+          <!-- small --color-action dot indicator on top-right -->
+          <div style="position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; border-radius: 50%; background-color: var(--color-action);"></div>
+        </div>
+      </div>
+
+      <!-- 2. GREETING -->
+      <div style="margin-bottom: var(--space-lg);">
+        <div id="current-time-label" class="text-label" style="color: var(--color-text-secondary); margin-bottom: 4px;">
+          THURSDAY, 6:30 PM
+        </div>
+        <h1 class="text-display" style="font-size: 26px; font-style: italic; line-height: 1.2; font-variation-settings: 'opsz' 9;">
+          Good evening, Priya.
+        </h1>
+      </div>
+
+      <!-- 3. TONIGHT HERO CARD -->
+      <div class="card" style="background-color: var(--color-surface); border-radius: 16px; padding: 20px; gap: 0;">
+        <span class="text-label" style="font-size: 11px; margin-bottom: 6px;">Tonight's meal</span>
+        <h2 class="text-display" style="font-size: 34px; font-variation-settings: 'opsz' 9; line-height: 1.1; margin-bottom: var(--space-sm);">Rajma Rice</h2>
+        
+        <!-- Meta row -->
+        <div style="display: flex; gap: var(--space-xs); flex-wrap: wrap; align-items: center; margin-bottom: var(--space-md);">
+          <div class="meta-pill">
+            <i data-lucide="clock" class="icon" style="width: 14px; height: 14px;"></i>
+            <span>35 min</span>
+          </div>
+          <div class="meta-pill">
+            <i data-lucide="home" class="icon" style="width: 14px; height: 14px;"></i>
+            <span>All at home</span>
+          </div>
+          <span class="tag okay">Okay</span>
+        </div>
+        
+        <!-- Primary CTA -->
+        <button id="start-cooking-cta" class="btn-primary" style="width: 100%; border-radius: 999px;">
+          Start Cooking →
+        </button>
+        
+        <!-- Ghost action -->
+        <button id="not-tonight-cta" class="btn-ghost" style="margin-top: 8px; width: 100%; text-align: center;">
+          Not tonight
+        </button>
+      </div>
+
+      <!-- 4. WEEK STRIP -->
+      <div class="section-header">
+        <span class="section-title">This week</span>
+      </div>
+      
+      <div class="week-strip">
+        <!-- Mon (done, faded) -->
+        <div class="day-card state-done">
+          <span class="day-abbr">Mon</span>
+          <span class="day-meal">Warm tomato stew</span>
+          <div class="day-indicator"></div>
+        </div>
+        
+        <!-- Tue (done, faded) -->
+        <div class="day-card state-done">
+          <span class="day-abbr">Tue</span>
+          <span class="day-meal">Mushroom pasta</span>
+          <div class="day-indicator"></div>
+        </div>
+        
+        <!-- Wed (done, faded) -->
+        <div class="day-card state-done">
+          <span class="day-abbr">Wed</span>
+          <span class="day-meal">Dal Chawal</span>
+          <div class="day-indicator"></div>
+        </div>
+        
+        <!-- Thu (today, active) -->
+        <div class="day-card state-today" style="border: 1.5px solid var(--color-action);">
+          <span class="day-abbr">Thu</span>
+          <span class="day-meal">Rajma Rice</span>
+          <div class="day-indicator"></div>
+        </div>
+        
+        <!-- Fri (upcoming) -->
+        <div class="day-card">
+          <span class="day-abbr">Fri</span>
+          <span class="day-meal">Khichdi</span>
+          <div class="day-indicator"></div>
+        </div>
+      </div>
+
+      <!-- 5. COOK STREAK CARD -->
+      <div class="section-header" style="margin-top: var(--space-lg);">
+        <span class="section-title">Streak</span>
+      </div>
+      
+      <div class="streak-card">
+        <div class="streak-left">
+          <div class="streak-number">3</div>
+          <div class="streak-label" style="font-family: var(--font-family-ui); font-size: 14px; color: var(--color-text-secondary); line-height: 1.2;">
+            day cook streak
+          </div>
+        </div>
+        <div class="streak-right">
+          <!-- 3 filled, 1 today, 3 empty -->
+          <div class="streak-dot filled" title="Mon (Completed)"></div>
+          <div class="streak-dot filled" title="Tue (Completed)"></div>
+          <div class="streak-dot filled" title="Wed (Completed)"></div>
+          <div class="streak-dot today" title="Thu (Today)"></div>
+          <div class="streak-dot empty" title="Fri"></div>
+          <div class="streak-dot empty" title="Sat"></div>
+          <div class="streak-dot empty" title="Sun"></div>
+        </div>
+      </div>
+
+      <!-- 6. PANTRY WATCH -->
+      <div class="section-header" style="margin-top: var(--space-lg);">
+        <span class="section-title">Pantry watch</span>
+      </div>
+      
+      <div class="pantry-card">
+        <!-- Row 1: Low -->
+        <div class="pantry-row">
+          <span class="pantry-name">Red kidney beans (rajma)</span>
+          <div class="pantry-status">
+            <div class="pantry-bar-wrapper">
+              <div class="pantry-bar low"></div>
+            </div>
+            <span class="pantry-level low">Low</span>
+          </div>
+        </div>
+        
+        <!-- Row 2: Half -->
+        <div class="pantry-row">
+          <span class="pantry-name">Onions & tomatoes</span>
+          <div class="pantry-status">
+            <div class="pantry-bar-wrapper">
+              <div class="pantry-bar half"></div>
+            </div>
+            <span class="pantry-level half">Half</span>
+          </div>
+        </div>
+        
+        <!-- Row 3: Good -->
+        <div class="pantry-row">
+          <span class="pantry-name">Basmati rice</span>
+          <div class="pantry-status">
+            <div class="pantry-bar-wrapper">
+              <div class="pantry-bar good"></div>
+            </div>
+            <span class="pantry-level good">Good</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spacer-xl"></div>
+
+    </div>
+
+    <!-- 7. BOTTOM TAB -->
+    <div class="bottom-nav">
+      <a href="home.html" class="nav-item active">
+        <i data-lucide="home" class="icon"></i>
+        <span class="nav-item-label">Home</span>
+      </a>
+      <a href="grocery.html" class="nav-item">
+        <i data-lucide="shopping-cart" class="icon"></i>
+        <span class="nav-item-label">Grocery</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i data-lucide="user" class="icon"></i>
+        <span class="nav-item-label">Profile</span>
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Dynamic Greeting Day + Time Update
+      function updateGreetingTime() {
+        const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+        const now = new Date();
+        const dayName = days[now.getDay()];
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        
+        const timeLabel = document.getElementById('current-time-label');
+        if (timeLabel) {
+          timeLabel.innerText = `${dayName}, ${hours}:${minutes} ${ampm}`;
+        }
+      }
+      
+      updateGreetingTime();
+      // Keep time updated
+      setInterval(updateGreetingTime, 60000);
+
+      // CTAs Interactions
+      const startCookingBtn = document.getElementById('start-cooking-cta');
+      if (startCookingBtn) {
+        startCookingBtn.addEventListener('click', () => {
+          // Set energy level to 'fine' so tonight.html displays Rajma Rice (cook time 35 min)
+          localStorage.setItem('userEnergyLevel', 'fine');
+          window.location.href = 'tonight.html';
+        });
+      }
+
+      const notTonightBtn = document.getElementById('not-tonight-cta');
+      if (notTonightBtn) {
+        notTonightBtn.addEventListener('click', () => {
+          // Navigate to energy check selection screen
+          window.location.href = 'energy-check.html';
+        });
+      }
+
+      // Quick interactive feedback for day cards (simulate viewing different days)
+      const dayCards = document.querySelectorAll('.day-card');
+      dayCards.forEach(card => {
+        card.addEventListener('click', () => {
+          // Highlight tapped card (only within upcoming/today for selection simplicity)
+          dayCards.forEach(c => c.style.borderColor = 'transparent');
+          card.style.borderColor = 'var(--color-action)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

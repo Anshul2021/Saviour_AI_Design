@@ -330,10 +330,7 @@
             
             // E. Hold for 2 seconds then auto-dismiss
             setTimeout(() => {
-              // Reset all local storage onboarding states
-              localStorage.removeItem('userLeaveTime');
-              localStorage.removeItem('userEnergyLevel');
-              window.location.href = 'index.html';
+              window.location.href = 'home.html';
             }, 2000);
           }, 400);
         }, 1200);
@@ -342,9 +339,7 @@
       // "Skip for tonight" click interaction
       skipBtn.addEventListener('click', () => {
         // Silent. No confirmation. No animation. Screen closes immediately.
-        localStorage.removeItem('userLeaveTime');
-        localStorage.removeItem('userEnergyLevel');
-        window.location.href = 'index.html';
+        window.location.href = 'home.html';
       });
     });
   </script>

@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Perform redirect to success screen after 2 seconds
       setTimeout(() => {
-        window.location.href = 'success.html';
+        window.location.href = 'lock-screen-630.html';
       }, 2000);
     });
   });

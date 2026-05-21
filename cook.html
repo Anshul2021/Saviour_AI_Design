@@ -242,14 +242,9 @@
       // Finish cooking action (Routing)
       finishBtn.addEventListener('click', () => {
         if (userEnergyLevel === 'okay' || userEnergyLevel === 'fine') {
-          // Keep energy level for the overnight prep screen, clear other onboarding state
-          localStorage.removeItem('userLeaveTime');
           window.location.href = 'overnight-prep-screen.html';
         } else {
-          // Exhausted or fallback: clear all and go home
-          localStorage.removeItem('userLeaveTime');
-          localStorage.removeItem('userEnergyLevel');
-          window.location.href = 'index.html';
+          window.location.href = 'home.html';
         }
       });
     });

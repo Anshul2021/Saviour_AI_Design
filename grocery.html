@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mise en Place — Grocery</title>
+  <meta name="description" content="A calm grocery planner for exhausted working professionals.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Lucide outline-only icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Sticky Top Bar Layout */
+    .sticky-top-bar {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-base);
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 48px var(--space-lg) var(--space-sm) var(--space-lg);
+      margin-top: -48px;
+      margin-left: -var(--space-lg);
+      margin-right: -var(--space-lg);
+      border-bottom: 1.2px solid var(--color-surface);
+      margin-bottom: var(--space-md);
+    }
+
+    /* Subheadings */
+    .greeting-subtitle-italic {
+      font-family: var(--font-family-display);
+      font-size: 22px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-text-primary);
+      line-height: 1.25;
+      font-variation-settings: "opsz" 9;
+    }
+
+    .subtitle-count {
+      font-family: var(--font-family-ui);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Low Stock Alert Card */
+    .alert-card {
+      background-color: #FDEEE9;
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .alert-icon-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--color-action);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .alert-text-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .alert-title {
+      font-family: var(--font-family-ui);
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--color-text-primary);
+    }
+
+    .alert-subtitle {
+      font-family: var(--font-family-ui);
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.3;
+    }
+
+    /* Horizontal Category Tabs */
+    .category-tabs-container {
+      display: flex;
+      gap: var(--space-xs);
+      overflow-x: auto;
+      scrollbar-width: none; /* Hide for Firefox */
+      -ms-overflow-style: none; /* Hide for IE/Edge */
+      margin-bottom: var(--space-lg);
+      padding-bottom: 2px;
+    }
+    
+    .category-tabs-container::-webkit-scrollbar {
+      display: none; /* Hide for Chrome/Safari/Opera */
+    }
+
+    .cat-tab {
+      border: none;
+      padding: 8px 16px;
+      border-radius: 999px; /* Pill */
+      font-family: var(--font-family-ui);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .cat-tab.active {
+      background-color: var(--color-surface-raised);
+      color: var(--color-text-primary);
+    }
+
+    .cat-tab.inactive {
+      background-color: var(--color-surface);
+      color: var(--color-text-secondary);
+    }
+
+    /* Section Headers */
+    .section-label {
+      font-family: var(--font-family-ui);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
+
+    /* Item List Row Styles */
+    .item-list-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-lg);
+    }
+
+    .item-row {
+      background-color: var(--color-surface);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: opacity 0.25s ease, transform 0.2s ease;
+    }
+
+    .item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Checkbox Styles */
+    .checkbox-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 1.5px solid var(--color-surface-raised);
+      background-color: var(--color-base);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 0;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .checkbox-btn .check-icon {
+      width: 12px;
+      height: 12px;
+      color: var(--color-base);
+      stroke-width: 3.5px;
+      display: none;
+    }
+
+    /* Checked Checkbox State */
+    .item-row.checked .checkbox-btn {
+      background-color: var(--color-text-primary);
+      border-color: var(--color-text-primary);
+    }
+
+    .item-row.checked .checkbox-btn .check-icon {
+      display: block;
+    }
+
+    .item-meta-container {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .item-name {
+      font-family: var(--font-family-ui);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      transition: color 0.2s, text-decoration 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-row.checked .item-name {
+      text-decoration: line-through;
+      color: var(--color-text-ghost);
+    }
+
+    .item-qty-note {
+      font-family: var(--font-family-ui);
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      transition: color 0.2s;
+      margin-top: 1px;
+    }
+
+    .item-row.checked .item-qty-note {
+      color: var(--color-text-ghost);
+    }
+
+    /* Custom Badges */
+    .badge-out {
+      background-color: #FAE8E8;
+      color: #C53030; /* Darker red for accessibility readability */
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-family: var(--font-family-ui);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .badge-low {
+      background-color: #FDEEE9;
+      color: var(--color-action);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-family: var(--font-family-ui);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* Add manually button style */
+    .btn-add-item {
+      width: 100%;
+      background-color: var(--color-surface);
+      color: var(--color-text-secondary);
+      font-family: var(--font-family-ui);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 14px var(--space-lg);
+      border-radius: 999px; /* Pill */
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .btn-add-item:hover {
+      background-color: var(--color-surface-raised);
+      color: var(--color-text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Physical phone mockup frame container -->
+  <div class="phone-viewport">
+    <div class="phone-notch"></div>
+    
+    <!-- Screen Content Container -->
+    <div class="screen-container" style="padding-bottom: 80px;">
+      
+      <!-- 1. TOP BAR (sticky) -->
+      <div class="sticky-top-bar">
+        <span style="font-family: var(--font-family-display); font-weight: 400; font-size: 18px; color: var(--color-text-primary);">Grocery</span>
+        
+        <!-- Circular Bell Icon Button (with dot) -->
+        <div style="position: relative; display: inline-block;">
+          <button class="icon-btn-circular" style="width: 40px; height: 40px; border-radius: 50%; background-color: var(--color-surface); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-text-primary);">
+            <i data-lucide="bell" class="icon" style="width: 20px; height: 20px;"></i>
+          </button>
+          <div style="position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; border-radius: 50%; background-color: var(--color-action);"></div>
+        </div>
+      </div>
+
+      <!-- 2. SUBHEADING -->
+      <div style="margin-bottom: var(--space-sm);">
+        <h1 class="greeting-subtitle-italic">Based on this week's cooking.</h1>
+        <div id="low-items-count" class="subtitle-count">3 items running low.</div>
+      </div>
+
+      <!-- 3. LOW STOCK ALERT CARD -->
+      <div class="alert-card">
+        <div class="alert-icon-circle">
+          <!-- Warning Icon in #FAF7F2 -->
+          <i data-lucide="alert-triangle" class="icon" style="width: 16px; height: 16px; color: #FAF7F2; stroke-width: 2px;"></i>
+        </div>
+        <div class="alert-text-container">
+          <span class="alert-title">Restock before Sunday</span>
+          <span class="alert-subtitle">Needed for next week's meal plan (Warm tomato stew, Rajma Rice)</span>
+        </div>
+      </div>
+
+      <!-- 4. CATEGORY TABS -->
+      <div class="category-tabs-container">
+        <button class="cat-tab active" data-category="all">All</button>
+        <button class="cat-tab inactive" data-category="pantry">Pantry</button>
+        <button class="cat-tab inactive" data-category="veg">Vegetables</button>
+        <button class="cat-tab inactive" data-category="dairy">Dairy & Eggs</button>
+      </div>
+
+      <!-- 5. NEED TO BUY SECTION -->
+      <div>
+        <span class="section-label">Need to buy</span>
+        <div class="item-list-container" id="need-to-buy-list">
+          
+          <!-- Rajma (Out) -->
+          <div class="item-row" data-id="rajma">
+            <div class="item-left">
+              <button class="checkbox-btn" aria-label="Mark Rajma as purchased">
+                <i data-lucide="check" class="check-icon"></i>
+              </button>
+              <div class="item-meta-container">
+                <span class="item-name">Rajma (Red Kidney Beans)</span>
+                <span class="item-qty-note">1 cup · for Tomorrow's Rajma Rice</span>
+              </div>
+            </div>
+            <span class="badge-out">Out</span>
+          </div>
+
+          <!-- Dal toor (Low) -->
+          <div class="item-row" data-id="dal">
+            <div class="item-left">
+              <button class="checkbox-btn" aria-label="Mark Dal toor as purchased">
+                <i data-lucide="check" class="check-icon"></i>
+              </button>
+              <div class="item-meta-container">
+                <span class="item-name">Dal toor (Yellow Lentils)</span>
+                <span class="item-qty-note">1/2 cup · for Dal Chawal</span>
+              </div>
+            </div>
+            <span class="badge-low">Low</span>
+          </div>
+
+          <!-- Bread (Low) -->
+          <div class="item-row" data-id="bread">
+            <div class="item-left">
+              <button class="checkbox-btn" aria-label="Mark Bread as purchased">
+                <i data-lucide="check" class="check-icon"></i>
+              </button>
+              <div class="item-meta-container">
+                <span class="item-name">Bread</span>
+                <span class="item-qty-note">1 loaf · for Egg Toast</span>
+              </div>
+            </div>
+            <span class="badge-low">Low</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 6. WELL STOCKED SECTION -->
+      <div style="margin-top: var(--space-lg);">
+        <span class="section-label">Well stocked</span>
+        <div class="item-list-container" id="well-stocked-list">
+          
+          <!-- Rice -->
+          <div class="item-row checked" data-id="rice">
+            <div class="item-left">
+              <button class="checkbox-btn" aria-label="Unmark Rice">
+                <i data-lucide="check" class="check-icon"></i>
+              </button>
+              <div class="item-meta-container">
+                <span class="item-name">Rice</span>
+                <span class="item-qty-note">3 kg</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Onions -->
+          <div class="item-row checked" data-id="onions">
+            <div class="item-left">
+              <button class="checkbox-btn" aria-label="Unmark Onions">
+                <i data-lucide="check" class="check-icon"></i>
+              </button>
+              <div class="item-meta-container">
+                <span class="item-name">Onions</span>
+                <span class="item-qty-note">6 units</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Eggs -->
+          <div class="item-row checked" data-id="eggs">
+            <div class="item-left">
+              <button class="checkbox-btn" aria-label="Unmark Eggs">
+                <i data-lucide="check" class="check-icon"></i>
+              </button>
+              <div class="item-meta-container">
+                <span class="item-name">Eggs</span>
+                <span class="item-qty-note">8 units</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 7. ADD ITEM BUTTON -->
+      <div style="margin-top: var(--space-lg); margin-bottom: var(--space-xl);">
+        <button class="btn-add-item">
+          <i data-lucide="plus" class="icon" style="width: 18px; height: 18px;"></i>
+          <span>Add item manually</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- 8. BOTTOM TAB — Grocery active -->
+    <div class="bottom-nav">
+      <a href="home.html" class="nav-item">
+        <i data-lucide="home" class="icon"></i>
+        <span class="nav-item-label">Home</span>
+      </a>
+      <a href="grocery.html" class="nav-item active">
+        <i data-lucide="shopping-cart" class="icon"></i>
+        <span class="nav-item-label">Grocery</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i data-lucide="user" class="icon"></i>
+        <span class="nav-item-label">Profile</span>
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Lucide Icons
+      lucide.createIcons();
+
+      const needToBuyList = document.getElementById('need-to-buy-list');
+      const wellStockedList = document.getElementById('well-stocked-list');
+      const lowItemsCountEl = document.getElementById('low-items-count');
+
+      // Update Low items count text helper
+      function updateLowCount() {
+        const count = needToBuyList.children.length;
+        if (count === 0) {
+          lowItemsCountEl.textContent = "All caught up! No items running low.";
+        } else {
+          lowItemsCountEl.textContent = `${count} ${count === 1 ? 'item' : 'items'} running low.`;
+        }
+      }
+
+      // Add event listeners to all list rows for check status toggle
+      function initRowListeners(row) {
+        const checkbox = row.querySelector('.checkbox-btn');
+        checkbox.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent duplicate trigger if clicking row
+          toggleItemCheck(row);
+        });
+
+        // Clicking the row card itself can also toggle check for ease of access
+        row.addEventListener('click', () => {
+          toggleItemCheck(row);
+        });
+      }
+
+      function toggleItemCheck(row) {
+        const isChecked = row.classList.contains('checked');
+        
+        if (isChecked) {
+          // Move from Well Stocked to Need to Buy
+          row.classList.remove('checked');
+          
+          // Re-create the badge if it was low or out based on the id
+          const id = row.getAttribute('data-id');
+          if (id === 'rajma') {
+            const badge = document.createElement('span');
+            badge.className = 'badge-out';
+            badge.textContent = 'Out';
+            row.appendChild(badge);
+          } else if (id === 'dal' || id === 'bread') {
+            const badge = document.createElement('span');
+            badge.className = 'badge-low';
+            badge.textContent = 'Low';
+            row.appendChild(badge);
+          }
+          
+          // Animate and append
+          row.style.transform = 'scale(0.97)';
+          row.style.opacity = '0.5';
+          setTimeout(() => {
+            needToBuyList.appendChild(row);
+            row.style.transform = 'scale(1)';
+            row.style.opacity = '1';
+            updateLowCount();
+          }, 200);
+          
+        } else {
+          // Move from Need to Buy to Well Stocked
+          row.classList.add('checked');
+          
+          // Remove badge if present
+          const badge = row.querySelector('.badge-out, .badge-low');
+          if (badge) {
+            badge.remove();
+          }
+          
+          // Animate and append
+          row.style.transform = 'scale(0.97)';
+          row.style.opacity = '0.5';
+          setTimeout(() => {
+            wellStockedList.appendChild(row);
+            row.style.transform = 'scale(1)';
+            row.style.opacity = '1';
+            updateLowCount();
+          }, 200);
+        }
+        
+        // Refresh icons within this row
+        lucide.createIcons();
+      }
+
+      // Initialize existing rows
+      document.querySelectorAll('.item-row').forEach(row => {
+        initRowListeners(row);
+      });
+
+      // Category tabs interactive selection
+      const tabs = document.querySelectorAll('.cat-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => {
+            t.classList.remove('active');
+            t.classList.add('inactive');
+          });
+          tab.classList.add('active');
+          tab.classList.remove('inactive');
+          
+          // Simulate simple filtering overlay transition
+          const allRows = document.querySelectorAll('.item-row');
+          allRows.forEach(row => {
+            row.style.opacity = '0.3';
+            setTimeout(() => {
+              row.style.opacity = row.classList.contains('checked') ? '0.6' : '1';
+            }, 150);
+          });
+        });
+      });
+
+      // Add item manual mock implementation
+      const addBtn = document.querySelector('.btn-add-item');
+      addBtn.addEventListener('click', () => {
+        const newItemName = prompt("Enter ingredient name:");
+        if (newItemName) {
+          const row = document.createElement('div');
+          row.className = 'item-row';
+          row.setAttribute('data-id', 'custom');
+          row.innerHTML = `
+            <div class="item-left">
+              <button class="checkbox-btn" aria-label="Mark ${newItemName} as purchased">
+                <i data-lucide="check" class="check-icon"></i>
+              </button>
+              <div class="item-meta-container">
+                <span class="item-name">${newItemName}</span>
+                <span class="item-qty-note">1 unit · added manually</span>
+              </div>
+            </div>
+            <span class="badge-low">Low</span>
+          `;
+          needToBuyList.appendChild(row);
+          initRowListeners(row);
+          lucide.createIcons();
+          updateLowCount();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

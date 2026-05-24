@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
+
+/* ==========================================================================
+   DESIGN SYSTEM CUSTOM PROPERTIES
+   ========================================================================== */
+:root {
+  /* --- 1. Color Palette --- */
+  
+  /* Base Surfaces */
+  --color-base: #FAF7F2;
+  --color-surface: #F0E9DE;
+  --color-surface-raised: #EDE3D4;
+
+  /* Text Colors */
+  --color-text-primary: #2E2A24;
+  --color-text-secondary: #8C7E6A;
+  --color-text-ghost: #C4B5A5;
+
+  /* Brand & Semantic (Saturated) */
+  --color-action: #E07A55;
+  --color-accent: #F5C97A;
+  --color-success: #A3C4A8;
+  --color-warning: #C4844A;
+  --color-error: #C45A5A;
+
+  /* Brand & Semantic (Subtle) */
+  --color-action-subtle: #FAEAE0;
+  --color-accent-subtle: #FDF6E3;
+  --color-success-subtle: #EBF3EC;
+  --color-warning-subtle: #FDF3E3;
+  --color-error-subtle: #FAE8E8;
+
+  /* Interactive & Utility */
+  --color-on-action: #FFFFFF;
+  --color-disabled: #DDD4C8;
+  --color-divider: #E5DDD0;
+  --color-overlay: rgba(46, 42, 36, 0.48);
+
+  /* --- 2. Typography Scale --- */
+  
+  /* Font Families */
+  --font-display: 'Fraunces', serif;
+  --font-interface: 'DM Sans', sans-serif;
+
+  /* Font Sizes */
+  --font-size-display: 28px;
+  --font-size-heading: 20px;
+  --font-size-subheading: 16px;
+  --font-size-body: 14px;
+  --font-size-body-small: 12px;
+  --font-size-label: 12px;
+  --font-size-caption: 11px;
+  --font-size-ghost: 12px;
+  --font-size-button: 14px;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  /* Line Heights */
+  --line-height-display: 36px;
+  --line-height-heading: 28px;
+  --line-height-subheading: 24px;
+  --line-height-body: 22.4px;
+  --line-height-body-small: 15.95px;
+  --line-height-label: 16px;
+  --line-height-caption: 15.95px;
+  --line-height-ghost: 16px;
+  --line-height-button: 22.4px;
+
+  /* Letter Spacings */
+  --letter-spacing-label: 0.84px; /* 7% of 12px */
+  --letter-spacing-ghost: 0.84px; /* 7% of 12px */
+
+  /* Border Radii & Transitions (Helpers) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-round: 24px;
+  --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   MODERN CSS RESET & BASE STYLES
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  background-color: var(--color-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-smooth);
+}
+
+img, picture, svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Selection styles */
+::selection {
+  background-color: var(--color-action-subtle);
+  color: var(--color-action);
+}
+
+/* ==========================================================================
+   TYPOGRAPHIC ELEMENTS DEFAULTS
+   ========================================================================== */
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-display);
+  color: var(--color-text-primary);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-heading);
+  color: var(--color-text-primary);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-subheading);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-subheading);
+  color: var(--color-text-primary);
+}
+
+p {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  color: var(--color-text-secondary);
+}
+
+small {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body-small);
+  color: var(--color-text-secondary);
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-color: var(--color-divider);
+  margin: 16px 0;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY CLASSES
+   ========================================================================== */
+.ty-display {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-display);
+}
+
+.ty-heading {
+  font-family: var(--font-display);
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-heading);
+}
+
+.ty-subheading {
+  font-family: var(--font-display);
+  font-size: var(--font-size-subheading);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-subheading);
+}
+
+.ty-body {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+}
+
+.ty-body-small {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body-small);
+}
+
+.ty-label {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+}
+
+.ty-caption {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-caption);
+}
+
+.ty-ghost {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-ghost);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-ghost);
+  letter-spacing: var(--letter-spacing-ghost);
+  text-transform: uppercase;
+}
+
+.ty-button {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-button);
+}
+
+/* ==========================================================================
+   COLOR SYSTEM UTILITIES
+   ========================================================================== */
+
+/* Backgrounds */
+.bg-base { background-color: var(--color-base); }
+.bg-surface { background-color: var(--color-surface); }
+.bg-surface-raised { background-color: var(--color-surface-raised); }
+.bg-disabled { background-color: var(--color-disabled); }
+
+/* Text Colors */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-ghost { color: var(--color-text-ghost); }
+.text-disabled { color: var(--color-text-ghost); }

@@ -265,6 +265,92 @@ hr {
   line-height: var(--line-height-button);
 }
 
+.Text {
+  width: 180px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body);
+  font-family: var(--font-interface);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  word-wrap: break-word;
+}
+
+.SingleGroupedCard {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.Frame54 {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  display: inline-flex;
+  margin-bottom: 24px;
+}
+
+.Avatar {
+  width: 52px;
+  height: 52px;
+  position: relative;
+  background-color: var(--color-text-primary);
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.Initials {
+  left: 14.55px;
+  top: 10.40px;
+  position: absolute;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-base);
+  font-size: 26px;
+  font-family: var(--font-interface);
+  font-weight: var(--font-weight-regular);
+  line-height: 31.20px;
+  word-wrap: break-word;
+}
+
+.Frame53 {
+  width: 230px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: inline-flex;
+}
+
+.Hustler {
+  align-self: stretch;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-heading);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-heading);
+  word-wrap: break-word;
+}
+
+.CookingSinceJan2025Bangalore {
+  align-self: stretch;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body);
+  font-family: var(--font-interface);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  word-wrap: break-word;
+}
+
 /* ==========================================================================
    COLOR SYSTEM UTILITIES
    ========================================================================== */
@@ -889,12 +975,12 @@ body {
   display: none; /* Hide scrollbar for Chrome/Safari */
 }
 .c-filter-chip {
-  padding: 4px 16px;
+  padding: 6px 16px;
   border-radius: 999px;
-  background-color: var(--color-base);
+  background-color: var(--color-surface);
   color: var(--color-text-secondary);
   font-family: var(--font-interface);
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-body-small);
   white-space: nowrap;
   cursor: pointer;
   transition: var(--transition-smooth);
@@ -902,11 +988,11 @@ body {
   outline: none;
 }
 .c-filter-chip:hover {
-  background-color: var(--color-surface);
+  background-color: var(--color-surface-raised);
 }
 .c-filter-chip.is-selected {
-  background-color: var(--color-surface-raised);
-  color: var(--color-text-primary);
+  background-color: var(--color-action);
+  color: var(--color-on-action);
 }
 
 /* Scrollable Container for Pantry Items */
@@ -1175,8 +1261,6 @@ body {
   left: 0;
   top: 0;
   background: transparent;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   z-index: 4;
   pointer-events: none;
 }
@@ -1184,7 +1268,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 76px;
+  margin-top: 52px;
   z-index: 5;
   width: 100%;
   position: relative;
@@ -1202,7 +1286,7 @@ body {
 .c-lock-screen__time {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 82px;
-  font-weight: 700;
+  font-weight: 500;
   color: #FFFFFF;
   line-height: 1;
   letter-spacing: -1.5px;
@@ -1263,14 +1347,14 @@ body {
   color: #FFFFFF;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.2;
 }
 .c-notification-card__desc {
   color: rgba(255, 255, 255, 0.75);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.2;
   margin-top: 2px;
 }
@@ -1504,8 +1588,10 @@ body {
 }
 
 .c-cook-top-section {
-  width: 342.40px;
-  left: 24px;
+  width: calc(100% - 48px);
+  max-width: 342.40px;
+  left: 50%;
+  transform: translateX(-50%);
   top: 100px;
   position: absolute;
   display: flex;
@@ -1655,7 +1741,7 @@ body {
 
 .c-cook-controls-area {
   width: 100%;
-  padding: 8px 20px 24px;
+  padding: 8px 20px 12px;
   left: 0;
   bottom: 0;
   position: absolute;
@@ -1821,8 +1907,10 @@ body {
    COOKING FLOW EXTENSIONS (COOKING NOW & PREP FOR TOMORROW)
    ========================================================================== */
 .c-cooking-time-top {
-  width: 342.40px;
-  left: 24px;
+  width: calc(100% - 48px);
+  max-width: 342.40px;
+  left: 50%;
+  transform: translateX(-50%);
   top: 166px;
   position: absolute;
   display: flex;
@@ -1833,23 +1921,20 @@ body {
 }
 
 .c-timer-note {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 642px;
   text-align: center;
   width: 280px;
   color: var(--color-text-secondary);
   font-family: var(--font-interface);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
-  z-index: 5;
+  margin-bottom: 8px;
 }
 
 .c-prep-glow {
   width: 262px;
   height: 198px;
-  left: 64px;
+  left: 50%;
+  transform: translateX(-50%);
   top: 251px;
   position: absolute;
   background: #FFF2DD;
@@ -1860,8 +1945,10 @@ body {
 }
 
 .c-prep-top-section {
-  width: 276px;
-  left: 57px;
+  width: calc(100% - 114px);
+  max-width: 276px;
+  left: 50%;
+  transform: translateX(-50%);
   top: 166px;
   position: absolute;
   display: flex;
@@ -1950,3 +2037,414 @@ body {
   line-height: var(--line-height-body);
   align-self: stretch;
 }
+
+/* ==========================================================================
+   BOTTOM SHEET STYLES
+   ========================================================================== */
+
+/* Scribble Strike-through Styles */
+.c-pantry-row.is-checked .c-pantry-row__label {
+  position: relative;
+  color: var(--color-text-ghost);
+  transition: color 0.3s ease;
+}
+
+.c-pantry-row.is-checked .c-pantry-row__label::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  height: 6px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M1,5 C15,3 35,7 50,4 C65,2 80,8 99,5' stroke='%23E07A55' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  transform: translateY(-50%) rotate(-0.5deg);
+  animation: scribble-strike 0.25s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes scribble-strike {
+  from {
+    width: 0;
+  }
+  to {
+    width: calc(100% + 8px);
+  }
+}
+
+/* Bottom Sheet */
+.c-bottomsheet-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-overlay);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.c-bottomsheet-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.c-bottomsheet {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-base);
+  border-radius: var(--radius-round) var(--radius-round) 0 0;
+  padding: 16px 24px 32px;
+  z-index: 101;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0px -8px 32px rgba(46, 42, 36, 0.16);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.c-bottomsheet.is-visible {
+  transform: translateY(0);
+}
+
+.c-bottomsheet__handle-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.c-bottomsheet__handle {
+  width: 52px;
+  height: 6px;
+  background-color: var(--color-divider);
+  border-radius: 3px;
+}
+
+/* Profiles & Home extra styles */
+.c-profile-avatar-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.c-profile-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--color-text-primary);
+  color: var(--color-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-interface);
+  font-size: 26px;
+}
+
+.c-profile-stats-card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-round);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Placeholder elements styling to prevent layout shift/crushing inside flex container */
+[data-component="status-bar"] {
+  display: block;
+  width: 100%;
+  height: 54px;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+[data-component="app-tabbar"] {
+  display: block;
+  width: 100%;
+  height: 64px;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+[data-component="home-indicator"] {
+  display: block;
+  width: 100%;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.c-tabbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-divider);
+  box-sizing: border-box;
+}
+
+.c-tabbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  text-decoration: none;
+  color: var(--color-text-ghost);
+  transition: var(--transition-smooth);
+  gap: 4px;
+  cursor: pointer;
+}
+
+.c-tabbar__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+}
+
+.c-tabbar__item:hover .c-tabbar__icon {
+  transform: translateY(-2px);
+  color: var(--color-text-secondary);
+}
+
+.c-tabbar__label {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  transition: var(--transition-smooth);
+}
+
+/* Active State */
+.c-tabbar__item.is-active {
+  color: var(--color-action);
+}
+
+.c-tabbar__item.is-active .c-tabbar__icon {
+  transform: scale(1.08);
+}
+
+/* ==========================================================================
+   IN-APP NOTIFICATIONS SCREEN COMPONENTS
+   ========================================================================== */
+.c-notifications-list {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 32px;
+}
+
+.c-notifications-group-title {
+  margin: 20px 0 8px;
+  opacity: 0.8;
+}
+
+.c-app-notification-card {
+  width: 100%;
+  padding: 16px 0;
+  background-color: transparent; /* flat on the page background */
+  border-radius: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition-smooth);
+  border: none;
+  border-bottom: 1px solid var(--color-divider);
+  text-decoration: none;
+  opacity: 0.7; /* read/earlier notification is slightly muted */
+}
+
+.c-app-notification-card:hover {
+  background-color: transparent;
+  opacity: 1;
+}
+
+.c-app-notification-card.is-unread {
+  opacity: 1; /* unread is fully prominent */
+}
+
+/* Bold the title of unread notifications for readability since orange dot is removed */
+.c-app-notification-card.is-unread .c-app-notification-card__title {
+  font-weight: 700;
+}
+
+.c-app-notification-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-surface); /* Clean, standard base-aligned surface contrast */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: var(--transition-smooth);
+}
+
+.c-app-notification-card.is-unread .c-app-notification-card__icon {
+  background-color: var(--color-surface-raised);
+}
+
+.c-app-notification-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.c-app-notification-card__title {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-body);
+}
+
+.c-app-notification-card__desc {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body-small);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-body-small);
+}
+
+.c-app-notification-card__time {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-caption);
+  color: var(--color-text-ghost);
+  margin-top: 2px;
+}
+
+/* Empty State Styling */
+.c-notifications-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 24px;
+  gap: 16px;
+  animation: fadeIn 0.4s ease;
+}
+
+.c-notifications-empty__icon {
+  width: 80px;
+  height: 80px;
+  background-color: var(--color-surface);
+  color: var(--color-text-ghost);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.c-notifications-empty__title {
+  margin-bottom: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   BUTTON COMPONENT STYLES (FROM components/ui/button.html)
+   ========================================================================== */
+
+/* Base Button */
+.c-btn {
+  width: 100%;
+  height: 56px;
+  padding: 16px 32px;
+  border-radius: 999px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-interface);
+  font-size: var(--font-size-button);
+  transition: var(--transition-smooth);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+/* --- Type: Primary --- */
+.c-btn--primary {
+  background-color: var(--color-action); /* #E07A55 */
+  color: var(--color-base); /* #FAF7F2 */
+  font-weight: var(--font-weight-medium); /* 500 */
+}
+
+/* Hover */
+.c-btn--primary:hover,
+.c-btn--primary.is-hover {
+  background-color: #D06845;
+}
+
+/* Pressed */
+.c-btn--primary:active,
+.c-btn--primary.is-pressed {
+  background-color: #BE5A3A;
+}
+
+/* Disabled State */
+.c-btn--primary:disabled,
+.c-btn--primary.is-disabled {
+  background-color: var(--color-surface-raised); /* #EDE3D4 */
+  color: var(--color-text-ghost); /* #C4B5A5 */
+  opacity: 0.60;
+  cursor: not-allowed;
+}
+
+/* --- Type: Ghost --- */
+.c-btn--ghost {
+  background-color: transparent;
+  color: var(--color-text-ghost); /* #C4B5A5 */
+  font-weight: var(--font-weight-regular); /* 400 */
+  outline: 1px rgba(196, 181, 165, 0.35) solid;
+  outline-offset: -1px;
+}
+
+/* Hover */
+.c-btn--ghost:hover,
+.c-btn--ghost.is-hover {
+  color: var(--color-text-secondary); /* #8C7E6A */
+  background-color: rgba(46, 42, 36, 0.02);
+}
+
+/* Disabled */
+.c-btn--ghost:disabled,
+.c-btn--ghost.is-disabled {
+  background-color: var(--color-surface-raised); /* #EDE3D4 */
+  color: var(--color-text-ghost); /* #C4B5A5 */
+  opacity: 0.60;
+  cursor: not-allowed;
+  outline: none;
+}
+
+/* --- Type: Outlined --- */
+.c-btn--outlined {
+  background-color: transparent;
+  color: var(--color-text-secondary); /* #8C7E6A */
+  font-weight: var(--font-weight-regular); /* 400 */
+}
+
+
+

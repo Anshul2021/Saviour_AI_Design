@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saviour - Notifications</title>
+  <meta name="description" content="Review your dinner suggestions, energy level checks, and grocery refill notifications.">
+  <link rel="stylesheet" href="global.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+</head>
+
+<body>
+
+  <!-- Responsive App Container fitting viewport height -->
+  <div class="app-container" id="app-container" data-page="notifications">
+    <!-- Glow Backdrop -->
+    <div class="ambient-glow"></div>
+
+    <!-- 1. Dynamic iPhone Status Bar Component -->
+    <header data-component="status-bar" id="app-status-bar"></header>
+
+    <!-- 2. Scrollable Body Content -->
+    <main class="app-content" style="display: flex; flex-direction: column;">
+      
+      <!-- Back Link -->
+      <div class="onboarding-back-link" style="margin-top: 4px;">
+        <a href="home.html" class="c-back-link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 13L5 8L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back</span>
+        </a>
+      </div>
+
+      <!-- Title & Clear All Header Group -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 16px; margin-bottom: 8px;">
+        <h1 class="ty-display text-primary">Notifications</h1>
+        <button id="notifications-clear-btn" class="ty-label" style="color: var(--color-action); font-weight: var(--font-weight-medium); font-size: var(--font-size-body-small); border: none; background: transparent; cursor: pointer; padding: 4px 0; outline: none; transition: opacity var(--transition-smooth);">Clear All</button>
+      </div>
+
+      <!-- Notifications List Container -->
+      <div id="notifications-list-container" class="c-notifications-list" style="margin-top: 16px;">
+        <!-- Dynamically injected via global.js -->
+      </div>
+
+      <!-- Empty State Container (Hidden by default) -->
+      <div id="notifications-empty-state" class="c-notifications-empty" style="display: none; flex: 1;">
+        <div class="c-notifications-empty__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 8A6 6 0 0 0 6 8C6 12 4 14 4 14H20C20 14 18 12 18 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M13.73 21A2 2 0 0 1 10.27 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="ty-heading text-primary c-notifications-empty__title">All caught up!</h3>
+        <p class="ty-body text-secondary" style="margin-bottom: 8px;">You don't have any notifications right now.</p>
+        <a href="home.html" class="c-btn c-btn--outlined" style="height: 48px; border-radius: var(--radius-round); border: 1px solid var(--color-divider); padding: 0 24px; display: inline-flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: var(--font-size-body); font-weight: var(--font-weight-regular); background: transparent; transition: var(--transition-smooth);">Back to Home</a>
+      </div>
+
+    </main>
+
+    <!-- Home Indicator -->
+    <div data-component="home-indicator" id="app-home-indicator"></div>
+  </div>
+
+  <!-- Standard script link -->
+  <script src="global.js?v=2"></script>
+</body>
+
+</html>

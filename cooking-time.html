@@ -20,66 +20,99 @@
     <header data-component="status-bar" id="app-status-bar"></header>
 
     <!-- 2. Back Chevron Link (Absolute positioned) -->
-    <a href="cook-item.html" class="c-cook-back" id="cook-back-btn" aria-label="Go back to recipe details">
+    <a href="cook-item.html" class="c-cook-back" id="cook-back-btn" aria-label="Go back to recipe details" style="left: 20px; top: 68px; position: absolute; justify-content: flex-start; align-items: center; display: inline-flex;">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12.5 15L7.5 10L12.5 5" stroke="var(--color-text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>
 
     <!-- 3. Top Section with Info & Timer -->
-    <div class="c-cooking-time-top">
+    <div class="TopSectionWithInfo" style="width: calc(100% - 48px); max-width: 342.40px; left: 50%; transform: translateX(-50%); top: 124px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: center; gap: 16px; display: inline-flex;">
       <!-- Title stack -->
-      <div class="c-prep-title-stack">
-        <div class="c-prep-label" style="color: var(--color-text-ghost);">COOKING NOW</div>
-        <h1 class="c-prep-title" id="cooking-meal-title">Rajma Rice</h1>
+      <div class="Frame28" style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: center; gap: 4px; display: flex;">
+        <div class="CookingNow" style="justify-content: center; display: flex; flex-direction: column; color: var(--color-text-ghost); font-size: 12px; font-family: var(--font-interface); font-weight: 500; text-transform: uppercase; line-height: 16px; letter-spacing: 0.84px; word-wrap: break-word;">COOKING NOW</div>
+        <div class="Heading1MealNameTimeDetailsMargin" style="position: relative; display: flex; justify-content: center; align-items: center;">
+          <h1 class="RajmaRice" id="cooking-meal-title" style="justify-content: center; display: flex; flex-direction: column; color: var(--color-text-primary); font-size: 28px; font-family: var(--font-display); font-weight: 400; line-height: 36px; word-wrap: break-word; margin: 0; text-align: center;">Rajma Rice</h1>
+        </div>
       </div>
       
       <!-- Circular calm resonance timer -->
-      <div class="c-timer">
-        <!-- Orbit Dots -->
-        <div class="c-timer__dot c-timer__dot--1"></div>
-        <div class="c-timer__dot c-timer__dot--2"></div>
-        <div class="c-timer__dot c-timer__dot--3"></div>
-        <div class="c-timer__dot c-timer__dot--4"></div>
-        <div class="c-timer__dot c-timer__dot--5"></div>
-        <div class="c-timer__dot c-timer__dot--6"></div>
-        <div class="c-timer__dot c-timer__dot--7"></div>
-        <div class="c-timer__dot c-timer__dot--8"></div>
+      <div class="CookingTimerCalmResonance" style="border-radius: 40px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 28px; display: flex;">
+        <div class="Frame" style="width: 326px; height: 326px; position: relative; overflow: hidden;">
+          <!-- Orbit Dots -->
+          <div class="Ellipse" style="left: 301px; top: 163px; position: absolute;">
+            <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="3" cy="3" r="3" fill="var(--color-accent)" fill-opacity="0.25"/>
+            </svg>
+          </div>
+          <div class="Ellipse" style="left: 260.58px; top: 260.58px; position: absolute;">
+            <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="3" cy="3" r="3" fill="var(--color-accent)" fill-opacity="0.25"/>
+            </svg>
+          </div>
+          <div class="Ellipse" style="left: 163px; top: 301px; position: absolute;">
+            <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="3" cy="3" r="3" fill="var(--color-accent)" fill-opacity="0.25"/>
+            </svg>
+          </div>
+          <div class="Ellipse" style="left: 65.42px; top: 260.58px; position: absolute;">
+            <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="3" cy="3" r="3" fill="var(--color-accent)" fill-opacity="0.25"/>
+            </svg>
+          </div>
+          <div class="Ellipse" style="left: 25px; top: 163px; position: absolute;">
+            <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="3" cy="3" r="3" fill="var(--color-accent)" fill-opacity="0.25"/>
+            </svg>
+          </div>
+          <div class="Ellipse" style="left: 65.42px; top: 65.42px; position: absolute;">
+            <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="3" cy="3" r="3" fill="var(--color-accent)" fill-opacity="0.25"/>
+            </svg>
+          </div>
+          <div class="Ellipse" style="left: 163px; top: 25px; position: absolute;">
+            <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="3" cy="3" r="3" fill="var(--color-accent)" fill-opacity="0.25"/>
+            </svg>
+          </div>
+          <div class="Ellipse" style="left: 260.58px; top: 65.42px; position: absolute;">
+            <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="3" cy="3" r="3" fill="var(--color-accent)" fill-opacity="0.25"/>
+            </svg>
+          </div>
 
-        <!-- Backing Blur -->
-        <div class="c-timer__blur-bg"></div>
+          <!-- Backing Blur -->
+          <div class="Ellipse" style="width: 320px; height: 320px; left: 3px; top: 3px; position: absolute; background: rgba(247, 239, 229, 0.60); border-radius: 9999px; filter: blur(20px)"></div>
 
-        <!-- Rings -->
-        <div class="c-timer__ring-outer"></div>
-        <div class="c-timer__ring-inner"></div>
-        <div class="c-timer__face"></div>
+          <!-- Rings -->
+          <div class="Ellipse" style="width: 290px; height: 290px; left: 18px; top: 18px; position: absolute; border-radius: 9999px; border: 1.50px rgba(224, 122, 85, 0.06) solid;"></div>
+          <div class="Ellipse" style="width: 258px; height: 258px; left: 34px; top: 34px; position: absolute; border-radius: 9999px; border: 1px rgba(224, 122, 85, 0.08) solid;"></div>
+          <div class="Ellipse" style="width: 240px; height: 240px; left: 43px; top: 43px; position: absolute; background: var(--color-surface); box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05); border-radius: 9999px; border: 1px var(--color-divider) solid;"></div>
+          
+          <!-- Progress Track -->
+          <div class="Ellipse" style="width: 210px; height: 210px; left: 58px; top: 58px; position: absolute; border-radius: 9999px; border: 10px rgba(229, 221, 208, 0.50) solid;"></div>
+          
+          <div class="c-timer__track-container" style="width: 210px; height: 210px; position: absolute; left: 58px; top: 58px; z-index: 5;">
+            <svg class="c-timer__progress-ring" style="width: 210px; height: 210px; position: absolute; left: 0; top: 0; transform: rotate(-90deg);">
+              <circle class="c-timer__progress-circle" id="cooking-progress-circle" cx="105" cy="105" r="100" style="stroke: var(--color-action); stroke-width: 10; stroke-linecap: round; fill: none; stroke-dasharray: 628.3; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear;" />
+            </svg>
+          </div>
 
-        <!-- Progress track container -->
-        <div class="c-timer__track-container">
-          <!-- Backdrop ring track -->
-          <div class="c-timer__track-bg"></div>
-
-          <!-- Active progress ring -->
-          <svg class="c-timer__progress-ring">
-            <circle class="c-timer__progress-circle" id="cooking-progress-circle" cx="105" cy="105" r="100" />
-          </svg>
-        </div>
-
-        <!-- Center Plate & Text -->
-        <div class="c-timer__inner-plate">
-          <div class="c-timer__text" id="cooking-timer-text">34:51</div>
+          <!-- Center Plate & Text -->
+          <div class="Ellipse" style="width: 170px; height: 170px; left: 78px; top: 78px; position: absolute; background: var(--color-surface-raised); box-shadow: 0px -1px 6px rgba(255, 255, 255, 0.50) inset; border-radius: 9999px; z-index: 6; display: flex; justify-content: center; align-items: center;">
+            <div data-layer="34:51" id="cooking-timer-text" style="text-align: center; color: var(--color-text-primary); font-size: 52px; font-family: var(--font-display); font-weight: 400; line-height: 52px; word-wrap: break-word;">34:51</div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Instruction label below the timer -->
-    <div class="c-timer-note">
-      Timer's running in the background.<br/>Close the app. Go cook.
     </div>
 
     <!-- 4. Absolute positioned Controls Area -->
     <footer class="c-cook-controls-area" id="app-footer">
-      <button class="c-btn c-btn--primary" id="done-cooking-btn" style="opacity: 0.5;">Done Cooking</button>
+      <!-- Instruction label below the timer / above the Done cooking button -->
+      <div class="c-timer-note">
+        Timer's running in the background.<br/>Close the app. Go cook.
+      </div>
+      <button class="c-btn c-btn--primary" id="done-cooking-btn" style="opacity: 0.50;">Done Cooking</button>
       <button class="c-btn c-btn--outlined" id="skip-timer-btn">Skip Timer</button>
       
       <!-- Reusable Home Indicator Component Placeholder -->

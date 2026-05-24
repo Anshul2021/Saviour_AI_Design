@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saviour - Profile</title>
+  <meta name="description"
+    content="Manage your Saviour user account, diet preferences, notifications, and reset schedule.">
+  <link rel="stylesheet" href="global.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+  <style>
+    /* Override toggle background when checked to be sage green matching the screenshot */
+    .c-toggle__input:checked + .c-toggle__track {
+      background-color: var(--color-success);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Responsive App Container fitting viewport height -->
+  <div class="app-container" id="app-container" data-page="profile" style="background-color: var(--color-base);">
+    <!-- Glow Backdrop -->
+    <div class="ambient-glow"></div>
+
+    <!-- Sticky Top Header (Beige Background) -->
+    <div style="background-color: var(--color-surface); z-index: 10; position: relative;">
+      <!-- 1. Dynamic iPhone Status Bar Component -->
+      <header data-component="status-bar" id="app-status-bar"></header>
+
+      <!-- Top Header Title and Notification Toggle -->
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 20px 12px;">
+        <h1 class="ty-heading text-primary" style="font-family: var(--font-display); font-size: 20px; margin: 0;">Profile</h1>
+        <a href="notifications.html"
+          style="width: 40px; height: 40px; background-color: var(--color-base); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M7.79642 17.5001C8.38401 18.0187 9.15593 18.3334 10.0013 18.3334C10.8467 18.3334 11.6185 18.0187 12.2061 17.5001M15.0013 6.66675C15.0013 5.34066 14.4745 4.0689 13.5368 3.13121C12.5991 2.19353 11.3273 1.66675 10.0013 1.66675C8.67518 1.66675 7.40343 2.19353 6.46575 3.13121C5.52806 4.0689 5.00128 5.34066 5.00128 6.66675C5.00128 9.24191 4.35167 11.0051 3.626 12.1712C3.01389 13.155 2.70783 13.6468 2.71905 13.7841C2.73148 13.936 2.76366 13.9939 2.88609 14.0847C2.99666 14.1667 3.49511 14.1667 4.49199 14.1667H15.5106C16.5074 14.1667 17.0059 14.1667 17.1164 14.0847C17.2389 13.9939 17.2711 13.936 17.2835 13.7841C17.2948 13.6468 16.9887 13.155 16.3766 12.1712C15.6508 11.0051 15.0013 9.24191 15.0013 6.66675Z"
+              stroke="var(--color-text-secondary)" stroke-width="1.66667" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <!-- small dot indicator -->
+          <div id="profile-notification-badge"
+            style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--color-action); position: absolute; top: 1px; right: 1px;">
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. Scrollable Body Content -->
+    <main class="app-content" style="background-color: #FFFFFF; padding: 24px 20px 24px; flex: 1; overflow-y: auto;">
+
+      <!-- Avatar & Info Group -->
+      <div data-layer="Frame 54" class="Frame54">
+        <div data-layer="Avatar" class="Avatar">
+          <div data-layer="Initials" class="Initials">H</div>
+        </div>
+        <div data-layer="Frame 53" class="Frame53">
+          <div data-layer="Hustler" class="Hustler">Hustler</div>
+          <div data-layer="Cooking since Jan 2025 · Bangalore" class="CookingSinceJan2025Bangalore">Cooking since Jan 2025 · Bangalore</div>
+        </div>
+      </div>
+
+      <!-- Savings Stats Card -->
+      <div class="c-profile-stats-card">
+        <div style="display: flex; flex-direction: column; gap: 4px; max-width: 180px;">
+          <span class="ty-ghost text-secondary" style="font-weight: var(--font-weight-medium);">SAVED VS EATING OUTSIDE</span>
+          <span class="ty-display text-primary" style="font-size: 28px; line-height: 1;">₹3,600</span>
+          <div data-layer="Text" class="Text" style="margin-top: 4px;">24 meals × ₹150 average outside meal</div>
+        </div>
+
+        <!-- Interactive Donut Progress -->
+        <div
+          style="position: relative; width: 96px; height: 96px; display: flex; align-items: center; justify-content: center;">
+          <!-- SVG Circular track -->
+          <svg width="96" height="96" viewBox="0 0 96 96">
+            <circle cx="48" cy="48" r="40" stroke="white" stroke-width="8" fill="none" />
+            <!-- Orange progress arc for 24 out of 30 (80% progress) -->
+            <!-- Circumference is 2 * PI * r = 251.3 -->
+            <!-- Stroke dashoffset = 251.3 * (1 - 0.8) = 50.2 -->
+            <circle cx="48" cy="48" r="40" stroke="var(--color-action)" stroke-width="8" stroke-dasharray="251.3"
+              stroke-dashoffset="50.2" stroke-linecap="round" fill="none" transform="rotate(-90 48 48)" />
+          </svg>
+          <div
+            style="position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <span
+              style="font-family: var(--font-display); font-size: 28px; color: var(--color-action); line-height: 36px; font-weight: var(--font-weight-regular);">24</span>
+            <span
+              style="font-family: var(--font-interface); font-size: 12px; color: var(--color-text-secondary); line-height: var(--line-height-caption);">of 30</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preferences Section -->
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+        <h3 class="ty-subheading text-secondary" style="font-family: var(--font-display);">Preferences</h3>
+
+        <div class="SingleGroupedCard">
+
+          <!-- Row a: Office leave time -->
+          <div
+            style="display: flex; align-items: center; gap: 12px; cursor: pointer; width: 100%;">
+            <div
+              style="width: 36px; height: 36px; background-color: var(--color-surface-raised); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M9 16.5C13.1421 16.5 16.5 13.1421 16.5 9C16.5 4.85786 13.1421 1.5 9 1.5C4.85786 1.5 1.5 4.85786 1.5 9C1.5 13.1421 4.85786 16.5 9 16.5Z"
+                  stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M9 4.5V9L12 10.5" stroke="var(--color-text-primary)" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; flex: 1; padding: 12px 0; border-bottom: 1px solid var(--color-divider);">
+              <div style="display: flex; flex-direction: column;">
+                <span class="ty-body text-primary">Office leave time</span>
+                <span class="ty-body text-secondary" style="margin-top: 1px;">7:30 PM</span>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                <path d="M6.75 13.5L11.25 9L6.75 4.5" stroke="var(--color-text-ghost)" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Row b: Diet preference -->
+          <div
+            style="display: flex; align-items: center; gap: 12px; cursor: pointer; width: 100%;">
+            <div
+              style="width: 36px; height: 36px; background-color: var(--color-surface-raised); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.25 1.5V6.75C2.25 7.575 2.925 8.25 3.75 8.25H6.75C7.57787 8.25 8.25 7.57787 8.25 6.75V1.5"
+                  stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M5.25 1.5V16.5" stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M15.75 11.25V1.5C13.6803 1.5 12 3.18032 12 5.25V9.75C12 10.575 12.675 11.25 13.5 11.25H15.75V11.25M15.75 11.25V16.5"
+                  stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; flex: 1; padding: 12px 0; border-bottom: 1px solid var(--color-divider);">
+              <div style="display: flex; flex-direction: column;">
+                <span class="ty-body text-primary">Diet preference</span>
+                <span class="ty-body text-secondary" style="margin-top: 1px;">All meals (veg + non-veg)</span>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                <path d="M6.75 13.5L11.25 9L6.75 4.5" stroke="var(--color-text-ghost)" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Row c: Notifications -->
+          <div
+            style="display: flex; align-items: center; gap: 12px; width: 100%;">
+            <div
+              style="width: 36px; height: 36px; background-color: var(--color-surface-raised); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M7.70117 15.75C7.96913 16.2141 8.4643 16.4999 9.00017 16.4999C9.53604 16.4999 10.0312 16.2141 10.2992 15.75"
+                  stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M2.44597 11.4945C2.24578 11.7139 2.19393 12.0308 2.31375 12.3025C2.43356 12.5743 2.70246 12.7498 2.99947 12.75H14.9995C15.2964 12.7501 15.5655 12.575 15.6856 12.3034C15.8058 12.0318 15.7543 11.7149 15.5545 11.4952C14.557 10.467 13.4995 9.37425 13.4995 6C13.4995 3.51638 11.4831 1.5 8.99947 1.5C6.51585 1.5 4.49947 3.51638 4.49947 6C4.49947 9.37425 3.44122 10.467 2.44597 11.4945"
+                  stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; flex: 1; padding: 12px 0; border-bottom: 1px solid var(--color-divider);">
+              <div style="display: flex; flex-direction: column;">
+                <span class="ty-body text-primary">Notifications</span>
+                <span class="ty-body text-secondary" style="margin-top: 1px;">Daily nudge at 6:30 PM</span>
+              </div>
+              <!-- Toggle switch (Checked by default) -->
+              <label class="c-toggle" for="profile-notif-toggle" style="flex-shrink: 0;">
+                <input type="checkbox" id="profile-notif-toggle" class="c-toggle__input" checked>
+                <div class="c-toggle__track">
+                  <div class="c-toggle__thumb"></div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Row d: Sunday reset -->
+          <div
+            style="display: flex; align-items: center; gap: 12px; width: 100%;">
+            <div
+              style="width: 36px; height: 36px; background-color: var(--color-surface-raised); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 1.5V4.5" stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M12 1.5V4.5" stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M3.75 3H14.25C15.0779 3 15.75 3.67213 15.75 4.5V15C15.75 15.8279 15.0779 16.5 14.25 16.5H3.75C2.92213 16.5 2.25 15.8279 2.25 15V4.5C2.25 3.67213 2.92213 3 3.75 3V3"
+                  stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M2.25 7.5H15.75" stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; flex: 1; padding: 12px 0;">
+              <div style="display: flex; flex-direction: column; max-width: 200px;">
+                <span class="ty-body text-primary">Sunday reset</span>
+                <span class="ty-body text-secondary" style="margin-top: 1px; line-height: var(--line-height-body);">Every Sunday, meals rebuild around what's at home</span>
+              </div>
+              <!-- Toggle switch (Checked by default) -->
+              <label class="c-toggle" for="profile-reset-toggle" style="flex-shrink: 0;">
+                <input type="checkbox" id="profile-reset-toggle" class="c-toggle__input" checked>
+                <div class="c-toggle__track">
+                  <div class="c-toggle__thumb"></div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Delete Account Link -->
+      <div style="display: flex; justify-content: center; margin-top: 24px; margin-bottom: 32px;">
+        <button
+          style="background: none; border: none; color: var(--color-text-secondary); text-decoration: underline; font-family: var(--font-interface); font-size: var(--font-size-body); cursor: pointer;">Delete
+          Account</button>
+      </div>
+
+    </main>
+
+    <!-- Bottom Tab Bar -->
+    <nav data-component="app-tabbar" id="app-tabbar"></nav>
+
+    <!-- Home Indicator -->
+    <div data-component="home-indicator" id="app-home-indicator"></div>
+  </div>
+
+  <!-- Standard non-module script link for offline CORS resilience -->
+  <script src="global.js?v=2"></script>
+</body>
+
+</html>

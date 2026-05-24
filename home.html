@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saviour - Home</title>
+  <meta name="description"
+    content="Your Saviour dinner dashboard. Decided meals, weekly stats, and grocery refill list.">
+  <link rel="stylesheet" href="global.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+</head>
+
+<body>
+
+  <!-- Responsive App Container fitting viewport height -->
+  <div class="app-container" id="app-container" data-page="home" style="background-color: var(--color-base);">
+    
+    <!-- Sticky Top Header (Beige Background) -->
+    <div style="background-color: var(--color-surface); z-index: 10; position: relative;">
+      <!-- 1. Dynamic iPhone Status Bar Component -->
+      <header data-component="status-bar" id="app-status-bar"></header>
+
+      <!-- Top Brand Header and Notification Toggle -->
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 20px 12px;">
+        <div class="ty-display text-primary"
+          style="font-family: var(--font-display); font-size: 20px; font-weight: var(--font-weight-regular); letter-spacing: 0.5px; opacity: 0.8;">
+          SAVIOUR</div>
+        <a href="notifications.html"
+          style="width: 40px; height: 40px; background-color: var(--color-base); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M7.79642 17.5001C8.38401 18.0187 9.15593 18.3334 10.0013 18.3334C10.8467 18.3334 11.6185 18.0187 12.2061 17.5001M15.0013 6.66675C15.0013 5.34066 14.4745 4.0689 13.5368 3.13121C12.5991 2.19353 11.3273 1.66675 10.0013 1.66675C8.67518 1.66675 7.40343 2.19353 6.46575 3.13121C5.52806 4.0689 5.00128 5.34066 5.00128 6.66675C5.00128 9.24191 4.35167 11.0051 3.626 12.1712C3.01389 13.155 2.70783 13.6468 2.71905 13.7841C2.73148 13.936 2.76366 13.9939 2.88609 14.0847C2.99666 14.1667 3.49511 14.1667 4.49199 14.1667H15.5106C16.5074 14.1667 17.0059 14.1667 17.1164 14.0847C17.2389 13.9939 17.2711 13.936 17.2835 13.7841C17.2948 13.6468 16.9887 13.155 16.3766 12.1712C15.6508 11.0051 15.0013 9.24191 15.0013 6.66675Z"
+              stroke="var(--color-text-secondary)" stroke-width="1.66667" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <!-- small dot indicator -->
+          <div id="home-notification-badge"
+            style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--color-action); position: absolute; top: 1px; right: 1px;">
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. Scrollable Body Content (White Background) -->
+    <main class="app-content" style="background-color: #FFFFFF; padding: 24px 20px 24px; flex: 1; overflow-y: auto;">
+
+      <!-- Greeting area -->
+      <div class="c-greeting">
+        <div class="ty-label text-secondary" id="home-current-date">THURSDAY, 8:10 PM</div>
+        <h1 class="ty-heading text-primary" style="margin-top: 4px;">Evening, Hustler.</h1>
+      </div>
+
+      <!-- Tonight Hero Card -->
+      <div class="c-tonight-card"
+        style="margin-top: 24px; padding: 20px; background-color: var(--color-surface); border-radius: var(--radius-xl); display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <div class="ty-label text-secondary">Decided for tonight</div>
+            <h2 class="ty-display text-primary" style="margin-top: 4px; font-size: 28px;">Rajma Rice</h2>
+            <div class="text-secondary" style="margin-top: 4px; font-size: var(--font-size-body);">Everything already at
+              home</div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+            <div
+              style="width: 48px; height: 48px; background-color: var(--color-surface-raised); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+              <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block;">
+                <!-- Bean 1 -->
+                <path d="M22.5 8.5C26 9.5 27.5 13 26.5 16.5C25.5 20 22 21 19 20C16 19 17 15.5 18 13C19 10.5 19 7.5 22.5 8.5Z" fill="#9C4444" />
+                <!-- Bean 2 -->
+                <path d="M10.5 18C11.5 14 15 12.5 18 14C21 15.5 21.5 18.5 20 21C18.5 23.5 15 24 12.5 22.5C10 21 10 22 10.5 18Z" fill="#7E3333" />
+                <!-- Bean 3 -->
+                <path d="M22.5 24.5C26 22.5 27.5 25 26.5 28C25.5 31 22.5 32 20 30C17.5 28 19.5 26.5 21 25.5C22.5 24.5 19 26.5 22.5 24.5Z" fill="#B35555" />
+              </svg>
+            </div>
+            <div class="ty-body-small text-secondary" style="margin-top: 4px;">35 min</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <a href="cooking-time.html" class="controls-area__btn"
+            style="flex: 1.2; height: 48px; border-radius: var(--radius-round); font-size: var(--font-size-body); font-weight: var(--font-weight-medium);">Start
+            Cooking</a>
+          <a href="index.html"
+            style="flex: 1; text-align: center; color: var(--color-text-secondary); font-size: var(--font-size-body); font-weight: var(--font-weight-medium); text-decoration: none; cursor: pointer; padding: 12px 0;">Not
+            Tonight</a>
+        </div>
+      </div>
+
+      <!-- Your Week Section -->
+      <div class="c-week-section" style="margin-top: 24px;">
+        <h3 class="ty-subheading text-secondary" style="margin-bottom: 12px; font-family: var(--font-display);">Your
+          week</h3>
+        <div
+          style="background-color: var(--color-surface); border-radius: var(--radius-xl); padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <!-- Monday -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <span class="ty-caption text-secondary" style="opacity: 0.6;">M</span>
+              <div
+                style="width: 32px; height: 32px; background-color: var(--color-surface-raised); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;">
+                <span class="ty-body-small text-primary" style="opacity: 0.5;">14</span>
+                <div
+                  style="position: absolute; bottom: -2px; right: -2px; width: 12px; height: 12px; background-color: var(--color-success); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.66632 2L3.00065 5.66667L1.33398 4" stroke="white" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <!-- Tuesday -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <span class="ty-caption text-secondary" style="opacity: 0.6;">T</span>
+              <div
+                style="width: 32px; height: 32px; background-color: var(--color-surface-raised); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;">
+                <span class="ty-body-small text-primary" style="opacity: 0.5;">15</span>
+                <div
+                  style="position: absolute; bottom: -2px; right: -2px; width: 12px; height: 12px; background-color: var(--color-success); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.66632 2L3.00065 5.66667L1.33398 4" stroke="white" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <!-- Wednesday -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <span class="ty-caption text-secondary" style="opacity: 0.6;">W</span>
+              <div
+                style="width: 32px; height: 32px; background-color: var(--color-surface-raised); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;">
+                <span class="ty-body-small text-primary" style="opacity: 0.5;">16</span>
+                <div
+                  style="position: absolute; bottom: -2px; right: -2px; width: 12px; height: 12px; background-color: var(--color-success); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.66632 2L3.00065 5.66667L1.33398 4" stroke="white" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <!-- Thursday -->
+            <div
+              style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 6px; background-color: var(--color-action-subtle); border-radius: var(--radius-md); border: 1.5px solid var(--color-action); box-sizing: border-box;">
+              <span class="ty-caption" style="color: var(--color-action); font-weight: var(--font-weight-medium);">T</span>
+              <div
+                style="width: 32px; height: 32px; background-color: var(--color-action); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span class="ty-body-small" style="color: white; font-weight: var(--font-weight-medium);">17</span>
+              </div>
+            </div>
+            <!-- Friday -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <span class="ty-caption text-secondary">F</span>
+              <div
+                style="width: 32px; height: 32px; background-color: var(--color-surface-raised); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span class="ty-body-small text-primary">18</span>
+              </div>
+            </div>
+            <!-- Saturday -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <span class="ty-caption text-secondary">S</span>
+              <div
+                style="width: 32px; height: 32px; background-color: var(--color-surface-raised); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span class="ty-body-small text-primary">19</span>
+              </div>
+            </div>
+            <!-- Sunday -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <span class="ty-caption text-secondary">S</span>
+              <div
+                style="width: 32px; height: 32px; background-color: var(--color-surface-raised); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span class="ty-body-small text-primary">20</span>
+              </div>
+            </div>
+          </div>
+          <div style="height: 1px; background-color: var(--color-divider); margin: 4px 0;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+            <div>
+              <div class="ty-body-small text-secondary">Tonight</div>
+              <div class="ty-subheading text-primary">Rajma Rice</div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.75 13.5L11.25 9L6.75 4.5" stroke="var(--color-text-secondary)" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grocery Refill Section -->
+      <div class="c-grocery-refill-section" style="margin-top: 24px; margin-bottom: 24px;">
+        <h3 class="ty-subheading text-secondary" style="margin-bottom: 12px; font-family: var(--font-display);">Grocery
+          Refill</h3>
+        <div
+          style="background-color: var(--color-surface); border-radius: var(--radius-xl); padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+          <!-- Row 1 -->
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="ty-body text-primary">Red kidney beans (rajma)</span>
+            <span class="ty-label" style="color: var(--color-action);">Almost Out</span>
+          </div>
+          <!-- Row 2 -->
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="ty-body text-primary">Basmati rice</span>
+            <span class="ty-label" style="color: var(--color-action);">Almost Out</span>
+          </div>
+          <!-- Row 3 -->
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="ty-body text-primary">Onions & tomatoes</span>
+            <span class="ty-label" style="color: var(--color-text-secondary);">Half Left</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Tab Bar -->
+    <nav data-component="app-tabbar" id="app-tabbar"></nav>
+
+    <!-- Home Indicator -->
+    <div data-component="home-indicator" id="app-home-indicator"></div>
+  </div>
+
+  <!-- Standard non-module script link for offline CORS resilience -->
+  <script src="global.js?v=2"></script>
+</body>
+
+</html>

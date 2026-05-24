@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saviour - Grocery (Details)</title>
+  <meta name="description" content="Manage your Saviour grocery list and pantry items to buy this week.">
+  <link rel="stylesheet" href="global.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+</head>
+
+<body>
+
+  <!-- Responsive App Container fitting viewport height -->
+  <div class="app-container" id="app-container" data-page="grocery">
+    <!-- Glow Backdrop -->
+    <div class="ambient-glow"></div>
+
+    <!-- 1. Dynamic iPhone Status Bar Component -->
+    <header data-component="status-bar" id="app-status-bar"></header>
+
+    <!-- 2. Scrollable Body Content -->
+    <main class="app-content">
+
+      <!-- Greeting / Header Area -->
+      <div class="c-greeting" style="margin-bottom: 20px;">
+        <h1 class="ty-heading text-primary" style="font-family: var(--font-display); font-size: 20px;">Your Kitchen</h1>
+        <p class="ty-body text-secondary" id="grocery-items-summary" style="margin-top: 2px;">3 things to grab this
+          week.</p>
+      </div>
+
+      <!-- Filter bar and items list wrapper -->
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+
+        <!-- Filter Category Chips Bar -->
+        <div class="c-filter-bar" style="margin-bottom: 4px; display: flex; gap: 8px;">
+          <button class="c-filter-chip is-selected"
+            style="padding: 6px 16px; border-radius: 999px; font-size: var(--font-size-body-small); font-weight: var(--font-weight-medium);">Need
+            to Buy</button>
+          <button class="c-filter-chip"
+            style="padding: 6px 16px; border-radius: 999px; font-size: var(--font-size-body-small); font-weight: var(--font-weight-medium);">All
+            Items</button>
+        </div>
+
+        <!-- Scrollable list of items -->
+        <div class="pantry-list-container"
+          style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 40px;">
+
+          <!-- Item 1: Rajma -->
+          <div class="c-pantry-row js-grocery-item"
+            style="padding: 12px; background-color: var(--color-surface); border-radius: var(--radius-lg); border-bottom: none; opacity: 1;"
+            data-title="Rajma" data-status="OUT" data-status-label="Out of stock" data-qty="1 cup"
+            data-needed="Rajma Rice" data-also-used="2 other meals" data-category="Pantry">
+            <div class="c-pantry-row__left">
+              <div class="c-checkbox js-grocery-checkbox">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <span class="c-pantry-row__label" style="font-weight: var(--font-weight-medium);">Rajma (Red Kidney
+                Beans)</span>
+            </div>
+            <div class="c-pantry-row__right" style="opacity: 1; pointer-events: auto;">
+              <span class="ty-label"
+                style="padding: 4px 10px; background-color: var(--color-error-subtle); color: var(--color-error); border-radius: 8px; font-size: 11px;">OUT</span>
+            </div>
+          </div>
+
+          <!-- Item 2: Dal toor -->
+          <div class="c-pantry-row js-grocery-item"
+            style="padding: 12px; background-color: var(--color-surface); border-radius: var(--radius-lg); border-bottom: none; opacity: 1;"
+            data-title="Dal toor" data-status="OUT" data-status-label="Out of stock" data-qty="2 cups"
+            data-needed="Dal Fry" data-also-used="1 other meal" data-category="Pantry">
+            <div class="c-pantry-row__left">
+              <div class="c-checkbox js-grocery-checkbox">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <span class="c-pantry-row__label" style="font-weight: var(--font-weight-medium);">Dal toor (Yellow
+                Lentils)</span>
+            </div>
+            <div class="c-pantry-row__right" style="opacity: 1; pointer-events: auto;">
+              <span class="ty-label"
+                style="padding: 4px 10px; background-color: var(--color-error-subtle); color: var(--color-error); border-radius: 8px; font-size: 11px;">OUT</span>
+            </div>
+          </div>
+
+          <!-- Item 3: Bread -->
+          <div class="c-pantry-row js-grocery-item"
+            style="padding: 12px; background-color: var(--color-surface); border-radius: var(--radius-lg); border-bottom: none; opacity: 1;"
+            data-title="Bread" data-status="LOW" data-status-label="Low Stock" data-qty="1 packet"
+            data-needed="Egg Toast" data-also-used="Bread Omelette" data-category="Quick Items">
+            <div class="c-pantry-row__left">
+              <div class="c-checkbox js-grocery-checkbox">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <span class="c-pantry-row__label" style="font-weight: var(--font-weight-medium);">Bread</span>
+            </div>
+            <div class="c-pantry-row__right" style="opacity: 1; pointer-events: auto;">
+              <span class="ty-label"
+                style="padding: 4px 10px; background-color: var(--color-warning-subtle); color: var(--color-warning); border-radius: 8px; font-size: 11px;">LOW</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- 3. Bottom Sheet Components (Overlay + Sheet shown by default) -->
+    <div class="c-bottomsheet-overlay is-visible" id="grocery-sheet-overlay"></div>
+    <div class="c-bottomsheet is-visible" id="grocery-sheet">
+      <div class="c-bottomsheet__handle-wrap">
+        <div class="c-bottomsheet__handle"></div>
+      </div>
+
+      <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h2 class="ty-display text-primary" id="sheet-item-title" style="font-size: 28px;">Rajma</h2>
+          <span class="ty-label" id="sheet-item-status"
+            style="padding: 4px 10px; background-color: var(--color-error-subtle); color: var(--color-error); border-radius: 8px;">Out
+            of stock</span>
+        </div>
+
+        <!-- Info List -->
+        <div style="display: flex; flex-direction: column; width: 100%;">
+          <div
+            style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--color-divider);">
+            <span class="text-secondary">How much to buy</span>
+            <strong class="text-primary" id="sheet-item-qty">1 cup</strong>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--color-divider);">
+            <span class="text-secondary">Needed for</span>
+            <strong class="text-primary" id="sheet-item-needed">Rajma Rice</strong>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--color-divider);">
+            <span class="text-secondary">Also used in</span>
+            <strong class="text-primary" id="sheet-item-also-used">2 other meals</strong>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--color-divider);">
+            <span class="text-secondary">Category</span>
+            <strong class="text-primary" id="sheet-item-category">Pantry</strong>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 8px;">
+          <button class="controls-area__btn" id="sheet-btn-bought"
+            style="height: 56px; border-radius: var(--radius-round);">Mark as Bought</button>
+          <button class="c-btn c-btn--outlined" id="sheet-btn-cancel"
+            style="height: 56px; border-radius: var(--radius-round); border: 1px solid var(--color-divider); display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: var(--font-size-body); font-weight: var(--font-weight-regular); background: transparent;">I'll
+            get it later</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Home Indicator -->
+    <div data-component="home-indicator" id="app-home-indicator"></div>
+  </div>
+
+  <!-- Standard non-module script link for offline CORS resilience -->
+  <script src="global.js"></script>
+</body>
+
+</html>

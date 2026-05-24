@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Component - Saviour UI</title>
+  <link rel="stylesheet" href="../../global.css">
+  <style>
+    body {
+      padding: 40px;
+    }
+    .showcase-container {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .showcase-section {
+      background: var(--color-surface);
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(46, 42, 36, 0.06);
+    }
+    .showcase-title {
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--color-divider);
+      padding-bottom: 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      align-items: center;
+    }
+    .state-label {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* ==========================================================================
+       BUTTON COMPONENT STYLES
+       ========================================================================== */
+    
+    /* Base Button */
+    .c-btn {
+      width: 196px;
+      height: 56px;
+      padding: 16px 32px;
+      border-radius: 999px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-interface);
+      font-size: var(--font-size-button);
+      transition: var(--transition-smooth);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* --- Type: Primary --- */
+    .c-btn--primary {
+      background-color: var(--color-action); /* #E07A55 */
+      color: var(--color-base); /* #FAF7F2 */
+      font-weight: var(--font-weight-medium); /* 500 */
+    }
+    
+    /* Hover (Manual State & Color Override) */
+    .c-btn--primary:hover,
+    .c-btn--primary.is-hover {
+      background-color: #D06845; /* MANUAL COLOR: Hover state shade not in global.css */
+    }
+
+    /* Pressed (Manual State & Color Override) */
+    .c-btn--primary:active,
+    .c-btn--primary.is-pressed {
+      background-color: #BE5A3A; /* MANUAL COLOR: Pressed state shade not in global.css */
+    }
+
+    /* Loading State */
+    .c-btn--primary.is-loading {
+      background-color: var(--color-action);
+      cursor: wait;
+    }
+    .c-btn__loader {
+      font-family: 'Inter', sans-serif; /* MANUAL FONT: Loader text uses Inter */
+      font-size: 11px;
+      color: var(--color-base);
+      opacity: 0.60;
+    }
+
+    /* Disabled State */
+    .c-btn--primary:disabled,
+    .c-btn--primary.is-disabled {
+      background-color: var(--color-surface-raised); /* #EDE3D4 */
+      color: var(--color-text-ghost); /* #C4B5A5 */
+      opacity: 0.60;
+      cursor: not-allowed;
+    }
+    .c-btn:disabled svg path,
+    .c-btn.is-disabled svg path {
+      stroke: currentColor;
+    }
+
+    /* --- Type: Ghost --- */
+    .c-btn--ghost {
+      background-color: transparent;
+      color: var(--color-text-ghost); /* #C4B5A5 */
+      font-weight: var(--font-weight-regular); /* 400 */
+      outline: 1px rgba(196, 181, 165, 0.35) solid;
+      outline-offset: -1px;
+    }
+    
+    /* Hover */
+    .c-btn--ghost:hover,
+    .c-btn--ghost.is-hover {
+      color: var(--color-text-secondary); /* #8C7E6A */
+    }
+
+    /* Disabled */
+    .c-btn--ghost:disabled,
+    .c-btn--ghost.is-disabled {
+      background-color: var(--color-surface-raised); /* #EDE3D4 */
+      color: var(--color-text-ghost); /* #C4B5A5 */
+      opacity: 0.60;
+      cursor: not-allowed;
+      outline: none;
+    }
+
+    /* --- Type: Outlined --- */
+    .c-btn--outlined {
+      background-color: transparent;
+      color: var(--color-text-secondary); /* #8C7E6A */
+      font-weight: var(--font-weight-regular); /* 400 */
+      /* Note: Styled as outline in design system, but original CSS shows transparent with no outline */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="showcase-container">
+    <h1 class="ty-display">Button Component</h1>
+    <p class="ty-body">Buttons communicate actions that users can take. Below are the design-system defined variations and states.</p>
+
+    <!-- Primary Buttons Section -->
+    <div class="showcase-section">
+      <h2 class="ty-heading showcase-title">Primary Buttons</h2>
+      <div class="grid">
+        <div class="btn-group">
+          <span class="state-label">Default</span>
+          <button class="c-btn c-btn--primary">Let's cook this</button>
+        </div>
+        <div class="btn-group">
+          <span class="state-label">Hover</span>
+          <button class="c-btn c-btn--primary is-hover">Let's cook this</button>
+        </div>
+        <div class="btn-group">
+          <span class="state-label">Pressed</span>
+          <button class="c-btn c-btn--primary is-pressed">Let's cook this</button>
+        </div>
+        <div class="btn-group">
+          <span class="state-label">Loading</span>
+          <button class="c-btn c-btn--primary is-loading">
+            <span class="c-btn__loader">● ● ●</span>
+            <span>Cooking...</span>
+          </button>
+        </div>
+        <div class="btn-group">
+          <span class="state-label">Disabled</span>
+          <button class="c-btn c-btn--primary" disabled>Let's cook this</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ghost Buttons Section -->
+    <div class="showcase-section">
+      <h2 class="ty-heading showcase-title">Ghost Buttons</h2>
+      <div class="grid">
+        <div class="btn-group">
+          <span class="state-label">Default</span>
+          <button class="c-btn c-btn--ghost">Not Tonight</button>
+        </div>
+        <div class="btn-group">
+          <span class="state-label">Hover</span>
+          <button class="c-btn c-btn--ghost is-hover">Not Tonight</button>
+        </div>
+        <div class="btn-group">
+          <span class="state-label">Disabled</span>
+          <button class="c-btn c-btn--ghost" disabled>Not Tonight</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Outlined Buttons Section -->
+    <div class="showcase-section">
+      <h2 class="ty-heading showcase-title">Outlined Buttons</h2>
+      <div class="grid">
+        <div class="btn-group">
+          <span class="state-label">Default</span>
+          <button class="c-btn c-btn--outlined">Not Tonight</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

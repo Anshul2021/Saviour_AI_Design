@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saviour Onboarding - Select Cooked Meals</title>
+  <meta name="description" content="Choose from your list of already cooked meals to customize your Saviour onboarding experience.">
+  <link rel="stylesheet" href="global.css">
+</head>
+<body>
+
+  <!-- Responsive App Container fitting viewport height -->
+  <div class="app-container" id="app-container" data-page="meals">
+    <!-- Glow Backdrop -->
+    <div class="ambient-glow"></div>
+
+    <!-- 1. Dynamic iPhone Status Bar Component -->
+    <header data-component="status-bar" id="app-status-bar"></header>
+
+    <!-- 2. Scrollable Body Content -->
+    <main class="app-content" id="app-main-content">
+      <div class="onboarding-header">
+        <!-- Title -->
+        <h1 class="ty-display">Let's start with what you already know.</h1>
+        
+        <div class="onboarding-header__description-group">
+          <!-- Description -->
+          <p class="ty-body">Pick meals you already cook. No new recipes. Just your real list.</p>
+          
+          <!-- Veg Only Toggle -->
+          <label class="c-toggle" for="veg-toggle" id="veg-toggle-label">
+            <span class="ty-body-small text-primary">Veg only</span>
+            <input type="checkbox" id="veg-toggle" class="c-toggle__input">
+            <div class="c-toggle__track">
+              <div class="c-toggle__thumb"></div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Meals Selection Grid (4 columns, 8pt gutters) -->
+      <div class="meals-grid js-meals-grid" id="meals-grid">
+        
+        <!-- 1. Dal Chawal (Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="true" id="meal-dal-chawal">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/curry-rice-emoji.png" alt="Dal chawal" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Dal chawal</span>
+        </div>
+
+        <!-- 2. Egg Toast (Non-Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="false" id="meal-egg-toast">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/fried-egg-emoji.png" alt="Egg toast" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Egg toast</span>
+        </div>
+
+        <!-- 3. Maggi (Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="true" id="meal-maggi">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/steaming-bowl-emoji.png" alt="Maggi" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Maggi</span>
+        </div>
+
+        <!-- 4. Paratha (Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="true" id="meal-paratha">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/pancakes-emoji.png" alt="Paratha" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Paratha</span>
+        </div>
+
+        <!-- 5. Khichdi (Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="true" id="meal-khichdi">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/cooked-rice-emoji.png" alt="Khichdi" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Khichdi</span>
+        </div>
+
+        <!-- 6. Curd Rice (Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="true" id="meal-curd-rice">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/bowl-with-spoon-emoji.png" alt="Curd rice" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Curd rice</span>
+        </div>
+
+        <!-- 7. Rajma Rice (Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="true" id="meal-rajma-rice">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/pot-of-food-emoji.png" alt="Rajma rice" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Rajma rice</span>
+        </div>
+
+        <!-- 8. Bread Omelette (Non-Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="false" id="meal-bread-omelette">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/omelet-emoji.png" alt="Bread omelette" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Bread omelette</span>
+        </div>
+
+        <!-- 9. Upma (Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="true" id="meal-upma">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/bowl-with-spoon-emoji.png" alt="Upma" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Upma</span>
+        </div>
+
+        <!-- 10. Poha (Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="true" id="meal-poha">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/green-salad-emoji.png" alt="Poha" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Poha</span>
+        </div>
+
+        <!-- 11. Aloo Fry (Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="true" id="meal-aloo-fry">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/potato-emoji.png" alt="Aloo fry" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Aloo fry</span>
+        </div>
+
+        <!-- 12. Sandwich (Non-Veg) -->
+        <div class="c-meal-option js-meal-option" data-veg="false" id="meal-sandwich">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <img src="https://img.icons8.com/emoji/96/sandwich-emoji.png" alt="Sandwich" class="c-meal-option__img">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Sandwich</span>
+        </div>
+
+        <!-- 13. Custom Add Meal Option -->
+        <div class="c-meal-option c-meal-option--custom js-meal-option" data-veg="true" id="meal-custom-add">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19" stroke="var(--color-text-secondary)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M5 12H19" stroke="var(--color-text-secondary)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Custom</span>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- 3. Fixed Bottom Controls Area with dynamic iOS Home Indicator -->
+    <footer class="controls-area" id="app-footer">
+      <div class="controls-area__margin">
+        <div class="ty-body text-secondary" id="selected-counter">0 of 6 selected</div>
+      </div>
+      <!-- Primary Action CTA Button -->
+      <button class="controls-area__btn" id="next-btn" disabled>
+        <span>Next</span>
+        <!-- Arrow right SVG -->
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.75 9H14.25M9 14.25L14.25 9L9 3.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      
+      <!-- Reusable Home Indicator Component Placeholder -->
+      <div data-component="home-indicator" id="app-home-indicator"></div>
+    </footer>
+  </div>
+
+  <!-- Standard script link for offline CORS resilience -->
+  <script src="global.js"></script>
+</body>
+</html>

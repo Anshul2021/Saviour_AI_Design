@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Bar Component - Saviour UI</title>
+  <link rel="stylesheet" href="../../global.css">
+  <style>
+    body {
+      padding: 40px;
+    }
+    .showcase-container {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .showcase-section {
+      background: var(--color-surface);
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(46, 42, 36, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .state-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .state-label {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ==========================================================================
+       SEARCH BAR COMPONENT STYLES
+       ========================================================================== */
+    .c-search-bar {
+      width: 342px;
+      height: 48px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      padding-left: 16px;
+      padding-right: 40px;
+      background-color: var(--color-surface); /* #F0E9DE */
+      border-radius: var(--radius-lg); /* 12px */
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border: none;
+      transition: var(--transition-smooth);
+    }
+    
+    .c-search-bar__icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .c-search-bar__icon svg {
+      display: block;
+    }
+    
+    .c-search-bar__input {
+      flex: 1 1 0;
+      font-family: var(--font-interface);
+      font-size: var(--font-size-body); /* 14px */
+      line-height: var(--line-height-body); /* 22.40px */
+      color: var(--color-text-primary); /* #2E2A24 */
+      background: transparent;
+      border: none;
+      outline: none;
+    }
+    .c-search-bar__input::placeholder {
+      color: var(--color-text-secondary); /* #8C7E6A */
+    }
+
+    /* State: Focused */
+    .c-search-bar--focused {
+      background-color: var(--color-base); /* #FAF7F2 */
+      outline: 1px var(--color-warning) solid; /* #C4844A */
+      outline-offset: -1px;
+    }
+
+    /* State: Filled (inherits Default styles basically, color is text-primary) */
+    .c-search-bar--filled .c-search-bar__input {
+      color: var(--color-text-primary);
+    }
+
+    /* State: Disabled */
+    .c-search-bar--disabled {
+      opacity: 0.70;
+      background-color: var(--color-surface-raised); /* #EDE3D4 */
+      cursor: not-allowed;
+    }
+    .c-search-bar--disabled .c-search-bar__input {
+      color: var(--color-text-ghost); /* #C4B5A5 */
+      cursor: not-allowed;
+    }
+    .c-search-bar--disabled .c-search-bar__input::placeholder {
+      color: var(--color-text-ghost);
+    }
+    .c-search-bar--disabled .c-search-bar__icon svg path {
+      stroke: #B1A392; /* MANUAL COLOR: Disabled stroke shade not in global.css */
+    }
+
+    /* State: Error */
+    .c-search-bar--error {
+      background-color: var(--color-base); /* #FAF7F2 */
+      outline: 1px var(--color-error) solid; /* #C45A5A */
+      outline-offset: -1px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="showcase-container">
+    <h1 class="ty-display">Search Bar</h1>
+    <p class="ty-body">Search inputs allow users to find ingredients or options with real-time feedback (focus, disabled, and error states).</p>
+
+    <div class="showcase-section">
+      <!-- State: Default -->
+      <div class="state-group">
+        <span class="state-label">State=Default</span>
+        <div class="c-search-bar">
+          <span class="c-search-bar__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.16634 14.9999C12.388 14.9999 14.9997 12.3882 14.9997 9.16658C14.9997 5.94492 12.388 3.33325 9.16634 3.33325C5.94468 3.33325 3.33301 5.94492 3.33301 9.16658C3.33301 12.3882 5.94468 14.9999 9.16634 14.9999Z" stroke="var(--color-text-secondary)" stroke-width="1.66667"/>
+              <path d="M16.667 16.6667L14.167 14.1667" stroke="var(--color-text-secondary)" stroke-width="1.66667" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <input type="text" class="c-search-bar__input" placeholder="Search for an ingredient...">
+        </div>
+      </div>
+
+      <!-- State: Focused -->
+      <div class="state-group">
+        <span class="state-label">State=Focused</span>
+        <div class="c-search-bar c-search-bar--focused">
+          <span class="c-search-bar__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.16634 14.9999C12.388 14.9999 14.9997 12.3882 14.9997 9.16658C14.9997 5.94492 12.388 3.33325 9.16634 3.33325C5.94468 3.33325 3.33301 5.94492 3.33301 9.16658C3.33301 12.3882 5.94468 14.9999 9.16634 14.9999Z" stroke="var(--color-text-secondary)" stroke-width="1.66667"/>
+              <path d="M16.667 16.6667L14.167 14.1667" stroke="var(--color-text-secondary)" stroke-width="1.66667" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <input type="text" class="c-search-bar__input" placeholder="Search for an ingredient...">
+        </div>
+      </div>
+
+      <!-- State: Filled -->
+      <div class="state-group">
+        <span class="state-label">State=Filled</span>
+        <div class="c-search-bar c-search-bar--filled">
+          <span class="c-search-bar__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.16634 14.9999C12.388 14.9999 14.9997 12.3882 14.9997 9.16658C14.9997 5.94492 12.388 3.33325 9.16634 3.33325C5.94468 3.33325 3.33301 5.94492 3.33301 9.16658C3.33301 12.3882 5.94468 14.9999 9.16634 14.9999Z" stroke="var(--color-text-secondary)" stroke-width="1.66667"/>
+              <path d="M16.667 16.6667L14.167 14.1667" stroke="var(--color-text-secondary)" stroke-width="1.66667" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <input type="text" class="c-search-bar__input" value="Dal">
+        </div>
+      </div>
+
+      <!-- State: Disabled -->
+      <div class="state-group">
+        <span class="state-label">State=Disabled</span>
+        <div class="c-search-bar c-search-bar--disabled">
+          <span class="c-search-bar__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.16634 14.9999C12.388 14.9999 14.9997 12.3882 14.9997 9.16658C14.9997 5.94492 12.388 3.33325 9.16634 3.33325C5.94468 3.33325 3.33301 5.94492 3.33301 9.16658C3.33301 12.3882 5.94468 14.9999 9.16634 14.9999Z" stroke="#B1A392" stroke-width="1.66667"/>
+              <path d="M16.667 16.6667L14.167 14.1667" stroke="#B1A392" stroke-width="1.66667" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <input type="text" class="c-search-bar__input" placeholder="Search unavailable" disabled>
+        </div>
+      </div>
+
+      <!-- State: Error -->
+      <div class="state-group">
+        <span class="state-label">State=Error</span>
+        <div class="c-search-bar c-search-bar--error">
+          <span class="c-search-bar__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.16634 14.9999C12.388 14.9999 14.9997 12.3882 14.9997 9.16658C14.9997 5.94492 12.388 3.33325 9.16634 3.33325C5.94468 3.33325 3.33301 5.94492 3.33301 9.16658C3.33301 12.3882 5.94468 14.9999 9.16634 14.9999Z" stroke="var(--color-text-secondary)" stroke-width="1.66667"/>
+              <path d="M16.667 16.6667L14.167 14.1667" stroke="var(--color-text-secondary)" stroke-width="1.66667" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <input type="text" class="c-search-bar__input" value="Ingredient not found">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

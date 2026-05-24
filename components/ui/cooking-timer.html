@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cooking Timer Component - Saviour UI</title>
+  <link rel="stylesheet" href="../../global.css">
+  <style>
+    body {
+      padding: 40px;
+    }
+    .showcase-container {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .showcase-section {
+      background: var(--color-surface);
+      padding: 48px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(46, 42, 36, 0.06);
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       COOKING TIMER COMPONENT STYLES
+       ========================================================================== */
+    .c-timer {
+      width: 326px;
+      height: 326px;
+      position: relative;
+    }
+
+    /* Outer surrounding orbit dots */
+    .c-timer__dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background-color: var(--color-accent); /* #F5C97A */
+      opacity: 0.25;
+      border-radius: 999px;
+    }
+
+    /* Absolute position for the 8 circular orbit dots */
+    .c-timer__dot--1 { left: 301px; top: 163px; }
+    .c-timer__dot--2 { left: 260.58px; top: 260.58px; }
+    .c-timer__dot--3 { left: 163px; top: 301px; }
+    .c-timer__dot--4 { left: 65.42px; top: 260.58px; }
+    .c-timer__dot--5 { left: 25px; top: 163px; }
+    .c-timer__dot--6 { left: 65.42px; top: 65.42px; }
+    .c-timer__dot--7 { left: 163px; top: 25px; }
+    .c-timer__dot--8 { left: 260.58px; top: 65.42px; }
+
+    /* Shadow backing blur */
+    .c-timer__blur-bg {
+      width: 320px;
+      height: 320px;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      /* MANUAL COLOR: backing plate uses #F7EFE5 for smooth 3D glowing backing */
+      background-color: rgba(247, 239, 229, 0.60);
+      box-shadow: 40px 40px 40px rgba(46, 42, 36, 0.05);
+      border-radius: 9999px;
+      filter: blur(20px);
+      z-index: 1;
+    }
+
+    /* Outer outline ring */
+    .c-timer__ring-outer {
+      width: 290px;
+      height: 290px;
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      border: 1.50px rgba(224, 122, 85, 0.06) solid; /* Action color @ 6% */
+      border-radius: 9999px;
+      z-index: 2;
+    }
+
+    /* Inner outline ring */
+    .c-timer__ring-inner {
+      width: 258px;
+      height: 258px;
+      position: absolute;
+      left: 34px;
+      top: 34px;
+      border: 1px rgba(224, 122, 85, 0.08) solid; /* Action color @ 8% */
+      border-radius: 9999px;
+      z-index: 3;
+    }
+
+    /* Main face plate */
+    .c-timer__face {
+      width: 240px;
+      height: 240px;
+      position: absolute;
+      left: 43px;
+      top: 43px;
+      background-color: var(--color-surface); /* #F0E9DE */
+      box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);
+      border: 1px var(--color-divider) solid; /* #E5DDD0 */
+      border-radius: 9999px;
+      z-index: 4;
+    }
+
+    /* Radial track progress container */
+    .c-timer__track-container {
+      width: 210px;
+      height: 210px;
+      position: absolute;
+      left: 58px;
+      top: 58px;
+      z-index: 5;
+    }
+    
+    /* Radial Backdrop Ring */
+    .c-timer__track-bg {
+      width: 210px;
+      height: 210px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      border: 10px rgba(229, 221, 208, 0.50) solid; /* Surface raised tone alpha */
+      border-radius: 9999px;
+    }
+
+    /* Radial Progress Ring (SVG implementation for accuracy and quality) */
+    .c-timer__progress-ring {
+      width: 210px;
+      height: 210px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: rotate(-90deg); /* Start progress from the top */
+    }
+
+    .c-timer__progress-circle {
+      stroke: var(--color-action); /* #E07A55 */
+      stroke-width: 10;
+      stroke-linecap: round;
+      fill: none;
+      /* Circumference = 2 * PI * r = 2 * 3.14159 * 100 = 628.3 */
+      stroke-dasharray: 628.3;
+      stroke-dashoffset: 220; /* Represents remaining time. Dynamic via JS */
+      transition: stroke-dashoffset 1s linear;
+    }
+
+    /* Inner Center Plate */
+    .c-timer__inner-plate {
+      width: 170px;
+      height: 170px;
+      position: absolute;
+      left: 78px;
+      top: 78px;
+      background-color: var(--color-surface-raised); /* #EDE3D4 */
+      box-shadow: 0px -1px 6px rgba(255, 255, 255, 0.50) inset;
+      border-radius: 9999px;
+      z-index: 6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Text display */
+    .c-timer__text {
+      text-align: center;
+      color: var(--color-text-primary); /* #2E2A24 */
+      font-family: var(--font-display); /* Fraunces */
+      font-size: 52px;
+      font-weight: var(--font-weight-regular); /* 400 */
+      line-height: 52px;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="showcase-container">
+    <h1 class="ty-display">Cooking Timer</h1>
+    <p class="ty-body">Calm Resonance radial countdown timer. Employs circular shadows, overlay rings, orbit dots, and an active progress track.</p>
+
+    <div class="showcase-section">
+      <div class="c-timer">
+        <!-- Orbit Dots -->
+        <div class="c-timer__dot c-timer__dot--1"></div>
+        <div class="c-timer__dot c-timer__dot--2"></div>
+        <div class="c-timer__dot c-timer__dot--3"></div>
+        <div class="c-timer__dot c-timer__dot--4"></div>
+        <div class="c-timer__dot c-timer__dot--5"></div>
+        <div class="c-timer__dot c-timer__dot--6"></div>
+        <div class="c-timer__dot c-timer__dot--7"></div>
+        <div class="c-timer__dot c-timer__dot--8"></div>
+
+        <!-- Backing Blur -->
+        <div class="c-timer__blur-bg"></div>
+
+        <!-- Rings -->
+        <div class="c-timer__ring-outer"></div>
+        <div class="c-timer__ring-inner"></div>
+        <div class="c-timer__face"></div>
+
+        <!-- Progress track container -->
+        <div class="c-timer__track-container">
+          <!-- Backdrop ring track -->
+          <div class="c-timer__track-bg"></div>
+
+          <!-- Active progress ring -->
+          <svg class="c-timer__progress-ring">
+            <circle class="c-timer__progress-circle" cx="105" cy="105" r="100" />
+          </svg>
+        </div>
+
+        <!-- Center Plate & Text -->
+        <div class="c-timer__inner-plate">
+          <div class="c-timer__text">34:51</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

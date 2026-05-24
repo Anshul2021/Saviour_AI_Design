@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grocery Row Component - Saviour UI</title>
+  <link rel="stylesheet" href="../../global.css">
+  <style>
+    body {
+      padding: 40px;
+    }
+    .showcase-container {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .showcase-section {
+      background: var(--color-surface);
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(46, 42, 36, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .state-label {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .row-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ==========================================================================
+       GROCERY ROW COMPONENT STYLES
+       ========================================================================== */
+    .c-grocery-row {
+      width: 100%;
+      height: 56px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      background-color: var(--color-base); /* #FAF7F2 */
+      border-bottom: 0.80px var(--color-surface) solid; /* #F0E9DE */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .c-grocery-row__left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      overflow: hidden;
+      flex: 1 1 0;
+    }
+    
+    .c-grocery-row__title {
+      color: var(--color-text-primary); /* #2E2A24 */
+      font-family: var(--font-interface);
+      font-size: var(--font-size-body); /* 14px */
+      font-weight: var(--font-weight-regular); /* 400 */
+      line-height: var(--line-height-body); /* 22.40px */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .c-grocery-row__right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    /* Checkbox Sub-component (Included for self-containment) */
+    .c-checkbox {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      border: 1px solid var(--color-text-ghost); /* #C4B5A5 */
+      background-color: var(--color-base); /* #FAF7F2 */
+      transition: var(--transition-smooth);
+    }
+    .c-checkbox.is-selected {
+      background-color: var(--color-text-primary); /* #2E2A24 */
+      border-color: var(--color-text-primary); /* #2E2A24 */
+    }
+    .c-checkbox svg {
+      opacity: 0;
+      transition: var(--transition-smooth);
+    }
+    .c-checkbox.is-selected svg {
+      opacity: 1;
+    }
+
+    /* Quantity Chip Sub-component */
+    .c-qty-chip {
+      padding: 4px 10px;
+      background-color: var(--color-surface); /* #F0E9DE */
+      border-radius: 12px;
+      color: var(--color-text-primary);
+      font-family: var(--font-interface);
+      font-size: var(--font-size-body-small); /* 12px/14px mix */
+      line-height: 22.40px;
+    }
+
+    /* Dropdown Sub-component */
+    .c-dropdown {
+      padding: 6px 12px;
+      background-color: var(--color-surface);
+      border-radius: 8px;
+      color: var(--color-text-primary);
+      font-family: var(--font-interface);
+      font-size: var(--font-size-body);
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    /* Stepper Sub-component */
+    .c-stepper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .c-stepper__btn {
+      width: 32px;
+      height: 32px;
+      background-color: var(--color-surface);
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--color-text-secondary);
+      font-family: var(--font-display);
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+    .c-stepper__val {
+      color: var(--color-text-primary);
+      font-family: var(--font-interface);
+      font-size: var(--font-size-body);
+      min-width: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="showcase-container">
+    <h1 class="ty-display">Grocery Row</h1>
+    <p class="ty-body">Grocery rows display list items in the pantry or grocery lists. They support checkbox selection and dropdown or stepper controls.</p>
+
+    <div class="showcase-section">
+      <!-- State: Unselected with Dropdown -->
+      <div class="row-group">
+        <span class="state-label">Selected=false, Control=Dropdown</span>
+        <div class="c-grocery-row">
+          <div class="c-grocery-row__left">
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.45833" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="c-grocery-row__title">Dal (toor)</span>
+          </div>
+          <div class="c-grocery-row__right">
+            <span class="c-qty-chip">1kg</span>
+            <button class="c-dropdown">
+              <span>Full</span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- State: Selected with Dropdown -->
+      <div class="row-group">
+        <span class="state-label">Selected=true, Control=Dropdown</span>
+        <div class="c-grocery-row">
+          <div class="c-grocery-row__left">
+            <div class="c-checkbox is-selected">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.45833" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="c-grocery-row__title">Dal (toor)</span>
+          </div>
+          <div class="c-grocery-row__right">
+            <span class="c-qty-chip">1kg</span>
+            <button class="c-dropdown">
+              <span>Full</span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- State: Unselected with Stepper -->
+      <div class="row-group">
+        <span class="state-label">Selected=false, Control=Stepper</span>
+        <div class="c-grocery-row">
+          <div class="c-grocery-row__left">
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.45833" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="c-grocery-row__title">Bread</span>
+          </div>
+          <div class="c-grocery-row__right">
+            <span class="c-qty-chip">1kg</span>
+            <div class="c-stepper">
+              <button class="c-stepper__btn">−</button>
+              <span class="c-stepper__val">1</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- State: Selected with Stepper -->
+      <div class="row-group">
+        <span class="state-label">Selected=true, Control=Stepper</span>
+        <div class="c-grocery-row">
+          <div class="c-grocery-row__left">
+            <div class="c-checkbox is-selected">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.45833" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="c-grocery-row__title">Bread</span>
+          </div>
+          <div class="c-grocery-row__right">
+            <span class="c-qty-chip">1kg</span>
+            <div class="c-stepper">
+              <button class="c-stepper__btn">−</button>
+              <span class="c-stepper__val">1</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Quick interactive toggle for demonstration
+    document.querySelectorAll('.c-checkbox').forEach(chk => {
+      chk.addEventListener('click', () => {
+        chk.classList.toggle('is-selected');
+      });
+    });
+  </script>
+</body>
+</html>

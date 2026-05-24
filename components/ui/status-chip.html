@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status Chip Component - Saviour UI</title>
+  <link rel="stylesheet" href="../../global.css">
+  <style>
+    body {
+      padding: 40px;
+    }
+    .showcase-container {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .showcase-section {
+      background: var(--color-surface);
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(46, 42, 36, 0.06);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      justify-items: center;
+      align-items: center;
+    }
+    .state-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .state-label {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ==========================================================================
+       STATUS CHIP COMPONENT STYLES
+       ========================================================================== */
+    .c-status-chip {
+      padding: 4px 10px;
+      border-radius: var(--radius-sm); /* 8px */
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-interface);
+      font-size: var(--font-size-body-small); /* 12px */
+      font-weight: var(--font-weight-medium); /* 500 */
+      line-height: var(--line-height-label); /* 16px */
+      letter-spacing: var(--letter-spacing-label); /* 0.84px */
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    /* Status: In Stock */
+    .c-status-chip--in-stock {
+      background-color: var(--color-success-subtle); /* #EBF3EC */
+      color: var(--color-success); /* #A3C4A8 */
+    }
+
+    /* Status: Low */
+    .c-status-chip--low {
+      background-color: var(--color-warning-subtle); /* #FDF3E3 */
+      color: var(--color-warning); /* #C4844A */
+    }
+
+    /* Status: Out */
+    .c-status-chip--out {
+      background-color: var(--color-error-subtle); /* #FAE8E8 */
+      color: var(--color-error); /* #C45A5A */
+    }
+
+    /* State: Disabled Override */
+    .c-status-chip.is-disabled {
+      background-color: var(--color-surface-raised); /* #EDE3D4 */
+      color: var(--color-text-ghost); /* #C4B5A5 */
+      opacity: 0.60;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="showcase-container">
+    <h1 class="ty-display">Status Chip</h1>
+    <p class="ty-body">Status chips signify quantity levels or inventory states for ingredients in the pantry.</p>
+
+    <div class="showcase-section">
+      <!-- Status: In Stock (Default) -->
+      <div class="state-group">
+        <span class="state-label">Status=In Stock, State=Default</span>
+        <div class="c-status-chip c-status-chip--in-stock">IN STOCK</div>
+      </div>
+
+      <!-- Status: In Stock (Disabled) -->
+      <div class="state-group">
+        <span class="state-label">Status=In Stock, State=Disabled</span>
+        <div class="c-status-chip c-status-chip--in-stock is-disabled">IN STOCK</div>
+      </div>
+
+      <!-- Status: Low (Default) -->
+      <div class="state-group">
+        <span class="state-label">Status=Low, State=Default</span>
+        <div class="c-status-chip c-status-chip--low">LOW</div>
+      </div>
+
+      <!-- Status: Low (Disabled) -->
+      <div class="state-group">
+        <span class="state-label">Status=Low, State=Disabled</span>
+        <div class="c-status-chip c-status-chip--low is-disabled">LOW</div>
+      </div>
+
+      <!-- Status: Out (Default) -->
+      <div class="state-group">
+        <span class="state-label">Status=Out, State=Default</span>
+        <div class="c-status-chip c-status-chip--out">OUT</div>
+      </div>
+
+      <!-- Status: Out (Disabled) -->
+      <div class="state-group">
+        <span class="state-label">Status=Out, State=Disabled</span>
+        <div class="c-status-chip c-status-chip--out is-disabled">OUT</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

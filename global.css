@@ -280,3 +280,668 @@ hr {
 .text-secondary { color: var(--color-text-secondary); }
 .text-ghost { color: var(--color-text-ghost); }
 .text-disabled { color: var(--color-text-ghost); }
+
+/* ==========================================================================
+   APP COMPONENT & VIEWPORT LAYOUT (MOBILE FIRST)
+   ========================================================================== */
+.app-container {
+  width: 100%;
+  max-width: 390px;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  background-color: var(--color-base);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  box-shadow: 0px 24px 64px rgba(46, 42, 36, 0.08);
+}
+
+.ambient-glow {
+  width: 392px;
+  height: 234px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: var(--color-action-subtle);
+  box-shadow: 100px 100px 100px rgba(224, 122, 85, 0.1);
+  filter: blur(50px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px 0;
+  z-index: 5;
+  position: relative;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.app-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================================================
+   ONBOARDING COMPONENTS & 8PT GRID SYSTEM
+   ========================================================================== */
+.onboarding-back-link {
+  align-self: flex-start;
+  margin-bottom: 4px;
+}
+.c-back-link {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-secondary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body-small);
+}
+.c-back-link span {
+  font-weight: var(--font-weight-medium);
+}
+
+.onboarding-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.onboarding-header__description-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* Veg Only Toggle Switch styling */
+.c-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.c-toggle__input {
+  display: none;
+}
+.c-toggle__track {
+  width: 38px;
+  height: 22px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-round);
+  position: relative;
+  transition: var(--transition-smooth);
+}
+.c-toggle__thumb {
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-text-secondary);
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: var(--transition-smooth);
+}
+.c-toggle__input:checked + .c-toggle__track {
+  background-color: var(--color-action);
+}
+.c-toggle__input:checked + .c-toggle__track .c-toggle__thumb {
+  background-color: var(--color-base);
+  transform: translateX(16px);
+}
+
+/* Meals Grid (4 columns, 8pt gutters) */
+.meals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 24px;
+  column-gap: 16px;
+  justify-items: center;
+  padding-bottom: 40px;
+  transition: var(--transition-smooth);
+}
+
+/* Meal Selection Option Component */
+.c-meal-option {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: var(--transition-smooth);
+}
+.c-meal-option__avatar-wrapper {
+  width: 64px;
+  height: 72px;
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.c-meal-option__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 32px;
+  position: relative;
+  background-color: var(--color-surface);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: 1px rgba(0, 0, 0, 0) solid;
+  outline-offset: -1px;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+.c-meal-option.is-selected .c-meal-option__avatar {
+  background-color: var(--color-action);
+  outline: 1px var(--color-action) solid;
+}
+.c-meal-option__img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  transition: var(--transition-smooth);
+}
+.c-meal-option__check {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-action);
+  border-radius: 50%;
+}
+.c-meal-option.is-selected .c-meal-option__check {
+  display: flex;
+}
+.c-meal-option.is-selected .c-meal-option__img {
+  display: none;
+}
+
+/* Custom Add Option */
+.c-meal-option__img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-surface-raised);
+  color: var(--color-text-secondary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-subheading);
+  font-weight: var(--font-weight-medium);
+}
+.c-meal-option--custom .c-meal-option__avatar {
+  background-color: transparent;
+  outline: 1px var(--color-text-secondary) solid;
+}
+.c-meal-option__label {
+  text-align: center;
+  color: var(--color-text-primary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+  word-wrap: break-word;
+  max-width: 78px;
+}
+
+.meals-grid.show-veg-only .c-meal-option[data-veg="false"] {
+  display: none;
+}
+
+/* ==========================================================================
+   FIXED BOTTOM CONTROLS AREA
+   ========================================================================== */
+.controls-area {
+  width: 100%;
+  padding: 8px 20px 12px;
+  background-color: var(--color-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  box-shadow: 0px -8px 24px rgba(46, 42, 36, 0.04);
+  flex-shrink: 0;
+}
+.controls-area__btn {
+  align-self: stretch;
+  height: 56px;
+  border-radius: 999px;
+  background-color: var(--color-action);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-base);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  border: none;
+  transition: var(--transition-smooth);
+}
+.controls-area__btn:hover:not(:disabled) {
+  background-color: #D06845;
+}
+.controls-area__btn:active:not(:disabled) {
+  background-color: #BE5A3A;
+}
+.controls-area__btn:disabled {
+  background-color: var(--color-disabled);
+  color: var(--color-text-ghost);
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   DESKTOP BACKGROUND / SCREEN SIZE ADAPTATIONS
+   ========================================================================== */
+body {
+  background-color: #ECE7DF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 480px) {
+  body {
+    background-color: var(--color-base);
+  }
+}
+
+/* Off-screen rendering wrapper (allows getBoundingClientRect to calculate DOM layout) */
+.app-offscreen {
+  position: absolute !important;
+  left: -9999px !important;
+  top: 0 !important;
+  opacity: 0.001 !important;
+  pointer-events: none !important;
+}
+
+/* Skeleton Loading Screen Overlay Container */
+.app-loading-overlay {
+  width: 100%;
+  max-width: 390px;
+  height: 100vh;
+  height: 100dvh;
+  background-color: var(--color-base);
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 24px 64px rgba(46, 42, 36, 0.08);
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+
+/* ==========================================================================
+   MANUAL SKELETON LOADERS & SHIMMER PULSE
+   ========================================================================== */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 150% 50%;
+  }
+  100% {
+    background-position: -50% 50%;
+  }
+}
+
+.c-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    var(--color-surface-raised) 37%,
+    var(--color-surface) 63%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+/* Skeleton Shape Classes */
+.skeleton-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+.skeleton-label {
+  height: 12px;
+  width: 52px;
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+}
+.skeleton-title {
+  height: 28px;
+  border-radius: var(--radius-sm);
+  width: 85%;
+  margin-bottom: 8px;
+}
+.skeleton-title-sub {
+  height: 28px;
+  border-radius: var(--radius-sm);
+  width: 55%;
+}
+.skeleton-desc-line {
+  height: 14px;
+  border-radius: var(--radius-sm);
+  width: 90%;
+  margin-bottom: 6px;
+}
+.skeleton-desc-line-sub {
+  height: 14px;
+  border-radius: var(--radius-sm);
+  width: 65%;
+}
+.skeleton-counter-text {
+  height: 16px;
+  width: 100px;
+  border-radius: var(--radius-sm);
+  margin: 8px 0;
+}
+.skeleton-btn {
+  align-self: stretch;
+  height: 56px;
+  border-radius: 999px;
+}
+
+/* ==========================================================================
+   PANTRY SCREEN COMPONENTS
+   ========================================================================== */
+
+/* Pantry Row List Layout */
+.c-pantry-row {
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 0.80px solid var(--color-divider);
+  opacity: 0.5; /* Default unchecked state is dimmed */
+  transition: opacity var(--transition-smooth);
+}
+.c-pantry-row.is-selected {
+  opacity: 1; /* Fully opaque when checked */
+}
+
+/* Row Left Side Group */
+.c-pantry-row__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.c-pantry-row__img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.c-pantry-row__label {
+  color: var(--color-text-primary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+}
+
+/* Row Right Side Controls Group */
+.c-pantry-row__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.5; /* Default disabled controls appearance */
+  pointer-events: none; /* Disable click interactions when row is unchecked */
+  transition: opacity var(--transition-smooth);
+}
+.c-pantry-row.is-selected .c-pantry-row__right {
+  opacity: 1;
+  pointer-events: auto; /* Enable controls when checked */
+}
+
+/* Reusable Checkbox Component */
+.c-checkbox {
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-base);
+  border: 1px solid var(--color-text-ghost);
+  border-radius: 6px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  outline-offset: -1px;
+}
+.c-checkbox.is-selected {
+  background-color: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+  outline: 1px var(--color-text-primary) solid;
+}
+.c-checkbox svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  transition: var(--transition-smooth);
+}
+.c-checkbox.is-selected svg {
+  opacity: 1;
+}
+
+/* Pantry Dropdown Component (overlays browser native picker for mobile friendliness) */
+.c-pantry-dropdown {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  cursor: pointer;
+  border: none;
+  transition: var(--transition-smooth);
+}
+.c-pantry-dropdown:hover {
+  background-color: var(--color-surface-raised);
+}
+.c-pantry-dropdown__arrow {
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.c-pantry-dropdown__arrow svg {
+  display: block;
+}
+.c-pantry-dropdown__select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Stepper Component */
+.c-stepper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.c-stepper__btn {
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-text-secondary);
+  font-family: var(--font-display);
+  font-size: var(--font-size-subheading);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-subheading);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+.c-stepper__btn:hover {
+  background-color: var(--color-surface-raised);
+}
+.c-stepper__val {
+  color: var(--color-text-primary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  min-width: 16px;
+  text-align: center;
+  user-select: none;
+}
+
+/* Static Badge Pill */
+.c-static-badge {
+  padding: 4px 10px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-primary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  text-align: center;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Search Bar (Centered on Mobile Grid) */
+.c-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  align-self: stretch;
+  height: 48px;
+  padding: 12px 16px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 16px; /* 8px bottom spacing */
+}
+.c-search-bar__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text-primary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+.c-search-bar__input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+/* Category Filter Bar */
+.c-filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  align-self: stretch;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  padding: 4px 0;
+  flex-shrink: 0;
+  margin-bottom: 16px; /* 16px bottom spacing before list */
+}
+.c-filter-bar::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
+}
+.c-filter-chip {
+  padding: 4px 16px;
+  border-radius: 999px;
+  background-color: var(--color-base);
+  color: var(--color-text-secondary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border: none;
+  outline: none;
+}
+.c-filter-chip:hover {
+  background-color: var(--color-surface);
+}
+.c-filter-chip.is-selected {
+  background-color: var(--color-surface-raised);
+  color: var(--color-text-primary);
+}
+
+/* Scrollable Container for Pantry Items */
+.pantry-list-container {
+  flex: 1;
+  overflow-y: auto;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+}
+.pantry-list-container::-webkit-scrollbar {
+  width: 4px;
+}
+.pantry-list-container::-webkit-scrollbar-thumb {
+  background-color: var(--color-surface-raised);
+  border-radius: var(--radius-sm);
+}
+
+/* Pantry Skeleton Loading Styles */
+.skeleton-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 0.8px solid var(--color-divider);
+}
+.skeleton-checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+}
+.skeleton-emoji {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+.skeleton-text {
+  height: 14px;
+  border-radius: var(--radius-sm);
+}
+.skeleton-right {
+  height: 32px;
+  width: 80px;
+  border-radius: var(--radius-sm);
+}
+
+
+
+

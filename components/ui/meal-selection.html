@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meal Selection Component - Saviour UI</title>
+  <link rel="stylesheet" href="../../global.css">
+  <style>
+    body {
+      padding: 40px;
+    }
+    .showcase-container {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .showcase-section {
+      background: var(--color-surface);
+      padding: 32px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(46, 42, 36, 0.06);
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .state-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .state-label {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    /* ==========================================================================
+       MEAL SELECTION OPTION COMPONENT STYLES
+       ========================================================================== */
+    .c-meal-option {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: var(--transition-smooth);
+    }
+    
+    .c-meal-option__avatar-wrapper {
+      width: 64px;
+      height: 72px; /* Includes padding bottom 8px */
+      padding-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    
+    .c-meal-option__avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 32px; /* 50% border radius */
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--color-surface); /* #F0E9DE default */
+      outline: 1px rgba(0, 0, 0, 0) solid;
+      outline-offset: -1px;
+      transition: var(--transition-smooth);
+      overflow: hidden;
+    }
+
+    /* Selected State Override */
+    .c-meal-option.is-selected .c-meal-option__avatar {
+      background-color: var(--color-action); /* #E07A55 */
+      outline: 1px var(--color-action) solid;
+    }
+
+    /* Image Wrapper */
+    .c-meal-option__img {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .c-meal-option__img svg {
+      width: 34px;
+      height: 34px;
+      display: block;
+    }
+    
+    /* Toggle Image vs Checkmark depending on selection */
+    .c-meal-option__check {
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--color-action);
+      border-radius: 50%;
+    }
+    .c-meal-option.is-selected .c-meal-option__check {
+      display: flex;
+    }
+    .c-meal-option.is-selected .c-meal-option__img {
+      display: none;
+    }
+
+    /* Custom placeholder for dynamically added meals */
+    .c-meal-option__img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--color-surface-raised);
+      color: var(--color-text-secondary);
+      font-family: var(--font-interface);
+      font-size: var(--font-size-subheading);
+      font-weight: var(--font-weight-medium);
+    }
+    .c-meal-option.is-selected .c-meal-option__img-placeholder {
+      display: none;
+    }
+
+    /* Custom Add State Override */
+    .c-meal-option--custom .c-meal-option__avatar {
+      background-color: transparent;
+      outline: 1px var(--color-text-secondary) solid; /* #8C7E6A */
+    }
+    .c-meal-option--custom:hover .c-meal-option__avatar {
+      background-color: rgba(140, 126, 106, 0.05);
+    }
+
+    /* Label text formatting */
+    .c-meal-option__label {
+      text-align: center;
+      color: var(--color-text-primary); /* #2E2A24 */
+      font-family: var(--font-interface);
+      font-size: var(--font-size-body-small); /* 12px */
+      font-weight: var(--font-weight-regular); /* 400 */
+      line-height: var(--line-height-body-small); /* 15.95px */
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="showcase-container">
+    <h1 class="ty-display">Meal Selection Option</h1>
+    <p class="ty-body">Meal selection options are clickable items representing dishes that the user can choose. Supports Selected, Unselected, and Add Custom states.</p>
+
+    <div class="showcase-section">
+      <!-- State: Selected Meal -->
+      <div class="state-container">
+        <span class="state-label">Selected = true</span>
+        <div class="c-meal-option is-selected">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Dal chawal</span>
+        </div>
+      </div>
+
+      <!-- State: Unselected Meal -->
+      <div class="state-container">
+        <span class="state-label">Selected = false</span>
+        <div class="c-meal-option">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <div class="c-meal-option__img">
+                <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <rect width="34" height="34" fill="url(#pattern_egg_toast)"/>
+                  <defs>
+                    <pattern id="pattern_egg_toast" patternContentUnits="objectBoundingBox" width="1" height="1">
+                      <use xlink:href="#img_egg_toast" transform="scale(0.0147059)"/>
+                    </pattern>
+                    <!-- Fallback placeholder image metadata -->
+                    <image id="img_egg_toast" width="68" height="68" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4E5OyAAAACXBIWXMAAAsTAAALEwEAmpwYAAARqklEQVR4nNVcCVRb15nGTtI202ln6/Rkls5M28lM55ye00nSpsFgs0lILMZ2ErY4jidJj5NMkjb1pE2bOYnaNNskthNjEHraWMRmecOA9N7TggQCm9UGzCqwWY3BrGIz0tN7/5z7Flk4wQFZePnPuRJI771773f//f5XISG3gWQy2eYm7LEH9MnJ9wVyH+iT74MQ2BRyrxOEhGyyySLuBwjxTaZOt/vb1uLUH9qL0h6x61K32gueibLqdsdW6VJjbbrUyKrC5x635aT/yFHxzF+teBaEbGrC9j2A7XvsAZksZHPIvQiGTBZxP/qbUCX/tUWTtIvUxH+AK6LLDVnhXRUZT8wS8i1gwbaAQxMO1dpwMCu2QEVGqLsiM6zfqIggCEx60KLd8QuzJjG8Rp30Lf7RLLgsx+lZjrsnOGcTerHlRHzDrJS+TmSLz5ixiKW6ong4V/YS0175Pjjr1HDxfKF34MIpaqSHdI90G939bccpZ0MO01n1CbTib0CD/kmwqbeCIXPrBKEQ23FMkmHMFj9NysXfvZF72Mb1e3cBBD4w4h8yKGINZmU01XB8NzgbNPTseI/72vwERXmWvQBAAwADXySapinv8uI0NT8z5L5y0UH11B6B5tIXoDo3FghFzDyRHd2DZ8ecMmKiVyrkMT9YDQQEEhIvf5G9rQR8xxWZEQ8RWGxjda4UOqo+pZfmJxAAzI3zZxgaGMYLDM039n/myyHyXKNmx7u8F5ty4Vz561BTsBNMKilFZEe5DFkR3UZ5ZI5RHvOCXfvkw9Cu/xoA+OuZTXdEvPRcpyGkUnKqOk8CznoNxwUM7QcAwoVZhTnYq9jv0XVfApBwI73gukwPdZTCBet70HByHziKUqFSmwC4fCtTdiSsj8iKUpk029Mdx5/5QY5s7ze4BZNtvm0KGcMeewC9G5XSFwlFNHWh8mNhAhtNDO31MK7xbhjqKIP2qkPQbPgtnD22Bxy5MWDICneRKmleZc6OGP3BJx4EgE2w0aAALyplWOKfmVQSa/2xNFiaG6c2HAmWi3hp5D5hX73UMkyPddKD7aVUi+mPzJmC7WBVRiwQWJy6Ri36ezTWDeUUjOcOa05SsjFrK/TUaW4mExsBDSdetBdomlohZpRniZkabfNcsL7vduRJgFRKGkzqJBaUDVG24KeoSGWc/GzRdnBN9Hm4FeR0x+0mBr4MHJrpay6kHPnxYFZJrIdfl3496GAgApmMZT1bYfqPDFnhA62md8HjXhS0KNxx8ilnbkhdtXK6UiMCozJWtiFcIuMBsWh2PuvIjYLhTsMd5Y5ViV8cynONaSj9b8AV0dOENvZ7LChBNMeb0ItRt/vbuDzKUnf8eZib7PfelYDwShjRqNMMVk0c4Nkxn6Hxo3grKGgAD4hV+2Q8qdgG7dWf03crGP5Eeym68dQ+ILAYJ45J/i5YVmcTeiG0qd8zZkU4HUXMHu1m7kXAEFDHGg7jsSGwhWSl/0tZUBcoefzGuXZCf+AK0T19hwpXGo9zoFBe29lnH4e6soWbCu+ODdG1erigcQkeQEDAiiitHHyZs3f9RNcHt' />
+                  </defs>
+                </svg>
+              </div>
+              <div class="c-meal-option__check">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Egg toast</span>
+        </div>
+      </div>
+
+      <!-- State: Add Custom -->
+      <div class="state-container">
+        <span class="state-label">Add Custom Button</span>
+        <div class="c-meal-option c-meal-option--custom">
+          <div class="c-meal-option__avatar-wrapper">
+            <div class="c-meal-option__avatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19" stroke="#8C7E6A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 5V19" stroke="#8C7E6A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <span class="c-meal-option__label">Custom</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

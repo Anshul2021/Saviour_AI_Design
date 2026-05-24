@@ -2,29 +2,53 @@ document.addEventListener('DOMContentLoaded', async () => {
   const appContainer = document.getElementById('app-container');
   if (!appContainer) return;
 
+  // Fallback: request fullscreen mode on the first click gesture
+  document.addEventListener('click', () => {
+    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
+  }, { once: true });
+
   // 1. Fetch and inject modular components (status-bar, home-indicator)
   await loadComponents();
 
-  // 2. Hide actual content container initially for 2 seconds
-  appContainer.style.display = 'none';
-
-  // 3. Create and append the manual skeleton loader overlay
-  const loadingOverlay = document.createElement('div');
-  loadingOverlay.className = 'app-loading-overlay';
-  document.body.appendChild(loadingOverlay);
-
-  // 4. Detect page context type
+  // 2. Detect page context type
   let pageType = 'meals';
   if (appContainer.getAttribute('data-page')) {
     pageType = appContainer.getAttribute('data-page');
   } else if (document.getElementById('pantry-list')) {
     pageType = 'pantry';
+  } else if (document.getElementById('picker-hours')) {
+    pageType = 'leave-office';
   }
 
-  // 5. Inject the page-specific skeleton structure (using local fallback for 100% reliability on file://)
-  injectSkeletonLayout(loadingOverlay, pageType);
+  // 3. Conditional skeleton loading (only for meals screen)
+  if (pageType === 'meals') {
+    // Hide actual content container initially for 2 seconds
+    appContainer.style.display = 'none';
 
-  // 6. Initialize interactive event bindings
+    // Create and append the manual skeleton loader overlay
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.className = 'app-loading-overlay';
+    document.body.appendChild(loadingOverlay);
+
+    // Inject the page-specific skeleton structure (using local fallback for 100% reliability on file://)
+    injectSkeletonLayout(loadingOverlay, pageType);
+
+    // Transition skeleton to actual content after exactly 2 seconds
+    setTimeout(() => {
+      loadingOverlay.style.opacity = '0';
+      setTimeout(() => {
+        loadingOverlay.remove();
+        appContainer.style.display = 'flex';
+      }, 300); // fade out duration matching global.css transition
+    }, 2000);
+  } else {
+    // Show content instantly without skeleton loader
+    appContainer.style.display = 'flex';
+  }
+
+  // 4. Initialize interactive event bindings
   if (pageType === 'meals') {
     initVegFilter();
     initMealSelection();
@@ -38,16 +62,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   } else if (pageType === 'pantry') {
     initPantryInteractivity();
-  }
 
-  // 7. Transition skeleton to actual content after exactly 2 seconds
-  setTimeout(() => {
-    loadingOverlay.style.opacity = '0';
-    setTimeout(() => {
-      loadingOverlay.remove();
-      appContainer.style.display = 'flex';
-    }, 300); // fade out duration matching global.css transition
-  }, 2000);
+    // Redirect to leave-office page on Next button click
+    const nextBtn = document.getElementById('next-btn');
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        window.location.href = 'leave-office.html';
+      });
+    }
+  } else if (pageType === 'leave-office') {
+    initTimePicker();
+  }
 });
 
 /**
@@ -460,4 +485,136 @@ function initPantryInteractivity() {
   // Set initial unchecked state count
   updatePantryState();
 }
+
+/**
+ * Initializes the iOS-style Time Picker component
+ */
+function initTimePicker() {
+  const hourCol = document.getElementById('picker-hours');
+  const minuteCol = document.getElementById('picker-minutes');
+  const periodCol = document.getElementById('picker-period');
+  const nextBtn = document.getElementById('next-btn');
+
+  if (!hourCol || !minuteCol || !periodCol) return;
+
+  // 1. Populate Hours (1 - 12)
+  for (let h = 1; h <= 12; h++) {
+    const item = document.createElement('div');
+    item.className = 'c-time-picker__item';
+    item.textContent = h;
+    hourCol.appendChild(item);
+  }
+
+  // 2. Populate Minutes (00 - 59)
+  for (let m = 0; m < 60; m++) {
+    const item = document.createElement('div');
+    item.className = 'c-time-picker__item';
+    item.textContent = m.toString().padStart(2, '0');
+    minuteCol.appendChild(item);
+  }
+
+  // 3. Populate Period (AM, PM)
+  ['AM', 'PM'].forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'c-time-picker__item';
+    item.textContent = p;
+    periodCol.appendChild(item);
+  });
+
+  // Helper: update item scaling and opacities dynamically based on scroll offset
+  function updateWheelOpacity(col) {
+    const scrollTop = col.scrollTop;
+    const items = col.querySelectorAll('.c-time-picker__item');
+    items.forEach((item, index) => {
+      // Each item is 40px tall. Distance ratio from centered position:
+      const ratio = index - (scrollTop / 40);
+      const absRatio = Math.abs(ratio);
+      
+      item.classList.remove('is-active', 'is-level-2', 'is-level-3');
+      
+      if (absRatio < 0.5) {
+        item.classList.add('is-active');
+      } else if (absRatio < 1.5) {
+        item.classList.add('is-level-2');
+      } else if (absRatio < 2.5) {
+        item.classList.add('is-level-3');
+      }
+    });
+  }
+
+  // Attach scroll listeners with requestAnimationFrame for hardware-accelerated smoothness
+  [hourCol, minuteCol, periodCol].forEach(col => {
+    let ticking = false;
+    col.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateWheelOpacity(col);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  });
+
+  // Set default initial value of 8:00 PM
+  // Index of 8 is 7. Index of 00 is 0. Index of PM is 1.
+  setTimeout(() => {
+    hourCol.scrollTop = 7 * 40;
+    minuteCol.scrollTop = 0 * 40;
+    periodCol.scrollTop = 1 * 40;
+    
+    // Force immediate visual update
+    updateWheelOpacity(hourCol);
+    updateWheelOpacity(minuteCol);
+    updateWheelOpacity(periodCol);
+  }, 50);
+
+  // Handle CTA Next Action click
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const activeHour = hourCol.querySelector('.is-active')?.textContent || '8';
+      const activeMinute = minuteCol.querySelector('.is-active')?.textContent || '00';
+      const activePeriod = periodCol.querySelector('.is-active')?.textContent || 'PM';
+      
+      const selectedTime = `${activeHour}:${activeMinute} ${activePeriod}`;
+      
+      // Trigger premium success modal with countdown redirect
+      showSuccessModal(selectedTime);
+    });
+  }
+}
+
+/**
+ * Creates and animatedly reveals the onboarding completion success overlay
+ */
+function showSuccessModal(selectedTime) {
+  // Prevent duplicate modals
+  if (document.querySelector('.c-success-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'c-success-overlay';
+  overlay.innerHTML = `
+    <div class="c-success-card">
+      <div class="c-success-checkmark">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="c-success-title">All Set!</h2>
+      <p class="c-success-subtitle">Saviour will send your energy check at <strong>${selectedTime}</strong>.</p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  
+  // Trigger entry animation next frame
+  requestAnimationFrame(() => {
+    overlay.classList.add('is-visible');
+  });
+
+  // Auto-redirect to home meals selection page after 2.5s
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 2500);
+}
+
 

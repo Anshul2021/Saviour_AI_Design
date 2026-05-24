@@ -540,6 +540,10 @@ hr {
   color: var(--color-text-ghost);
   cursor: not-allowed;
 }
+.controls-area__btn:disabled svg path,
+.controls-area__btn.is-disabled svg path {
+  stroke: currentColor;
+}
 
 /* ==========================================================================
    DESKTOP BACKGROUND / SCREEN SIZE ADAPTATIONS
@@ -555,9 +559,14 @@ body {
   padding: 0;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 540px) {
   body {
     background-color: var(--color-base);
+  }
+  .app-container {
+    max-width: 100%;
+    width: 100%;
+    box-shadow: none;
   }
 }
 
@@ -940,6 +949,192 @@ body {
   height: 32px;
   width: 80px;
   border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   iOS TIME PICKER WHEEL COMPONENT
+   ========================================================================== */
+.c-time-picker {
+  width: 100%;
+  max-width: 350px;
+  height: 280px;
+  position: relative;
+  overflow: hidden;
+  align-self: center;
+}
+
+/* Central Selection Highlight Bar */
+.c-time-picker__highlight {
+  width: 310px;
+  height: 40px;
+  position: absolute;
+  left: 20px;
+  top: 120px; /* Center alignment (280 - 40) / 2 */
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  z-index: 1;
+}
+
+/* Flex layout containing the 3 picker columns */
+.c-time-picker__columns {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 2;
+}
+
+/* Scroll wheel columns with snap snapping */
+.c-time-picker__col {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none; /* Hide scrollbars for Firefox */
+  -ms-overflow-style: none; /* Hide scrollbars for IE */
+}
+.c-time-picker__col::-webkit-scrollbar {
+  display: none; /* Hide scrollbars for Chrome/Safari */
+}
+
+/* Column widths and top/bottom padding to scroll first/last item into selection area */
+.c-time-picker__col--hour {
+  width: 120px;
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+.c-time-picker__col--minute {
+  width: 120px;
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+.c-time-picker__col--period {
+  width: 110px;
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+
+/* Individual options inside the wheel columns */
+.c-time-picker__item {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  user-select: none;
+  scroll-snap-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  color: var(--color-text-primary);
+  opacity: 0.15;
+  transition: opacity 0.2s ease, font-size 0.2s ease, font-weight 0.2s ease;
+}
+
+/* dynamic wheel perspective styling */
+.c-time-picker__item.is-active {
+  opacity: 1.0;
+  font-size: 26px;
+  font-weight: 500;
+}
+.c-time-picker__item.is-level-2 {
+  opacity: 0.45;
+  font-size: 22px;
+}
+.c-time-picker__item.is-level-3 {
+  opacity: 0.25;
+  font-size: 20px;
+}
+
+/* Gradient fade masks for realism */
+.c-time-picker__gradient-top {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* background: linear-gradient(180deg, var(--color-base) 0%, rgba(250, 247, 242, 0) 100%); */
+  pointer-events: none;
+  z-index: 3;
+}
+.c-time-picker__gradient-bottom {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(250, 247, 242, 0) 0%, var(--color-base) 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ==========================================================================
+   SUCCESS MODAL & TRANSITIONS FOR ONBOARDING COMPLETION
+   ========================================================================== */
+.c-success-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-overlay);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 24px;
+}
+.c-success-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.c-success-card {
+  background-color: var(--color-base);
+  border-radius: var(--radius-round);
+  padding: 32px 24px;
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0px 16px 48px rgba(46, 42, 36, 0.16);
+  border: 1px solid rgba(46, 42, 36, 0.04);
+  transform: scale(0.9);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.c-success-overlay.is-visible .c-success-card {
+  transform: scale(1);
+}
+.c-success-checkmark {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--color-success-subtle);
+  color: var(--color-success);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 12px rgba(163, 196, 168, 0.2);
+}
+.c-success-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-heading);
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+.c-success-subtitle {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-body);
 }
 
 

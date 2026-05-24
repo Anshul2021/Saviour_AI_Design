@@ -1,7 +1,7 @@
 {
   "name": "Saviour App",
   "short_name": "Saviour",
-  "start_url": "index.html",
+  "start_url": "notification-screen.html",
   "display": "standalone",
   "background_color": "#FAF7F2",
   "theme_color": "#E07A55",

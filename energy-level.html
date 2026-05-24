@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saviour Onboarding - How's your energy?</title>
+  <meta name="description" content="Select your energy level tonight.">
+  <link rel="stylesheet" href="global.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+
+  <!-- Responsive App Container fitting viewport height -->
+  <div class="app-container c-energy-selection" id="app-container" data-page="energy-level">
+    
+    <!-- Ambient Glow background shadow -->
+    <div class="c-energy-selection__glow"></div>
+
+    <!-- 1. Background Ellipses (Bubble Effect) -->
+    <a href="index.html" class="c-energy-bubble c-energy-bubble--exhausted js-energy-bubble" id="energy-exhausted">
+      <span class="c-energy-bubble__label">Exhausted</span>
+    </a>
+    
+    <a href="index.html" class="c-energy-bubble c-energy-bubble--okay js-energy-bubble" id="energy-okay">
+      <span class="c-energy-bubble__label">Okay</span>
+    </a>
+
+    <a href="index.html" class="c-energy-bubble c-energy-bubble--fine js-energy-bubble" id="energy-fine">
+      <span class="c-energy-bubble__label">Fine</span>
+    </a>
+
+    <!-- 2. Dynamic iPhone Status Bar Component -->
+    <header data-component="status-bar" id="app-status-bar"></header>
+
+    <!-- 3. Foreground Header Area -->
+    <div class="c-energy-header">
+      <h1 class="ty-display text-primary">How's your energy<br/>tonight ?</h1>
+    </div>
+
+    <!-- 4. Reusable Home Indicator Component Placeholder -->
+    <div data-component="home-indicator" id="app-home-indicator"></div>
+  </div>
+
+  <!-- Standard non-module script link for offline CORS resilience -->
+  <script src="global.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saviour Onboarding - Lock Screen Notification</title>
+  <meta name="description" content="Saviour Lock Screen Notification simulation.">
+  <link rel="stylesheet" href="global.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+
+  <!-- Responsive App Container fitting viewport height -->
+  <div class="app-container c-lock-screen" id="app-container" data-page="notification-screen">
+    
+    <!-- iPhone Lock Screen Wallpaper -->
+    <img src="Assets/Wallpaper.png" alt="Lock Screen Wallpaper" class="c-lock-screen__wallpaper">
+    
+    <!-- Dark screen overlay -->
+    <div class="c-lock-screen__overlay"></div>
+    
+    <!-- Progressive Blur overlay for top status bar area -->
+    <div class="c-lock-screen__progressive-blur"></div>
+
+    <!-- 1. Dynamic iPhone Status Bar Component (overridden to white theme via CSS) -->
+    <header data-component="status-bar" id="app-status-bar"></header>
+
+    <!-- Header containing Date and Time -->
+    <div class="c-lock-screen__header">
+      <div class="c-lock-screen__date">Monday, June 6</div>
+      <div class="c-lock-screen__time">5:30</div>
+    </div>
+
+    <!-- Notifications Container -->
+    <div class="c-lock-screen__notifications">
+      <a href="energy-level.html" class="c-notification-card js-notification-card">
+        <!-- SVG App Icon representing the concentric wireframe design grid -->
+        <div class="c-notification-card__icon-wrapper">
+          <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="38" height="38" rx="9" fill="#FFFFFF"/>
+            <circle cx="19" cy="19" r="14" stroke="#E5E5EA" stroke-width="1"/>
+            <circle cx="19" cy="19" r="10" stroke="#E5E5EA" stroke-width="1"/>
+            <circle cx="19" cy="19" r="6" stroke="#D1D1D6" stroke-width="1"/>
+            <line x1="19" y1="5" x2="19" y2="33" stroke="#E5E5EA" stroke-width="1"/>
+            <line x1="5" y1="19" x2="33" y2="19" stroke="#E5E5EA" stroke-width="1"/>
+            <line x1="9" y1="9" x2="29" y2="29" stroke="#F2F2F7" stroke-width="1"/>
+            <line x1="29" y1="9" x2="9" y2="29" stroke="#F2F2F7" stroke-width="1"/>
+          </svg>
+        </div>
+        <!-- Card Text Content -->
+        <div class="c-notification-card__content">
+          <div class="c-notification-card__title">How tired are you ?</div>
+          <div class="c-notification-card__desc">Tell us your energy level</div>
+        </div>
+        <!-- Received Time -->
+        <div class="c-notification-card__time">5:30 PM</div>
+      </a>
+    </div>
+
+    <!-- Reusable Home Indicator Component Placeholder -->
+    <div data-component="home-indicator" id="app-home-indicator"></div>
+
+  </div>
+
+  <!-- Standard script link -->
+  <script src="global.js"></script>
+</body>
+</html>

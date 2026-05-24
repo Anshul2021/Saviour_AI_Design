@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saviour - Cooking Time</title>
+  <meta name="description" content="Track your cooking time with Saviour's calm resonance timer.">
+  <link rel="stylesheet" href="global.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+
+  <!-- Responsive App Container fitting viewport height -->
+  <div class="app-container" id="app-container" data-page="cooking-time">
+    
+    <!-- 1. Dynamic iPhone Status Bar Component -->
+    <header data-component="status-bar" id="app-status-bar"></header>
+
+    <!-- 2. Back Chevron Link (Absolute positioned) -->
+    <a href="cook-item.html" class="c-cook-back" id="cook-back-btn" aria-label="Go back to recipe details">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.5 15L7.5 10L12.5 5" stroke="var(--color-text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+
+    <!-- 3. Top Section with Info & Timer -->
+    <div class="c-cooking-time-top">
+      <!-- Title stack -->
+      <div class="c-prep-title-stack">
+        <div class="c-prep-label" style="color: var(--color-text-ghost);">COOKING NOW</div>
+        <h1 class="c-prep-title" id="cooking-meal-title">Rajma Rice</h1>
+      </div>
+      
+      <!-- Circular calm resonance timer -->
+      <div class="c-timer">
+        <!-- Orbit Dots -->
+        <div class="c-timer__dot c-timer__dot--1"></div>
+        <div class="c-timer__dot c-timer__dot--2"></div>
+        <div class="c-timer__dot c-timer__dot--3"></div>
+        <div class="c-timer__dot c-timer__dot--4"></div>
+        <div class="c-timer__dot c-timer__dot--5"></div>
+        <div class="c-timer__dot c-timer__dot--6"></div>
+        <div class="c-timer__dot c-timer__dot--7"></div>
+        <div class="c-timer__dot c-timer__dot--8"></div>
+
+        <!-- Backing Blur -->
+        <div class="c-timer__blur-bg"></div>
+
+        <!-- Rings -->
+        <div class="c-timer__ring-outer"></div>
+        <div class="c-timer__ring-inner"></div>
+        <div class="c-timer__face"></div>
+
+        <!-- Progress track container -->
+        <div class="c-timer__track-container">
+          <!-- Backdrop ring track -->
+          <div class="c-timer__track-bg"></div>
+
+          <!-- Active progress ring -->
+          <svg class="c-timer__progress-ring">
+            <circle class="c-timer__progress-circle" id="cooking-progress-circle" cx="105" cy="105" r="100" />
+          </svg>
+        </div>
+
+        <!-- Center Plate & Text -->
+        <div class="c-timer__inner-plate">
+          <div class="c-timer__text" id="cooking-timer-text">34:51</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instruction label below the timer -->
+    <div class="c-timer-note">
+      Timer's running in the background.<br/>Close the app. Go cook.
+    </div>
+
+    <!-- 4. Absolute positioned Controls Area -->
+    <footer class="c-cook-controls-area" id="app-footer">
+      <button class="c-btn c-btn--primary" id="done-cooking-btn" style="opacity: 0.5;">Done Cooking</button>
+      <button class="c-btn c-btn--outlined" id="skip-timer-btn">Skip Timer</button>
+      
+      <!-- Reusable Home Indicator Component Placeholder -->
+      <div data-component="home-indicator" id="app-home-indicator"></div>
+    </footer>
+
+  </div>
+
+  <!-- Standard non-module script link for offline CORS resilience -->
+  <script src="global.js"></script>
+</body>
+</html>

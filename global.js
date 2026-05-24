@@ -2,15 +2,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   const appContainer = document.getElementById('app-container');
   if (!appContainer) return;
 
-  // Fallback: request fullscreen mode on the first click gesture
-  document.addEventListener('click', () => {
-    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen().catch(() => {});
-    }
-  }, { once: true });
+
 
   // 1. Fetch and inject modular components (status-bar, home-indicator)
   await loadComponents();
+
+  // 1.5 Update status bar time dynamically
+  const activePageType = appContainer.getAttribute('data-page') || 'meals';
+  const statusBarTimes = document.querySelectorAll('.status-bar__time');
+  statusBarTimes.forEach(el => {
+    if (activePageType === 'notification-screen' || activePageType === 'cook-item' || activePageType === 'cooking-time' || activePageType === 'prep-tomorrow') {
+      const notifType = localStorage.getItem('saviour_notification_type');
+      el.textContent = notifType === 'rajma_rice' ? '6:30' : '5:30';
+    } else if (activePageType === 'energy-level') {
+      el.textContent = '5:30';
+    } else {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 should be 12
+      el.textContent = `${hours}:${minutes}`;
+    }
+  });
 
   // 2. Detect page context type
   let pageType = 'meals';
@@ -41,12 +55,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       setTimeout(() => {
         loadingOverlay.remove();
         appContainer.style.display = 'flex';
+        setTimeout(() => appContainer.classList.add('is-loaded'), 50);
       }, 300); // fade out duration matching global.css transition
     }, 2000);
   } else {
     // Show content instantly without skeleton loader
     appContainer.style.display = 'flex';
+    appContainer.classList.add('is-loaded');
   }
+
+  // Intercept back links for direct navigation
+  document.addEventListener('click', (e) => {
+    const backLink = e.target.closest('.c-back-link');
+    if (backLink) {
+      e.preventDefault();
+      navigateTo(backLink.getAttribute('href'));
+    }
+  });
 
   // 4. Initialize interactive event bindings
   if (pageType === 'meals') {
@@ -56,8 +81,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const nextBtn = document.getElementById('next-btn');
     if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        window.location.href = 'pantry.html';
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigateTo('pantry.html');
       });
     }
   } else if (pageType === 'pantry') {
@@ -66,12 +92,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Redirect to leave-office page on Next button click
     const nextBtn = document.getElementById('next-btn');
     if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        window.location.href = 'leave-office.html';
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigateTo('leave-office.html');
       });
     }
   } else if (pageType === 'leave-office') {
     initTimePicker();
+  } else if (pageType === 'notification-screen') {
+    initNotificationScreen();
+  } else if (pageType === 'energy-level') {
+    initEnergyLevel();
+  } else if (pageType === 'cook-item') {
+    initCookItem();
+  } else if (pageType === 'cooking-time') {
+    initCookingTime();
+  } else if (pageType === 'prep-tomorrow') {
+    initPrepTomorrow();
   }
 });
 
@@ -202,7 +239,9 @@ async function loadComponents() {
       if (!response.ok) {
         throw new Error(`Failed to load component: ${componentName}`);
       }
-      const html = await response.text();
+      let html = await response.text();
+      // Clean live-server injected script tags to prevent DOM corruption
+      html = html.replace(/<!-- Code injected by live-server -->[\s\S]*?<\/script>/gi, '');
       el.innerHTML = html;
     } catch (err) {
       console.warn(err);
@@ -277,7 +316,7 @@ function initMealSelection() {
     const option = e.target.closest('.js-meal-option');
     if (!option) return;
 
-    // Handle Custom Meal Addition
+    // Handle Custom Meal Addition (Onboarding only)
     if (option.classList.contains('c-meal-option--custom')) {
       handleAddCustomMeal(grid);
       return;
@@ -611,10 +650,393 @@ function showSuccessModal(selectedTime) {
     overlay.classList.add('is-visible');
   });
 
-  // Auto-redirect to home meals selection page after 2.5s
+  // Save completion status
+  localStorage.setItem('saviour_onboarding_complete', 'true');
+  localStorage.setItem('saviour_notification_type', 'how_tired');
+
+  // Auto-redirect to lock screen page after 2.5s
+  setTimeout(() => {
+    navigateTo('notification-screen.html');
+  }, 2500);
+}
+
+/**
+ * Initializes the Lock Screen notification click interaction
+ */
+function initNotificationScreen() {
+  const card = document.querySelector('.js-notification-card');
+  const clockEl = document.querySelector('.c-lock-screen__time');
+  const titleEl = document.querySelector('.c-notification-card__title');
+  const descEl = document.querySelector('.c-notification-card__desc');
+  const notifTimeEl = document.querySelector('.c-notification-card__time');
+  
+  if (!card) return;
+
+  const notifType = localStorage.getItem('saviour_notification_type');
+
+  if (notifType === 'rajma_rice') {
+    // Update lock screen clock to 6:30
+    if (clockEl) clockEl.textContent = '6:30';
+    
+    // Update notification card details
+    if (titleEl) titleEl.textContent = 'Tonight: Rajma Rice';
+    if (descEl) descEl.textContent = 'Ready in 35min. Everything is at home.';
+    if (notifTimeEl) notifTimeEl.textContent = '6:30 PM';
+    
+    // Redirect to cook-item detail page
+    card.setAttribute('href', 'cook-item.html');
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'cook-item.html';
+    });
+  } else {
+    // Default flow
+    if (clockEl) clockEl.textContent = '5:30';
+    if (titleEl) titleEl.textContent = 'How tired are you ?';
+    if (descEl) descEl.textContent = 'Tell us your energy level';
+    if (notifTimeEl) notifTimeEl.textContent = '5:30 PM';
+    
+    // Redirect to energy level selection
+    card.setAttribute('href', 'energy-level.html');
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'energy-level.html';
+    });
+  }
+}
+
+/**
+ * Initializes the Energy Level selection bubbles
+ */
+function initEnergyLevel() {
+  const bubbles = document.querySelectorAll('.js-energy-bubble');
+  bubbles.forEach(bubble => {
+    bubble.addEventListener('click', (e) => {
+      e.preventDefault();
+      const selection = bubble.getAttribute('id');
+      localStorage.setItem('saviour_selected_energy', selection);
+      
+      if (selection === 'energy-okay' || selection === 'energy-fine') {
+        localStorage.setItem('saviour_notification_type', 'rajma_rice');
+        localStorage.setItem('saviour_selected_meal', 'Rajma Rice');
+        localStorage.removeItem('saviour_selected_meal_emoji');
+        window.location.href = 'notification-screen.html';
+      } else {
+        localStorage.setItem('saviour_notification_type', 'how_tired');
+        window.location.href = 'index.html';
+      }
+    });
+  });
+}
+
+/**
+ * Triggers a page redirect instantly
+ */
+function navigateTo(url) {
+  window.location.href = url;
+}
+
+/**
+ * Initializes the Cook Item Detail page
+ */
+function initCookItem() {
+  const mealTitleEl = document.getElementById('cook-meal-title');
+  const mealEmojiEl = document.getElementById('cook-meal-emoji');
+  const startBtn = document.getElementById('start-cooking-btn');
+  const cancelBtn = document.getElementById('not-tonight-btn');
+  const backBtn = document.getElementById('cook-back-btn');
+  
+  const drawerBtn = document.getElementById('ingredients-drawer-btn');
+  const drawerCard = document.getElementById('ingredients-drawer-card');
+  const drawerArrow = document.getElementById('ingredients-drawer-arrow');
+  const drawerText = document.getElementById('ingredients-drawer-text');
+
+  // Load selected meal from localStorage (fallback to Rajma Rice)
+  const selectedMeal = localStorage.getItem('saviour_selected_meal') || 'Rajma Rice';
+  const selectedMealEmoji = localStorage.getItem('saviour_selected_meal_emoji') || '';
+
+  if (mealTitleEl) {
+    mealTitleEl.textContent = selectedMeal;
+  }
+  
+  if (mealEmojiEl) {
+    if (selectedMealEmoji) {
+      mealEmojiEl.innerHTML = `<img src="${selectedMealEmoji}" alt="${selectedMeal}" style="width: 60px; height: 60px; object-fit: contain;">`;
+    } else {
+      let fallbackEmoji = '🍛';
+      if (selectedMeal.toLowerCase().includes('sandwich')) fallbackEmoji = '🥪';
+      else if (selectedMeal.toLowerCase().includes('toast')) fallbackEmoji = '🍳';
+      else if (selectedMeal.toLowerCase().includes('maggi')) fallbackEmoji = '🍜';
+      else if (selectedMeal.toLowerCase().includes('paratha')) fallbackEmoji = '🥞';
+      else if (selectedMeal.toLowerCase().includes('khichdi')) fallbackEmoji = '🍚';
+      else if (selectedMeal.toLowerCase().includes('curd')) fallbackEmoji = '🥣';
+      else if (selectedMeal.toLowerCase().includes('omelette')) fallbackEmoji = '🍳';
+      else if (selectedMeal.toLowerCase().includes('upma')) fallbackEmoji = '🥣';
+      else if (selectedMeal.toLowerCase().includes('poha')) fallbackEmoji = '🥗';
+      else if (selectedMeal.toLowerCase().includes('aloo')) fallbackEmoji = '🥔';
+      mealEmojiEl.textContent = fallbackEmoji;
+    }
+  }
+
+  // Toggle ingredients drawer visibility (collapsed by default)
+  if (drawerBtn && drawerCard && drawerArrow && drawerText) {
+    drawerBtn.addEventListener('click', () => {
+      const isOpen = drawerCard.classList.toggle('is-open');
+      if (isOpen) {
+        drawerText.textContent = 'Hide ingredients';
+        drawerArrow.textContent = '↑';
+      } else {
+        drawerText.textContent = 'Show ingredients';
+        drawerArrow.textContent = '↓';
+      }
+    });
+  }
+
+  // Bind navigation actions
+  if (startBtn) {
+    startBtn.addEventListener('click', () => {
+      window.location.href = 'cooking-time.html';
+    });
+  }
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+  }
+
+  if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'index.html';
+    });
+  }
+}
+
+/**
+ * Creates and animatedly reveals the cooking started overlay
+ */
+function showCookingStartedOverlay(mealName) {
+  if (document.querySelector('.c-success-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'c-success-overlay';
+  overlay.innerHTML = `
+    <div class="c-success-card">
+      <div class="c-success-checkmark" style="background-color: var(--color-action-subtle); color: var(--color-action);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="c-success-title">Let's Cook!</h2>
+      <p class="c-success-subtitle">Starting to cook <strong>${mealName}</strong>. Enjoy your meal!</p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  requestAnimationFrame(() => {
+    overlay.classList.add('is-visible');
+  });
+
   setTimeout(() => {
     window.location.href = 'index.html';
-  }, 2500);
+  }, 2000);
+}
+
+/**
+ * Initializes the Cooking Time page with a countdown timer
+ */
+function initCookingTime() {
+  const mealTitleEl = document.getElementById('cooking-meal-title');
+  const timerTextEl = document.getElementById('cooking-timer-text');
+  const progressCircle = document.getElementById('cooking-progress-circle');
+  const doneBtn = document.getElementById('done-cooking-btn');
+  const skipBtn = document.getElementById('skip-timer-btn');
+  const backBtn = document.getElementById('cook-back-btn');
+
+  // Load selected meal from localStorage (fallback to Rajma Rice)
+  const selectedMeal = localStorage.getItem('saviour_selected_meal') || 'Rajma Rice';
+  if (mealTitleEl) {
+    mealTitleEl.textContent = selectedMeal;
+  }
+
+  // Timer Configuration (34 minutes 51 seconds = 2091 seconds)
+  let totalSeconds = 2091; // 34:51
+  let remainingSeconds = totalSeconds;
+
+  // Circumference of SVG circle (2 * PI * r = 2 * 3.14159 * 100 = 628.3)
+  const circumference = 628.3;
+
+  function updateTimerUI() {
+    const mins = Math.floor(remainingSeconds / 60);
+    const secs = remainingSeconds % 60;
+    
+    if (timerTextEl) {
+      timerTextEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    if (progressCircle) {
+      // Circle stroke starts full and goes to empty
+      const offset = circumference - (circumference * remainingSeconds / totalSeconds);
+      progressCircle.style.strokeDashoffset = offset;
+    }
+
+    // Done Cooking button becomes active and fully visible when timer has progress (active after 3 seconds of mock usage)
+    if (remainingSeconds <= 2088) {
+      if (doneBtn) {
+        doneBtn.style.opacity = '1';
+        doneBtn.disabled = false;
+      }
+    }
+  }
+
+  updateTimerUI();
+
+  // Run the countdown timer every second
+  const timerInterval = setInterval(() => {
+    if (remainingSeconds > 0) {
+      remainingSeconds--;
+      updateTimerUI();
+    } else {
+      clearInterval(timerInterval);
+    }
+  }, 1000);
+
+  // Bind Done Cooking action
+  if (doneBtn) {
+    doneBtn.disabled = true; // initially disabled as per Figma opacity 0.5
+    doneBtn.addEventListener('click', () => {
+      clearInterval(timerInterval);
+      showCookingStartedOverlay(selectedMeal);
+    });
+  }
+
+  // Bind Skip Timer action (goes to prep-tomorrow.html)
+  if (skipBtn) {
+    skipBtn.addEventListener('click', () => {
+      clearInterval(timerInterval);
+      window.location.href = 'prep-tomorrow.html';
+    });
+  }
+
+  // Bind Back action (goes to cook-item.html)
+  if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      clearInterval(timerInterval);
+      window.location.href = 'cook-item.html';
+    });
+  }
+}
+
+/**
+ * Initializes the Prep for Tomorrow page
+ */
+function initPrepTomorrow() {
+  const headerTitleEl = document.getElementById('prep-header-title');
+  const mealNameEl = document.getElementById('prep-meal-name');
+  const actionInstructionEl = document.getElementById('prep-action-instruction');
+  const descTextEl = document.getElementById('prep-description-text');
+  const mealEmojiEl = document.getElementById('prep-meal-emoji');
+  
+  const soakingBtn = document.getElementById('its-soaking-btn');
+  const skipBtn = document.getElementById('skip-prep-btn');
+  const backBtn = document.getElementById('prep-back-btn');
+
+  // Load selected meal from localStorage (fallback to Rajma Rice)
+  const selectedMeal = localStorage.getItem('saviour_selected_meal') || 'Rajma Rice';
+  
+  // Extract first word (e.g. "Rajma Rice" -> "rajma", "Sandwich" -> "sandwich")
+  const firstWord = selectedMeal.trim().split(' ')[0].toLowerCase();
+  
+  if (headerTitleEl) {
+    headerTitleEl.textContent = `Tonight: soak ${firstWord}`;
+  }
+
+  if (mealNameEl) {
+    // If it's Rajma Rice, format as "Rajama" (Figma spelling) or capitalized first word
+    const capitalizedWord = firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
+    mealNameEl.textContent = capitalizedWord === 'Rajma' ? 'Rajama' : capitalizedWord;
+  }
+
+  if (actionInstructionEl) {
+    actionInstructionEl.innerHTML = `Soak &frac12; cup in water`;
+  }
+
+  if (descTextEl) {
+    descTextEl.textContent = `Soaking cuts tomorrow's cook time from 45 min to 20 min.`;
+  }
+
+  // Customize emoji if not Rajma Rice
+  if (mealEmojiEl && selectedMeal.toLowerCase() !== 'rajma rice') {
+    const selectedMealEmoji = localStorage.getItem('saviour_selected_meal_emoji') || '';
+    if (selectedMealEmoji) {
+      mealEmojiEl.innerHTML = `<img src="${selectedMealEmoji}" alt="${selectedMeal}" style="width: 60px; height: 60px; object-fit: contain;">`;
+    } else {
+      let fallbackEmoji = '🍛';
+      if (selectedMeal.toLowerCase().includes('sandwich')) fallbackEmoji = '🥪';
+      else if (selectedMeal.toLowerCase().includes('toast')) fallbackEmoji = '🍳';
+      else if (selectedMeal.toLowerCase().includes('maggi')) fallbackEmoji = '🍜';
+      else if (selectedMeal.toLowerCase().includes('paratha')) fallbackEmoji = '🥞';
+      else if (selectedMeal.toLowerCase().includes('khichdi')) fallbackEmoji = '🍚';
+      else if (selectedMeal.toLowerCase().includes('curd')) fallbackEmoji = '🥣';
+      else if (selectedMeal.toLowerCase().includes('omelette')) fallbackEmoji = '🍳';
+      else if (selectedMeal.toLowerCase().includes('upma')) fallbackEmoji = '🥣';
+      else if (selectedMeal.toLowerCase().includes('poha')) fallbackEmoji = '🥗';
+      else if (selectedMeal.toLowerCase().includes('aloo')) fallbackEmoji = '🥔';
+      mealEmojiEl.textContent = fallbackEmoji;
+    }
+  }
+
+  // Bind actions
+  if (soakingBtn) {
+    soakingBtn.addEventListener('click', () => {
+      showPrepSuccessOverlay();
+    });
+  }
+
+  if (skipBtn) {
+    skipBtn.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+  }
+
+  if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'cooking-time.html';
+    });
+  }
+}
+
+/**
+ * Creates and animatedly reveals a success overlay for the Tomorrow Prep page
+ */
+function showPrepSuccessOverlay() {
+  if (document.querySelector('.c-success-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'c-success-overlay';
+  overlay.innerHTML = `
+    <div class="c-success-card">
+      <div class="c-success-checkmark" style="background-color: var(--color-action-subtle); color: var(--color-action);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="c-success-title">All Prepped!</h2>
+      <p class="c-success-subtitle">Tomorrow's cook time is cut in half. Sleep well!</p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  requestAnimationFrame(() => {
+    overlay.classList.add('is-visible');
+  });
+
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 2000);
 }
 
 

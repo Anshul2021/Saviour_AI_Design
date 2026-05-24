@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saviour - Prep for Tomorrow</title>
+  <meta name="description" content="One small prep task tonight to cut your cooking time in half tomorrow.">
+  <link rel="stylesheet" href="global.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+
+  <!-- Responsive App Container fitting viewport height -->
+  <div class="app-container" id="app-container" data-page="prep-tomorrow">
+    
+    <!-- Ambient glow behind content -->
+    <div class="c-prep-glow"></div>
+
+    <!-- 1. Dynamic iPhone Status Bar Component -->
+    <header data-component="status-bar" id="app-status-bar"></header>
+
+    <!-- 2. Back Chevron Link (Absolute positioned) -->
+    <a href="cooking-time.html" class="c-cook-back" id="prep-back-btn" aria-label="Go back to cooking timer">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.5 15L7.5 10L12.5 5" stroke="var(--color-text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+
+    <!-- 3. Prep Information Stack (Figma Spacing) -->
+    <div class="c-prep-top-section">
+      <!-- Title stack at the top of content column -->
+      <div class="c-prep-title-stack">
+        <div class="c-prep-label" id="prep-header-label">ONE THING BEFORE YOU SLEEP</div>
+        <h1 class="c-prep-title" id="prep-header-title">Tonight: soak rajma</h1>
+        <div class="c-prep-duration">60 Seconds</div>
+      </div>
+
+      <!-- Emoji and specific prep task stack below it (inverted from cook-item) -->
+      <div class="c-prep-body-stack">
+        <div class="c-prep-emoji-circle" id="prep-meal-emoji">
+          <!-- Fallback or dynamic SVG of rajma beans -->
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Simple clean design system friendly vector drawing of kidney beans -->
+            <path d="M14 18C14 14.6863 16.6863 12 20 12C23.3137 12 26 14.6863 26 18C26 21.3137 28.6863 24 32 24C35.3137 24 38 26.6863 38 30C38 33.3137 35.3137 36 32 36C28.6863 36 26 33.3137 26 30C26 26.6863 23.3137 24 20 24C16.6863 24 14 21.3137 14 18Z" fill="var(--color-action)" fill-opacity="0.85"/>
+            <path d="M28 20C28 17.7909 29.7909 16 32 16C34.2091 16 36 17.7909 36 20C36 22.2091 37.7909 24 40 24" stroke="var(--color-text-secondary)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="c-prep-title-stack">
+          <h2 class="c-prep-name" id="prep-meal-name">Rajama</h2>
+          <div class="c-prep-action-instruction" id="prep-action-instruction">Soak &frac12; cup in water</div>
+        </div>
+
+        <div class="c-prep-desc" id="prep-description-text">
+          Soaking cuts tomorrow's cook time from 45 min to 20 min.
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Absolute positioned Controls Area -->
+    <footer class="c-cook-controls-area" id="app-footer">
+      <button class="c-btn c-btn--primary" id="its-soaking-btn">It's soaking</button>
+      <button class="c-btn c-btn--outlined" id="skip-prep-btn">Skip for Tonight</button>
+      
+      <!-- Reusable Home Indicator Component Placeholder -->
+      <div data-component="home-indicator" id="app-home-indicator"></div>
+    </footer>
+
+  </div>
+
+  <!-- Standard non-module script link for offline CORS resilience -->
+  <script src="global.js"></script>
+</body>
+</html>

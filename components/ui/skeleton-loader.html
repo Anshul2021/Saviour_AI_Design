@@ -1,0 +1,88 @@
+<!-- Reusable Skeleton Loader Component for Onboarding Pages -->
+<div class="app-loading-overlay">
+  <!-- 1. Skeleton Status Bar -->
+  <div class="c-status-bar" style="width: 100%; height: 54px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; box-sizing: border-box; flex-shrink: 0;">
+    <div class="status-bar__time" style="font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500; font-size: 17px; color: var(--color-text-primary); user-select: none;">9:41</div>
+    <div class="status-bar__icons" style="display: flex; align-items: center; gap: 6px; opacity: 0.35;">
+      <div class="c-shimmer" style="width: 20px; height: 13px; border-radius: 2px;"></div>
+      <div class="c-shimmer" style="width: 18px; height: 13px; border-radius: 2px;"></div>
+      <div class="c-shimmer" style="width: 25px; height: 13px; border-radius: 3px;"></div>
+    </div>
+  </div>
+
+  <!-- 2. Skeleton Scrollable Content (Meals Grid layout) -->
+  <div class="app-content" style="display: flex; flex-direction: column; gap: 32px; overflow: hidden; box-sizing: border-box;">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div>
+        <div class="c-shimmer skeleton-title" style="width: 75%; height: 32px; border-radius: var(--radius-sm);"></div>
+        <div class="c-shimmer skeleton-title-sub" style="width: 45%; height: 24px; border-radius: var(--radius-sm); margin-top: 8px;"></div>
+      </div>
+      <div>
+        <div class="c-shimmer skeleton-desc-line" style="width: 90%; height: 14px; border-radius: var(--radius-sm);"></div>
+        <div class="c-shimmer skeleton-desc-line-sub" style="width: 60%; height: 14px; border-radius: var(--radius-sm); margin-top: 6px;"></div>
+      </div>
+    </div>
+    
+    <div class="meals-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding-bottom: 24px;">
+      <div class="c-meal-option" style="border: none; background: transparent; pointer-events: none;">
+        <div class="c-meal-option__avatar-wrapper">
+          <div class="c-shimmer skeleton-avatar"></div>
+        </div>
+        <div class="c-shimmer skeleton-label"></div>
+      </div>
+      <div class="c-meal-option" style="border: none; background: transparent; pointer-events: none;">
+        <div class="c-meal-option__avatar-wrapper">
+          <div class="c-shimmer skeleton-avatar"></div>
+        </div>
+        <div class="c-shimmer skeleton-label"></div>
+      </div>
+      <div class="c-meal-option" style="border: none; background: transparent; pointer-events: none;">
+        <div class="c-meal-option__avatar-wrapper">
+          <div class="c-shimmer skeleton-avatar"></div>
+        </div>
+        <div class="c-shimmer skeleton-label"></div>
+      </div>
+      <div class="c-meal-option" style="border: none; background: transparent; pointer-events: none;">
+        <div class="c-meal-option__avatar-wrapper">
+          <div class="c-shimmer skeleton-avatar"></div>
+        </div>
+        <div class="c-shimmer skeleton-label"></div>
+      </div>
+      <div class="c-meal-option" style="border: none; background: transparent; pointer-events: none;">
+        <div class="c-meal-option__avatar-wrapper">
+          <div class="c-shimmer skeleton-avatar"></div>
+        </div>
+        <div class="c-shimmer skeleton-label"></div>
+      </div>
+      <div class="c-meal-option" style="border: none; background: transparent; pointer-events: none;">
+        <div class="c-meal-option__avatar-wrapper">
+          <div class="c-shimmer skeleton-avatar"></div>
+        </div>
+        <div class="c-shimmer skeleton-label"></div>
+      </div>
+      <div class="c-meal-option" style="border: none; background: transparent; pointer-events: none;">
+        <div class="c-meal-option__avatar-wrapper">
+          <div class="c-shimmer skeleton-avatar"></div>
+        </div>
+        <div class="c-shimmer skeleton-label"></div>
+      </div>
+      <div class="c-meal-option" style="border: none; background: transparent; pointer-events: none;">
+        <div class="c-meal-option__avatar-wrapper">
+          <div class="c-shimmer skeleton-avatar"></div>
+        </div>
+        <div class="c-shimmer skeleton-label"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Skeleton Bottom Controls Area -->
+  <div class="controls-area" style="border-top: 1px solid var(--color-divider); box-sizing: border-box; flex-shrink: 0; padding: 16px 20px;">
+    <div class="c-shimmer skeleton-counter-text" style="width: 100px; height: 16px; border-radius: var(--radius-sm); margin-bottom: 12px;"></div>
+    <div class="c-shimmer skeleton-btn" style="width: 100%; height: 50px; border-radius: var(--radius-round);"></div>
+    
+    <!-- Home Indicator -->
+    <div class="c-home-indicator" style="width: 100%; display: flex; justify-content: center; align-items: center; padding: 8px 0 0 0; box-sizing: border-box; flex-shrink: 0;">
+      <div class="home-indicator-bar" style="width: 134px; height: 5px; background-color: var(--color-text-primary); border-radius: 100px; opacity: 0.8;"></div>
+    </div>
+  </div>
+</div>

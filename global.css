@@ -541,8 +541,10 @@ hr {
   cursor: not-allowed;
 }
 .controls-area__btn:disabled svg path,
-.controls-area__btn.is-disabled svg path {
-  stroke: currentColor;
+.controls-area__btn.is-disabled svg path,
+.c-btn:disabled svg path,
+.c-btn.is-disabled svg path {
+  stroke: currentColor !important;
 }
 
 /* ==========================================================================
@@ -559,14 +561,15 @@ body {
   padding: 0;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 768px) {
   body {
     background-color: var(--color-base);
   }
   .app-container {
-    max-width: 100%;
-    width: 100%;
-    box-shadow: none;
+    max-width: 100% !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
   }
 }
 
@@ -1137,6 +1140,813 @@ body {
   line-height: var(--line-height-body);
 }
 
+/* ==========================================================================
+   iOS LOCK SCREEN & NOTIFICATIONS
+   ========================================================================== */
+.c-lock-screen {
+  background-color: #000;
+  position: relative;
+  --color-text-primary: #FFFFFF; /* Forces status bar component to render in white */
+}
+.c-lock-screen__wallpaper {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.c-lock-screen__overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%), rgba(0, 0, 0, 0.25);
+  background-blend-mode: linear-burn, normal;
+  z-index: 2;
+  pointer-events: none;
+}
+.c-lock-screen__progressive-blur {
+  width: 100%;
+  height: 62px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 4;
+  pointer-events: none;
+}
+.c-lock-screen__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 76px;
+  z-index: 5;
+  width: 100%;
+  position: relative;
+}
+.c-lock-screen__date {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 510;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  letter-spacing: -0.2px;
+  margin-bottom: 4px;
+  user-select: none;
+}
+.c-lock-screen__time {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 82px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1;
+  letter-spacing: -1.5px;
+  text-align: center;
+  user-select: none;
+}
+.c-lock-screen__notifications {
+  width: 100%;
+  padding: 0 16px;
+  position: absolute;
+  top: 260px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
 
+/* Glassmorphism Notification Card */
+.c-notification-card {
+  width: 100%;
+  min-height: 64px;
+  padding: 12px 16px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(30px) saturate(120%);
+  -webkit-backdrop-filter: blur(30px) saturate(120%);
+  border-radius: 20px;
+  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  user-select: none;
+  text-decoration: none;
+}
+.c-notification-card:active {
+  transform: scale(0.98);
+  opacity: 0.95;
+}
+.c-notification-card__icon-wrapper {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.c-notification-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.c-notification-card__title {
+  color: #FFFFFF;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.c-notification-card__desc {
+  color: rgba(255, 255, 255, 0.75);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+.c-notification-card__time {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  align-self: flex-start;
+  margin-top: 2px;
+}
 
+/* White theme overrides for lock screen status bar */
+.c-lock-screen .c-status-bar {
+  color: white;
+}
 
+/* Position status-bar and home-indicator above lock screen wallpaper overlays */
+.c-lock-screen #app-status-bar {
+  position: relative;
+  z-index: 10;
+}
+.c-lock-screen #app-home-indicator {
+  position: relative;
+  z-index: 10;
+}
+
+/* ==========================================================================
+   ENERGY SELECTION SCREEN
+   ========================================================================== */
+.c-energy-selection {
+  background-color: #FAF7F2;
+}
+
+.c-energy-selection #app-status-bar {
+  position: relative;
+  z-index: 10;
+}
+
+.c-energy-selection #app-home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.c-energy-selection__glow {
+  width: 390px;
+  height: 298px;
+  left: 0;
+  top: 0;
+  position: absolute;
+  background: #FAEAE0;
+  box-shadow: 100px 100px 100px rgba(250, 234, 224, 0.5);
+  filter: blur(50px);
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.c-energy-header {
+  position: absolute;
+  top: 77px;
+  left: 20px;
+  width: calc(100% - 40px);
+  max-width: 350px;
+  text-align: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.c-energy-bubble {
+  position: absolute;
+  display: block;
+  text-decoration: none;
+  color: #2E2A24;
+  outline: none;
+  border: none;
+  transition: filter 0.3s ease;
+}
+
+.c-energy-bubble--exhausted {
+  width: 621px;
+  height: 482px;
+  top: 189px;
+  left: calc(50% - 310.5px);
+  background-color: #F19E5A;
+  z-index: 2;
+  border-radius: 50%;
+}
+
+.c-energy-bubble--okay {
+  width: 683px;
+  height: 531px;
+  top: 371px;
+  left: calc(50% - 341.5px);
+  background-color: #FBE784;
+  z-index: 3;
+  border-radius: 50%;
+}
+
+.c-energy-bubble--fine {
+  width: 701px;
+  height: 543px;
+  top: 600px;
+  left: calc(50% - 350.5px);
+  background-color: #F8D959;
+  z-index: 4;
+  border-radius: 50%;
+}.c-energy-bubble:hover {
+  filter: brightness(1.03) saturate(1.05);
+}
+
+.c-energy-bubble__label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 36px;
+  color: #2E2A24;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  user-select: none;
+}
+
+.c-energy-bubble--exhausted .c-energy-bubble__label {
+  top: 65px;
+}
+
+.c-energy-bubble--okay .c-energy-bubble__label {
+  top: 112px;
+}
+
+.c-energy-bubble--fine .c-energy-bubble__label {
+  top: 87px;
+}
+
+.c-energy-bubble:hover .c-energy-bubble__label {
+  transform: translateY(-4px) scale(1.04);
+}
+
+/* ==========================================================================
+   BUTTONS COMPONENT
+   ========================================================================== */
+.c-btn {
+  width: 100%;
+  height: 56px;
+  padding: 16px 32px;
+  border-radius: 999px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-interface);
+  font-size: var(--font-size-button);
+  transition: var(--transition-smooth);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.c-btn--primary {
+  background-color: var(--color-action);
+  color: var(--color-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.c-btn--primary:hover {
+  background-color: #D06845;
+}
+
+.c-btn--primary:active {
+  background-color: #BE5A3A;
+}
+
+.c-btn--outlined {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-regular);
+  border: 1px solid var(--color-divider);
+}
+
+.c-btn--outlined:hover {
+  background-color: rgba(46, 42, 36, 0.04);
+  color: var(--color-text-primary);
+}
+
+.c-btn:disabled,
+.c-btn.is-disabled {
+  background-color: var(--color-disabled);
+  color: var(--color-text-ghost);
+  cursor: not-allowed;
+  border: none;
+}
+
+/* ==========================================================================
+   COOK ITEM PAGE (EXACT FIGMA SPACING)
+   ========================================================================== */
+.c-cook-item {
+  background-color: var(--color-base);
+}
+
+.c-cook-item #app-status-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 390px;
+  height: 54px;
+  z-index: 10;
+}
+
+.c-cook-item #app-home-indicator {
+  z-index: 10;
+}
+
+.c-cook-back {
+  position: absolute;
+  top: 68px;
+  left: 20px;
+  z-index: 10;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.c-cook-top-section {
+  width: 342.40px;
+  left: 24px;
+  top: 100px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 5;
+}
+
+.c-emoji-circle {
+  width: 120px;
+  height: 120px;
+  background-color: var(--color-surface-raised);
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+}
+
+.c-cook-info-stack {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.c-cook-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-display);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-display);
+  text-align: center;
+}
+
+.c-cook-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--color-text-secondary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+}
+
+.c-cook-meta__dot {
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-text-ghost);
+  border-radius: 50%;
+}
+
+.c-cook-meta__tag {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-ghost);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+}
+
+.c-cook-status {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  color: var(--color-success);
+  font-weight: var(--font-weight-regular);
+  text-align: center;
+}
+
+.c-cook-ingredients-drawer {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.c-cook-drawer-trigger {
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+}
+
+.c-cook-drawer-card {
+  align-self: stretch;
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  box-sizing: border-box;
+  padding: 0 16px;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease, padding 0.35s ease;
+}
+
+.c-cook-drawer-card.is-open {
+  max-height: 400px;
+  opacity: 1;
+  padding: 16px;
+}
+
+.c-cook-row {
+  align-self: stretch;
+  padding: 6px 0;
+  border-bottom: 0.8px solid rgba(46, 42, 36, 0.04);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+}
+
+.c-cook-row:last-of-type {
+  border-bottom: none;
+}
+
+.c-cook-row__name {
+  color: var(--color-text-primary);
+}
+
+.c-cook-row__qty {
+  color: var(--color-text-secondary);
+}
+
+.c-cook-drawer-note {
+  align-self: stretch;
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-ghost);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  line-height: var(--line-height-body-small);
+  text-align: left;
+}
+
+.c-cook-controls-area {
+  width: 100%;
+  padding: 8px 20px 24px;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  background: var(--color-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+/* ==========================================================================
+   COOKING TIMER COMPONENT STYLES
+   ========================================================================== */
+.c-timer {
+  width: 326px;
+  height: 326px;
+  position: relative;
+}
+
+/* Outer surrounding orbit dots */
+.c-timer__dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-accent); /* #F5C97A */
+  opacity: 0.25;
+  border-radius: 999px;
+}
+
+/* Absolute position for the 8 circular orbit dots */
+.c-timer__dot--1 { left: 301px; top: 163px; }
+.c-timer__dot--2 { left: 260.58px; top: 260.58px; }
+.c-timer__dot--3 { left: 163px; top: 301px; }
+.c-timer__dot--4 { left: 65.42px; top: 260.58px; }
+.c-timer__dot--5 { left: 25px; top: 163px; }
+.c-timer__dot--6 { left: 65.42px; top: 65.42px; }
+.c-timer__dot--7 { left: 163px; top: 25px; }
+.c-timer__dot--8 { left: 260.58px; top: 65.42px; }
+
+/* Shadow backing blur */
+.c-timer__blur-bg {
+  width: 320px;
+  height: 320px;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  background-color: rgba(247, 239, 229, 0.60);
+  box-shadow: 40px 40px 40px rgba(46, 42, 36, 0.05);
+  border-radius: 9999px;
+  filter: blur(20px);
+  z-index: 1;
+}
+
+/* Outer outline ring */
+.c-timer__ring-outer {
+  width: 290px;
+  height: 290px;
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  border: 1.50px rgba(224, 122, 85, 0.06) solid;
+  border-radius: 9999px;
+  z-index: 2;
+}
+
+/* Inner outline ring */
+.c-timer__ring-inner {
+  width: 258px;
+  height: 258px;
+  position: absolute;
+  left: 34px;
+  top: 34px;
+  border: 1px rgba(224, 122, 85, 0.08) solid;
+  border-radius: 9999px;
+  z-index: 3;
+}
+
+/* Main face plate */
+.c-timer__face {
+  width: 240px;
+  height: 240px;
+  position: absolute;
+  left: 43px;
+  top: 43px;
+  background-color: var(--color-surface);
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);
+  border: 1px var(--color-divider) solid;
+  border-radius: 9999px;
+  z-index: 4;
+}
+
+/* Radial track progress container */
+.c-timer__track-container {
+  width: 210px;
+  height: 210px;
+  position: absolute;
+  left: 58px;
+  top: 58px;
+  z-index: 5;
+}
+
+/* Radial Backdrop Ring */
+.c-timer__track-bg {
+  width: 210px;
+  height: 210px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 10px rgba(229, 221, 208, 0.50) solid;
+  border-radius: 9999px;
+}
+
+/* Radial Progress Ring (SVG implementation) */
+.c-timer__progress-ring {
+  width: 210px;
+  height: 210px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: rotate(-90deg);
+}
+
+.c-timer__progress-circle {
+  stroke: var(--color-action);
+  stroke-width: 10;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 628.3;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear;
+}
+
+/* Inner Center Plate */
+.c-timer__inner-plate {
+  width: 170px;
+  height: 170px;
+  position: absolute;
+  left: 78px;
+  top: 78px;
+  background-color: var(--color-surface-raised);
+  box-shadow: 0px -1px 6px rgba(255, 255, 255, 0.50) inset;
+  border-radius: 9999px;
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Text display */
+.c-timer__text {
+  text-align: center;
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: var(--font-weight-regular);
+  line-height: 52px;
+  user-select: none;
+}
+
+/* ==========================================================================
+   COOKING FLOW EXTENSIONS (COOKING NOW & PREP FOR TOMORROW)
+   ========================================================================== */
+.c-cooking-time-top {
+  width: 342.40px;
+  left: 24px;
+  top: 166px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 5;
+}
+
+.c-timer-note {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 642px;
+  text-align: center;
+  width: 280px;
+  color: var(--color-text-secondary);
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  z-index: 5;
+}
+
+.c-prep-glow {
+  width: 262px;
+  height: 198px;
+  left: 64px;
+  top: 251px;
+  position: absolute;
+  background: #FFF2DD;
+  box-shadow: 120px 120px 120px rgba(224, 122, 85, 0.15);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.c-prep-top-section {
+  width: 276px;
+  left: 57px;
+  top: 166px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  z-index: 5;
+}
+
+.c-prep-title-stack {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.c-prep-label {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-text-ghost);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: var(--line-height-label);
+}
+
+.c-prep-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-display);
+  text-align: center;
+  margin: 0;
+}
+
+.c-prep-duration {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  color: var(--color-text-ghost);
+  text-align: center;
+  line-height: var(--line-height-body);
+}
+
+.c-prep-body-stack {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.c-prep-emoji-circle {
+  width: 120px;
+  height: 120px;
+  background-color: var(--color-surface-raised);
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+}
+
+.c-prep-name {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin: 0;
+}
+
+.c-prep-action-instruction {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  color: var(--color-action);
+  text-align: center;
+  line-height: var(--line-height-body);
+}
+
+.c-prep-desc {
+  font-family: var(--font-interface);
+  font-size: var(--font-size-body);
+  color: var(--color-text-secondary);
+  text-align: center;
+  line-height: var(--line-height-body);
+  align-self: stretch;
+}

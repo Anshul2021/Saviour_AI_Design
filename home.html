@@ -97,73 +97,126 @@
       </div>
 
       <!-- 3. TONIGHT HERO CARD -->
-      <div class="card" style="background-color: var(--color-surface); border-radius: 16px; padding: 20px; gap: 0;">
-        <span class="text-label" style="font-size: 11px; margin-bottom: 6px;">Tonight's meal</span>
-        <h2 class="text-display" style="font-size: 34px; font-variation-settings: 'opsz' 9; line-height: 1.1; margin-bottom: var(--space-sm);">Rajma Rice</h2>
-        
-        <!-- Meta row -->
-        <div style="display: flex; gap: var(--space-xs); flex-wrap: wrap; align-items: center; margin-bottom: var(--space-md);">
-          <div class="meta-pill">
-            <i data-lucide="clock" class="icon" style="width: 14px; height: 14px;"></i>
-            <span>35 min</span>
+      <div class="card" style="background-color: var(--color-surface); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: var(--space-md); border: none; box-shadow: none;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
+          <div>
+            <span class="text-label" style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; display: block;">Tonight's meal</span>
+            <h2 class="text-display" style="font-size: 28px; font-variation-settings: 'opsz' 9; line-height: 1.2; margin-bottom: 8px;">Rajma Rice</h2>
+            
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+              <span class="tag okay" style="background-color: var(--color-accent); color: var(--color-text-primary); font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 500; font-family: var(--font-family-ui); text-transform: uppercase; letter-spacing: 0.05em;">Okay Energy</span>
+              <span style="font-family: var(--font-family-ui); font-size: 13px; color: var(--color-text-secondary); display: flex; align-items: center; gap: 4px;">
+                <i data-lucide="clock" class="icon" style="width: 14px; height: 14px; stroke: var(--color-text-secondary);"></i> 35m
+              </span>
+              <span style="font-family: var(--font-family-ui); font-size: 13px; color: var(--color-text-secondary); display: flex; align-items: center; gap: 4px;">
+                <i data-lucide="home" class="icon" style="width: 14px; height: 14px; stroke: var(--color-text-secondary);"></i> All at home
+              </span>
+            </div>
           </div>
-          <div class="meta-pill">
-            <i data-lucide="home" class="icon" style="width: 14px; height: 14px;"></i>
-            <span>All at home</span>
+          
+          <div style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--color-surface-raised); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <img src="https://img.icons8.com/emoji/96/beans-emoji.png" alt="Rajma" style="width: 40px; height: 40px; object-fit: contain;">
           </div>
-          <span class="tag okay">Okay</span>
         </div>
-        
-        <!-- Primary CTA -->
-        <button id="start-cooking-cta" class="btn-primary" style="width: 100%; border-radius: 999px;">
-          Start Cooking →
-        </button>
-        
-        <!-- Ghost action -->
-        <button id="not-tonight-cta" class="btn-ghost" style="margin-top: 8px; width: 100%; text-align: center;">
-          Not tonight
-        </button>
+
+        <div style="display: flex; gap: var(--space-sm); align-items: center; width: 100%; margin-top: 4px;">
+          <button id="start-cooking-cta" class="btn-primary" style="flex: 2; padding: 12px var(--space-md); font-size: 14px; font-weight: 500; border-radius: 999px;">
+            Start Cooking
+          </button>
+          <button id="not-tonight-cta" class="btn-ghost" style="flex: 1; padding: 12px 0; font-size: 13px; font-weight: 300; text-align: center; height: 44px; display: flex; align-items: center; justify-content: center; color: var(--color-text-ghost);">
+            Not tonight
+          </button>
+        </div>
       </div>
 
-      <!-- 4. WEEK STRIP -->
+      <!-- 4. WEEK CALENDAR CARD -->
       <div class="section-header">
         <span class="section-title">This week</span>
       </div>
       
-      <div class="week-strip">
-        <!-- Mon (done, faded) -->
-        <div class="day-card state-done">
-          <span class="day-abbr">Mon</span>
-          <span class="day-meal">Warm tomato stew</span>
-          <div class="day-indicator"></div>
+      <div class="calendar-card" style="background-color: var(--color-surface); border-radius: 16px; padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-md);">
+        <!-- Days Row -->
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          
+          <!-- Monday -->
+          <div class="calendar-day-btn state-done" data-day="Mon" data-meal="Warm tomato stew" data-status="Cooked on Monday" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; flex: 1; padding: 8px 0; border-radius: 10px; transition: background-color 0.2s ease;">
+            <span style="font-family: var(--font-family-ui); font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--color-text-secondary); opacity: 0.6;">M</span>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-surface-raised); display: flex; align-items: center; justify-content: center; position: relative;">
+              <span style="font-family: var(--font-family-ui); font-size: 14px; font-weight: 500; color: var(--color-text-primary); opacity: 0.5;">14</span>
+              <!-- Done checkmark indicator -->
+              <div style="position: absolute; bottom: -2px; right: -2px; width: 12px; height: 12px; border-radius: 50%; background-color: var(--color-success); display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="check" style="width: 8px; height: 8px; stroke: var(--color-text-primary); stroke-width: 3px;"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tuesday -->
+          <div class="calendar-day-btn state-done" data-day="Tue" data-meal="Mushroom pasta" data-status="Cooked on Tuesday" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; flex: 1; padding: 8px 0; border-radius: 10px; transition: background-color 0.2s ease;">
+            <span style="font-family: var(--font-family-ui); font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--color-text-secondary); opacity: 0.6;">T</span>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-surface-raised); display: flex; align-items: center; justify-content: center; position: relative;">
+              <span style="font-family: var(--font-family-ui); font-size: 14px; font-weight: 500; color: var(--color-text-primary); opacity: 0.5;">15</span>
+              <div style="position: absolute; bottom: -2px; right: -2px; width: 12px; height: 12px; border-radius: 50%; background-color: var(--color-success); display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="check" style="width: 8px; height: 8px; stroke: var(--color-text-primary); stroke-width: 3px;"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wednesday -->
+          <div class="calendar-day-btn state-done" data-day="Wed" data-meal="Dal Chawal" data-status="Cooked on Wednesday" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; flex: 1; padding: 8px 0; border-radius: 10px; transition: background-color 0.2s ease;">
+            <span style="font-family: var(--font-family-ui); font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--color-text-secondary); opacity: 0.6;">W</span>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-surface-raised); display: flex; align-items: center; justify-content: center; position: relative;">
+              <span style="font-family: var(--font-family-ui); font-size: 14px; font-weight: 500; color: var(--color-text-primary); opacity: 0.5;">16</span>
+              <div style="position: absolute; bottom: -2px; right: -2px; width: 12px; height: 12px; border-radius: 50%; background-color: var(--color-success); display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="check" style="width: 8px; height: 8px; stroke: var(--color-text-primary); stroke-width: 3px;"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thursday (Today, highlighted) -->
+          <div class="calendar-day-btn active-today" data-day="Thu" data-meal="Rajma Rice" data-status="Planned for Tonight" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; flex: 1; padding: 8px 0; border-radius: 10px; background-color: var(--color-surface-raised); border: 1.5px solid var(--color-action);">
+            <span style="font-family: var(--font-family-ui); font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--color-action);">T</span>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-base); display: flex; align-items: center; justify-content: center; position: relative;">
+              <span style="font-family: var(--font-family-ui); font-size: 14px; font-weight: 500; color: var(--color-text-primary);">17</span>
+              <!-- Action dot indicator -->
+              <div style="position: absolute; bottom: -2px; right: -2px; width: 10px; height: 10px; border-radius: 50%; background-color: var(--color-action);"></div>
+            </div>
+          </div>
+
+          <!-- Friday -->
+          <div class="calendar-day-btn" data-day="Fri" data-meal="Khichdi" data-status="Planned for Friday" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; flex: 1; padding: 8px 0; border-radius: 10px; transition: background-color 0.2s ease;">
+            <span style="font-family: var(--font-family-ui); font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--color-text-secondary);">F</span>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-surface-raised); display: flex; align-items: center; justify-content: center;">
+              <span style="font-family: var(--font-family-ui); font-size: 14px; font-weight: 500; color: var(--color-text-primary);">18</span>
+            </div>
+          </div>
+
+          <!-- Saturday -->
+          <div class="calendar-day-btn" data-day="Sat" data-meal="Poha" data-status="Planned for Saturday" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; flex: 1; padding: 8px 0; border-radius: 10px; transition: background-color 0.2s ease;">
+            <span style="font-family: var(--font-family-ui); font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--color-text-secondary);">S</span>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-surface-raised); display: flex; align-items: center; justify-content: center;">
+              <span style="font-family: var(--font-family-ui); font-size: 14px; font-weight: 500; color: var(--color-text-primary);">19</span>
+            </div>
+          </div>
+
+          <!-- Sunday -->
+          <div class="calendar-day-btn" data-day="Sun" data-meal="Sandwich" data-status="Planned for Sunday" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; flex: 1; padding: 8px 0; border-radius: 10px; transition: background-color 0.2s ease;">
+            <span style="font-family: var(--font-family-ui); font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--color-text-secondary);">S</span>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-surface-raised); display: flex; align-items: center; justify-content: center;">
+              <span style="font-family: var(--font-family-ui); font-size: 14px; font-weight: 500; color: var(--color-text-primary);">20</span>
+            </div>
+          </div>
+
         </div>
-        
-        <!-- Tue (done, faded) -->
-        <div class="day-card state-done">
-          <span class="day-abbr">Tue</span>
-          <span class="day-meal">Mushroom pasta</span>
-          <div class="day-indicator"></div>
-        </div>
-        
-        <!-- Wed (done, faded) -->
-        <div class="day-card state-done">
-          <span class="day-abbr">Wed</span>
-          <span class="day-meal">Dal Chawal</span>
-          <div class="day-indicator"></div>
-        </div>
-        
-        <!-- Thu (today, active) -->
-        <div class="day-card state-today" style="border: 1.5px solid var(--color-action);">
-          <span class="day-abbr">Thu</span>
-          <span class="day-meal">Rajma Rice</span>
-          <div class="day-indicator"></div>
-        </div>
-        
-        <!-- Fri (upcoming) -->
-        <div class="day-card">
-          <span class="day-abbr">Fri</span>
-          <span class="day-meal">Khichdi</span>
-          <div class="day-indicator"></div>
+
+        <!-- Meal Details Card Sub-panel -->
+        <div id="calendar-meal-details" style="background-color: var(--color-surface-raised); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; transition: opacity 0.2s ease, transform 0.2s ease;">
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <span id="calendar-meal-status" class="text-label" style="font-size: 10px; color: var(--color-action); letter-spacing: 0.05em;">Planned for Tonight</span>
+            <span id="calendar-meal-name" style="font-family: var(--font-family-display); font-size: 18px; color: var(--color-text-primary); font-variation-settings: 'opsz' 144;">Rajma Rice</span>
+          </div>
+          <div style="color: var(--color-text-secondary); display: flex; align-items: center;">
+            <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
+          </div>
         </div>
       </div>
 
@@ -300,13 +353,62 @@
         });
       }
 
-      // Quick interactive feedback for day cards (simulate viewing different days)
-      const dayCards = document.querySelectorAll('.day-card');
-      dayCards.forEach(card => {
-        card.addEventListener('click', () => {
-          // Highlight tapped card (only within upcoming/today for selection simplicity)
-          dayCards.forEach(c => c.style.borderColor = 'transparent');
-          card.style.borderColor = 'var(--color-action)';
+      // Interactive calendar view switching
+      const calendarBtns = document.querySelectorAll('.calendar-day-btn');
+      const mealDetailsContainer = document.getElementById('calendar-meal-details');
+      const mealNameText = document.getElementById('calendar-meal-name');
+      const mealStatusText = document.getElementById('calendar-meal-status');
+
+      calendarBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Reset all buttons' styles
+          calendarBtns.forEach(b => {
+            if (b.classList.contains('active-today')) {
+              // Reset today style
+              b.style.backgroundColor = 'var(--color-surface-raised)';
+              b.style.border = '1.5px solid transparent';
+              const letter = b.querySelector('span');
+              if (letter) letter.style.color = 'var(--color-text-secondary)';
+            } else {
+              // Reset other days' style
+              b.style.backgroundColor = 'transparent';
+              b.style.border = 'none';
+            }
+          });
+
+          // Style the clicked button
+          if (btn.classList.contains('active-today')) {
+            btn.style.border = '1.5px solid var(--color-action)';
+            const letter = btn.querySelector('span');
+            if (letter) letter.style.color = 'var(--color-action)';
+          } else {
+            btn.style.backgroundColor = 'var(--color-surface-raised)';
+            btn.style.borderRadius = '10px';
+          }
+
+          // Trigger smooth fade out transition for meal details
+          mealDetailsContainer.style.opacity = '0';
+          mealDetailsContainer.style.transform = 'translateY(2px)';
+
+          setTimeout(() => {
+            // Update texts based on dataset attributes
+            const meal = btn.getAttribute('data-meal');
+            const status = btn.getAttribute('data-status');
+            mealNameText.innerText = meal;
+            mealStatusText.innerText = status;
+
+            // Set color of status text depending on category
+            if (btn.classList.contains('state-done')) {
+              mealStatusText.style.color = 'var(--color-success)';
+            } else if (btn.classList.contains('active-today')) {
+              mealStatusText.style.color = 'var(--color-action)';
+            } else {
+              mealStatusText.style.color = 'var(--color-text-secondary)';
+            }
+
+            mealDetailsContainer.style.opacity = '1';
+            mealDetailsContainer.style.transform = 'translateY(0)';
+          }, 150);
         });
       });
     });

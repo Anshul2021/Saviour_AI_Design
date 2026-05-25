@@ -503,13 +503,21 @@ function initMealSelection() {
   const grid = document.querySelector('.js-meals-grid');
   if (!grid) return;
 
+  initCustomMealSheet(grid);
+
   grid.addEventListener('click', (e) => {
+    const showMore = e.target.closest('.js-show-more-meals');
+    if (showMore) {
+      revealExtraMeals(grid, showMore);
+      return;
+    }
+
     const option = e.target.closest('.js-meal-option');
     if (!option) return;
 
     // Handle Custom Meal Addition (Onboarding only)
     if (option.classList.contains('c-meal-option--custom')) {
-      handleAddCustomMeal(grid);
+      openCustomMealSheet();
       return;
     }
 
@@ -544,25 +552,107 @@ function updateSelectedCount() {
 }
 
 /**
- * Prompts user to add a custom meal option to the grid
+ * Reveals the additional meal options after the compact first list.
  */
-function handleAddCustomMeal(grid) {
-  const mealName = prompt('Enter the name of your custom meal:');
-  if (!mealName || mealName.trim() === '') return;
+function revealExtraMeals(grid, trigger) {
+  trigger.setAttribute('aria-expanded', 'true');
+  trigger.hidden = true;
+  grid.classList.add('is-expanded');
 
+  const extraMeals = grid.querySelectorAll('.c-meal-option--extra');
+  extraMeals.forEach((meal, index) => {
+    meal.hidden = false;
+    window.requestAnimationFrame(() => {
+      meal.style.transitionDelay = `${Math.min(index * 35, 260)}ms`;
+      meal.classList.add('is-revealed');
+    });
+  });
+}
+
+/**
+ * Initializes the custom meal bottom sheet form.
+ */
+function initCustomMealSheet(grid) {
+  const form = document.getElementById('custom-meal-form');
+  const overlay = document.getElementById('custom-meal-overlay');
+  if (!form || form.dataset.bound === 'true') return;
+
+  form.dataset.bound = 'true';
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = document.getElementById('custom-meal-name');
+    const vegInput = document.getElementById('custom-meal-veg');
+    const mealName = input ? input.value.trim() : '';
+
+    if (!mealName) {
+      if (input) input.focus();
+      return;
+    }
+
+    handleAddCustomMeal(grid, mealName, Boolean(vegInput && vegInput.checked));
+    form.reset();
+    if (vegInput) vegInput.checked = true;
+    closeCustomMealSheet();
+  });
+
+  if (overlay) {
+    overlay.addEventListener('click', closeCustomMealSheet);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeCustomMealSheet();
+    }
+  });
+}
+
+/**
+ * Opens the custom meal bottom sheet.
+ */
+function openCustomMealSheet() {
+  const sheet = document.getElementById('custom-meal-sheet');
+  const overlay = document.getElementById('custom-meal-overlay');
+  const input = document.getElementById('custom-meal-name');
+
+  if (!sheet || !overlay) return;
+
+  overlay.classList.add('is-visible');
+  sheet.classList.add('is-visible');
+  sheet.setAttribute('aria-hidden', 'false');
+
+  window.setTimeout(() => {
+    if (input) input.focus();
+  }, 180);
+}
+
+/**
+ * Closes the custom meal bottom sheet.
+ */
+function closeCustomMealSheet() {
+  const sheet = document.getElementById('custom-meal-sheet');
+  const overlay = document.getElementById('custom-meal-overlay');
+
+  if (overlay) overlay.classList.remove('is-visible');
+  if (sheet) {
+    sheet.classList.remove('is-visible');
+    sheet.setAttribute('aria-hidden', 'true');
+  }
+}
+
+/**
+ * Adds a custom meal option to the grid with the default food image.
+ */
+function handleAddCustomMeal(grid, mealName, isVeg) {
   // Create new meal option container
   const newOption = document.createElement('div');
-  newOption.className = 'c-meal-option js-meal-option is-selected';
-  newOption.setAttribute('data-veg', 'true'); // Default custom meals as veg/general
+  newOption.className = 'c-meal-option js-meal-option c-meal-option--extra is-revealed';
+  newOption.setAttribute('data-veg', isVeg ? 'true' : 'false');
 
   newOption.innerHTML = `
     <div class="c-meal-option__avatar-wrapper">
       <div class="c-meal-option__avatar">
-        <!-- Image Placeholder (fallback when not selected) -->
-        <div class="c-meal-option__img-placeholder">
-          <span>${mealName.trim().charAt(0).toUpperCase()}</span>
-        </div>
-        <!-- Checkmark Overlay (shown when selected) -->
+        <img src="Assets/Dishes/Khichidi.png" alt="${escapeHTML(mealName)}" class="c-meal-option__img">
         <div class="c-meal-option__check">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -570,7 +660,7 @@ function handleAddCustomMeal(grid) {
         </div>
       </div>
     </div>
-    <span class="c-meal-option__label">${mealName.trim()}</span>
+    <span class="c-meal-option__label">${escapeHTML(mealName)}</span>
   `;
 
   // Insert before the Custom Add button
@@ -579,6 +669,16 @@ function handleAddCustomMeal(grid) {
 
   // Recalculate selected counts
   updateSelectedCount();
+}
+
+function escapeHTML(value) {
+  return value.replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  }[char]));
 }
 
 /**

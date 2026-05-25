@@ -764,13 +764,21 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  gap: 10px;
+  padding: 12px 8px;
   border-bottom: 0.80px solid var(--color-divider);
-  opacity: 0.5; /* Default unchecked state is dimmed */
-  transition: opacity var(--transition-smooth);
+  border-radius: var(--radius-lg);
+  opacity: 1;
+  cursor: pointer;
+  transition: background-color 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease, transform 0.24s ease;
 }
 .c-pantry-row.is-selected {
-  opacity: 1; /* Fully opaque when checked */
+  background-color: transparent;
+  border-bottom-color: var(--color-divider);
+  box-shadow: none;
+}
+.c-pantry-row:hover {
+  background-color: rgba(240, 233, 222, 0.34);
 }
 
 /* Row Left Side Group */
@@ -778,6 +786,8 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  flex: 1;
 }
 .c-pantry-row__img {
   width: 24px;
@@ -791,6 +801,7 @@ body {
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body);
+  min-width: 0;
 }
 
 /* Row Right Side Controls Group */
@@ -798,13 +809,23 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  opacity: 0.5; /* Default disabled controls appearance */
-  pointer-events: none; /* Disable click interactions when row is unchecked */
-  transition: opacity var(--transition-smooth);
+  max-width: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateX(10px) scale(0.96);
+  transform-origin: right center;
+  transition: max-width 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease, visibility 0.2s ease, transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .c-pantry-row.is-selected .c-pantry-row__right {
+  max-width: 220px;
   opacity: 1;
-  pointer-events: auto; /* Enable controls when checked */
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0) scale(1);
 }
 
 /* Reusable Checkbox Component */
@@ -812,7 +833,7 @@ body {
   width: 24px;
   height: 24px;
   background-color: var(--color-base);
-  border: 1px solid var(--color-text-ghost);
+  border: 1px solid var(--color-text-secondary);
   border-radius: 6px;
   display: inline-flex;
   justify-content: center;
@@ -821,10 +842,13 @@ body {
   transition: var(--transition-smooth);
   outline-offset: -1px;
 }
+.c-pantry-row:hover .c-checkbox {
+  border-color: var(--color-action);
+}
 .c-checkbox.is-selected {
-  background-color: var(--color-text-primary);
-  border-color: var(--color-text-primary);
-  outline: 1px var(--color-text-primary) solid;
+  background-color: var(--color-action);
+  border-color: var(--color-action);
+  outline: none;
 }
 .c-checkbox svg {
   width: 14px;
@@ -918,9 +942,10 @@ body {
 
 /* Static Badge Pill */
 .c-static-badge {
-  padding: 4px 10px;
+  gap: 2px;
+  padding: 4px 8px;
   background-color: var(--color-surface);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
   color: var(--color-text-primary);
   font-family: var(--font-interface);
   font-size: var(--font-size-body);
@@ -931,6 +956,32 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: text;
+  border: 1px solid transparent;
+  transition: var(--transition-smooth);
+}
+.c-static-badge:hover,
+.c-static-badge:focus-within {
+  background-color: var(--color-surface-raised);
+  border-color: rgba(224, 122, 85, 0.22);
+}
+.c-static-badge__input {
+  width: 3ch;
+  min-width: 2ch;
+  max-width: 5ch;
+  padding: 0;
+  color: var(--color-text-primary);
+  font: inherit;
+  line-height: inherit;
+  text-align: right;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+.c-static-badge__unit {
+  color: var(--color-text-secondary);
+  font: inherit;
+  line-height: inherit;
 }
 
 /* Search Bar (Centered on Mobile Grid) */
@@ -1003,6 +1054,13 @@ body {
   display: flex;
   flex-direction: column;
   padding-bottom: 24px;
+}
+.c-pantry-category-title {
+  margin: 16px 8px 6px;
+  font-weight: var(--font-weight-medium);
+}
+.c-pantry-category-title:first-child {
+  margin-top: 0;
 }
 .pantry-list-container::-webkit-scrollbar {
   width: 4px;

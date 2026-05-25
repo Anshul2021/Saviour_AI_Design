@@ -58,15 +58,18 @@
         <button class="c-filter-chip" data-category="pantry">Pantry</button>
         <button class="c-filter-chip" data-category="vegetables">Vegetables</button>
         <button class="c-filter-chip" data-category="dairy-eggs">Dairy & Eggs</button>
+        <button class="c-filter-chip" data-category="spices-basics">Spices & Basics</button>
         <button class="c-filter-chip" data-category="quick">Quick Items</button>
       </div>
 
       <!-- Scrollable Ingredients List Container -->
       <div class="pantry-list-container scrollable-area" id="pantry-list">
-        
+
+        <div class="c-pantry-category-title ty-ghost text-secondary">Pantry</div>
         <!-- 1. Rice -->
-        <div class="c-pantry-row" data-categories="pantry" id="row-rice">
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-rice">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -95,8 +98,9 @@
         </div>
 
         <!-- 2. Dal (toor) -->
-        <div class="c-pantry-row" data-categories="pantry" id="row-dal-toor">
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-dal-toor">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -124,46 +128,17 @@
           </div>
         </div>
 
-        <!-- 3. Dal (moong) -->
-        <div class="c-pantry-row" data-categories="pantry" id="row-dal-moong">
+        <!-- 3. Atta -->
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-atta">
           <div class="c-pantry-row__left">
-            <div class="c-checkbox">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <img src="https://img.icons8.com/emoji/96/beans-emoji.png" alt="Dal (moong)" class="c-pantry-row__img">
-            <span class="c-pantry-row__label">Dal (moong)</span>
-          </div>
-          <div class="c-pantry-row__right">
-            <span class="c-static-badge">1kg</span>
-            <div class="c-pantry-dropdown">
-              <span class="c-pantry-dropdown__label">Full</span>
-              <span class="c-pantry-dropdown__arrow">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <select class="c-pantry-dropdown__select">
-                <option value="Full" selected>Full</option>
-                <option value="Half">Half</option>
-                <option value="More than half">More than half</option>
-                <option value="Less than half">Less than half</option>
-              </select>
-            </div>
-          </div>
-        </div>
 
-        <!-- 4. Atta (wheat flour) -->
-        <div class="c-pantry-row" data-categories="pantry" id="row-atta">
-          <div class="c-pantry-row__left">
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
             <img src="https://img.icons8.com/emoji/96/sheaf-of-rice-emoji.png" alt="Atta" class="c-pantry-row__img">
-            <span class="c-pantry-row__label">Atta (wheat flour)</span>
+            <span class="c-pantry-row__label">Atta</span>
           </div>
           <div class="c-pantry-row__right">
             <span class="c-static-badge">10kg</span>
@@ -184,29 +159,41 @@
           </div>
         </div>
 
-        <!-- 5. Bread -->
-        <div class="c-pantry-row" data-categories="pantry quick" id="row-bread">
+        <!-- 4. Poha -->
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-poha">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <img src="https://img.icons8.com/emoji/96/bread-emoji.png" alt="Bread" class="c-pantry-row__img">
-            <span class="c-pantry-row__label">Bread</span>
+            <img src="https://img.icons8.com/emoji/96/bowl-with-spoon-emoji.png" alt="Poha" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Poha</span>
           </div>
           <div class="c-pantry-row__right">
-            <div class="c-stepper">
-              <button class="c-stepper__btn">−</button>
-              <span class="c-stepper__val">1</span>
-              <button class="c-stepper__btn">+</button>
+            <span class="c-static-badge">500g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
             </div>
           </div>
         </div>
 
-        <!-- 6. Maggi -->
-        <div class="c-pantry-row" data-categories="pantry quick" id="row-maggi">
+        <!-- 5. Maggi -->
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-maggi">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -217,96 +204,371 @@
           </div>
           <div class="c-pantry-row__right">
             <div class="c-stepper">
-              <button class="c-stepper__btn">−</button>
+              <button class="c-stepper__btn">-</button>
               <span class="c-stepper__val">2</span>
               <button class="c-stepper__btn">+</button>
             </div>
           </div>
         </div>
 
-        <!-- 7. Onions -->
-        <div class="c-pantry-row" data-categories="vegetables" id="row-onions">
+        <!-- 6. Pasta -->
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-pasta">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <img src="https://img.icons8.com/emoji/96/onion-emoji.png" alt="Onions" class="c-pantry-row__img">
-            <span class="c-pantry-row__label">Onions</span>
+            <img src="https://img.icons8.com/emoji/96/spaghetti-emoji.png" alt="Pasta" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Pasta</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">500g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Full</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full" selected>Full</option>
+                <option value="Half">Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Oats -->
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-oats">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/bowl-with-spoon-emoji.png" alt="Oats" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Oats</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">500g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Full</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full" selected>Full</option>
+                <option value="Half">Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Rajma -->
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-rajma">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/beans-emoji.png" alt="Rajma" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Rajma</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">1kg</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. Chole -->
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-chole">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/beans-emoji.png" alt="Chole" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Chole</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">1kg</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. Vermicelli -->
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-vermicelli">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/spaghetti-emoji.png" alt="Vermicelli" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Vermicelli</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">500g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Full</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full" selected>Full</option>
+                <option value="Half">Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. Bread -->
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-bread">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/bread-emoji.png" alt="Bread" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Bread</span>
           </div>
           <div class="c-pantry-row__right">
             <div class="c-stepper">
-              <button class="c-stepper__btn">−</button>
+              <button class="c-stepper__btn">-</button>
+              <span class="c-stepper__val">1</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. Cooking oil -->
+        <div class="c-pantry-row" data-categories="pantry" id="row-pantry-cooking-oil">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/olive-oil-emoji.png" alt="Cooking oil" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Cooking oil</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">1L</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-pantry-category-title ty-ghost text-secondary">Vegetables</div>
+        <!-- 13. Onion -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-onion">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/onion-emoji.png" alt="Onion" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Onion</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <div class="c-stepper">
+              <button class="c-stepper__btn">-</button>
               <span class="c-stepper__val">3</span>
               <button class="c-stepper__btn">+</button>
             </div>
           </div>
         </div>
 
-        <!-- 8. Tomatoes -->
-        <div class="c-pantry-row" data-categories="vegetables" id="row-tomatoes">
+        <!-- 14. Tomato -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-tomato">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <img src="https://img.icons8.com/emoji/96/tomato-emoji.png" alt="Tomatoes" class="c-pantry-row__img">
-            <span class="c-pantry-row__label">Tomatoes</span>
+            <img src="https://img.icons8.com/emoji/96/tomato-emoji.png" alt="Tomato" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Tomato</span>
           </div>
           <div class="c-pantry-row__right">
             <div class="c-stepper">
-              <button class="c-stepper__btn">−</button>
+              <button class="c-stepper__btn">-</button>
               <span class="c-stepper__val">2</span>
               <button class="c-stepper__btn">+</button>
             </div>
           </div>
         </div>
 
-        <!-- 9. Potatoes -->
-        <div class="c-pantry-row" data-categories="vegetables" id="row-potatoes">
+        <!-- 15. Potato -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-potato">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <img src="https://img.icons8.com/emoji/96/potato-emoji.png" alt="Potatoes" class="c-pantry-row__img">
-            <span class="c-pantry-row__label">Potatoes</span>
+            <img src="https://img.icons8.com/emoji/96/potato-emoji.png" alt="Potato" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Potato</span>
           </div>
           <div class="c-pantry-row__right">
             <div class="c-stepper">
-              <button class="c-stepper__btn">−</button>
+              <button class="c-stepper__btn">-</button>
               <span class="c-stepper__val">4</span>
               <button class="c-stepper__btn">+</button>
             </div>
           </div>
         </div>
 
-        <!-- 10. Green chillies -->
-        <div class="c-pantry-row" data-categories="vegetables" id="row-green-chillies">
+        <!-- 16. Green chilli -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-green-chilli">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <img src="https://img.icons8.com/emoji/96/hot-pepper-emoji.png" alt="Green chillies" class="c-pantry-row__img">
-            <span class="c-pantry-row__label">Green chillies</span>
+            <img src="https://img.icons8.com/emoji/96/hot-pepper-emoji.png" alt="Green chilli" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Green chilli</span>
           </div>
           <div class="c-pantry-row__right">
             <div class="c-stepper">
-              <button class="c-stepper__btn">−</button>
+              <button class="c-stepper__btn">-</button>
               <span class="c-stepper__val">5</span>
               <button class="c-stepper__btn">+</button>
             </div>
           </div>
         </div>
 
-        <!-- 11. Coriander -->
-        <div class="c-pantry-row" data-categories="vegetables" id="row-coriander">
+        <!-- 17. Ginger -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-ginger">
           <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/ginger-root-emoji.png" alt="Ginger" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Ginger</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">100g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 18. Garlic -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-garlic">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/garlic-emoji.png" alt="Garlic" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Garlic</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">100g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 19. Coriander -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-coriander">
+          <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -316,49 +578,49 @@
             <span class="c-pantry-row__label">Coriander</span>
           </div>
           <div class="c-pantry-row__right">
-            <!-- Static items have no additional controls -->
+            <span class="c-static-badge">1 bunch</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <!-- 12. Ginger-garlic paste -->
-        <div class="c-pantry-row" data-categories="vegetables quick" id="row-ginger-garlic">
+        <!-- 20. Lemon -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-lemon">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <img src="https://img.icons8.com/emoji/96/garlic-emoji.png" alt="Ginger-garlic paste" class="c-pantry-row__img">
-            <span class="c-pantry-row__label">Ginger-garlic paste</span>
-          </div>
-          <div class="c-pantry-row__right">
-            <!-- Static items have no additional controls -->
-          </div>
-        </div>
-
-        <!-- 13. Carrots -->
-        <div class="c-pantry-row" data-categories="vegetables" id="row-carrots">
-          <div class="c-pantry-row__left">
-            <div class="c-checkbox">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <img src="https://img.icons8.com/emoji/96/carrot-emoji.png" alt="Carrots" class="c-pantry-row__img">
-            <span class="c-pantry-row__label">Carrots</span>
+            <img src="https://img.icons8.com/emoji/96/lemon-emoji.png" alt="Lemon" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Lemon</span>
           </div>
           <div class="c-pantry-row__right">
             <div class="c-stepper">
-              <button class="c-stepper__btn">−</button>
+              <button class="c-stepper__btn">-</button>
               <span class="c-stepper__val">2</span>
               <button class="c-stepper__btn">+</button>
             </div>
           </div>
         </div>
 
-        <!-- 14. Capsicum -->
-        <div class="c-pantry-row" data-categories="vegetables" id="row-capsicum">
+        <!-- 21. Capsicum -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-capsicum">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -369,16 +631,112 @@
           </div>
           <div class="c-pantry-row__right">
             <div class="c-stepper">
-              <button class="c-stepper__btn">−</button>
+              <button class="c-stepper__btn">-</button>
               <span class="c-stepper__val">2</span>
               <button class="c-stepper__btn">+</button>
             </div>
           </div>
         </div>
 
-        <!-- 15. Milk -->
-        <div class="c-pantry-row" data-categories="dairy-eggs quick" id="row-milk">
+        <!-- 22. Carrot -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-carrot">
           <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/carrot-emoji.png" alt="Carrot" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Carrot</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <div class="c-stepper">
+              <button class="c-stepper__btn">-</button>
+              <span class="c-stepper__val">2</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 23. Peas -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-peas">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/pea-pod-emoji.png" alt="Peas" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Peas</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">250g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Full</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full" selected>Full</option>
+                <option value="Half">Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 24. Cucumber -->
+        <div class="c-pantry-row" data-categories="vegetables" id="row-vegetables-cucumber">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/cucumber-emoji.png" alt="Cucumber" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Cucumber</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <div class="c-stepper">
+              <button class="c-stepper__btn">-</button>
+              <span class="c-stepper__val">1</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-pantry-category-title ty-ghost text-secondary">Dairy & Eggs</div>
+        <!-- 25. Eggs -->
+        <div class="c-pantry-row" data-categories="dairy-eggs" id="row-dairy-eggs-eggs">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/egg-emoji.png" alt="Eggs" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Eggs</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <div class="c-stepper">
+              <button class="c-stepper__btn">-</button>
+              <span class="c-stepper__val">6</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 26. Milk -->
+        <div class="c-pantry-row" data-categories="dairy-eggs" id="row-dairy-eggs-milk">
+          <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -406,29 +764,10 @@
           </div>
         </div>
 
-        <!-- 16. Eggs -->
-        <div class="c-pantry-row" data-categories="dairy-eggs quick" id="row-eggs">
+        <!-- 27. Curd -->
+        <div class="c-pantry-row" data-categories="dairy-eggs" id="row-dairy-eggs-curd">
           <div class="c-pantry-row__left">
-            <div class="c-checkbox">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <img src="https://img.icons8.com/emoji/96/egg-emoji.png" alt="Eggs" class="c-pantry-row__img">
-            <span class="c-pantry-row__label">Eggs</span>
-          </div>
-          <div class="c-pantry-row__right">
-            <div class="c-stepper">
-              <button class="c-stepper__btn">−</button>
-              <span class="c-stepper__val">6</span>
-              <button class="c-stepper__btn">+</button>
-            </div>
-          </div>
-        </div>
 
-        <!-- 17. Curd -->
-        <div class="c-pantry-row" data-categories="dairy-eggs" id="row-curd">
-          <div class="c-pantry-row__left">
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -456,9 +795,10 @@
           </div>
         </div>
 
-        <!-- 18. Butter -->
-        <div class="c-pantry-row" data-categories="dairy-eggs" id="row-butter">
+        <!-- 28. Butter -->
+        <div class="c-pantry-row" data-categories="dairy-eggs" id="row-dairy-eggs-butter">
           <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -470,15 +810,15 @@
           <div class="c-pantry-row__right">
             <span class="c-static-badge">200g</span>
             <div class="c-pantry-dropdown">
-              <span class="c-pantry-dropdown__label">Full</span>
+              <span class="c-pantry-dropdown__label">Half</span>
               <span class="c-pantry-dropdown__arrow">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
               <select class="c-pantry-dropdown__select">
-                <option value="Full" selected>Full</option>
-                <option value="Half">Half</option>
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
                 <option value="More than half">More than half</option>
                 <option value="Less than half">Less than half</option>
               </select>
@@ -486,9 +826,41 @@
           </div>
         </div>
 
-        <!-- 19. Paneer -->
-        <div class="c-pantry-row" data-categories="dairy-eggs" id="row-paneer">
+        <!-- 29. Cheese -->
+        <div class="c-pantry-row" data-categories="dairy-eggs" id="row-dairy-eggs-cheese">
           <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/cheese-wedge-emoji.png" alt="Cheese" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Cheese</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">200g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 30. Paneer -->
+        <div class="c-pantry-row" data-categories="dairy-eggs" id="row-dairy-eggs-paneer">
+          <div class="c-pantry-row__left">
+
             <div class="c-checkbox">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -512,6 +884,351 @@
                 <option value="More than half">More than half</option>
                 <option value="Less than half">Less than half</option>
               </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-pantry-category-title ty-ghost text-secondary">Spices & Basics</div>
+        <!-- 31. Salt -->
+        <div class="c-pantry-row" data-categories="spices-basics" id="row-spices-basics-salt">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/salt-emoji.png" alt="Salt" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Salt</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">500g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Full</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full" selected>Full</option>
+                <option value="Half">Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 32. Turmeric -->
+        <div class="c-pantry-row" data-categories="spices-basics" id="row-spices-basics-turmeric">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/yellow-circle-emoji.png" alt="Turmeric" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Turmeric</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">100g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Full</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full" selected>Full</option>
+                <option value="Half">Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 33. Red chilli powder -->
+        <div class="c-pantry-row" data-categories="spices-basics" id="row-spices-basics-red-chilli-powder">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/hot-pepper-emoji.png" alt="Red chilli powder" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Red chilli powder</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">100g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 34. Garam masala -->
+        <div class="c-pantry-row" data-categories="spices-basics" id="row-spices-basics-garam-masala">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/curry-rice-emoji.png" alt="Garam masala" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Garam masala</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">100g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 35. Jeera -->
+        <div class="c-pantry-row" data-categories="spices-basics" id="row-spices-basics-jeera">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/seedling-emoji.png" alt="Jeera" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Jeera</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">100g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Full</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full" selected>Full</option>
+                <option value="Half">Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 36. Mustard seeds -->
+        <div class="c-pantry-row" data-categories="spices-basics" id="row-spices-basics-mustard-seeds">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/seedling-emoji.png" alt="Mustard seeds" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Mustard seeds</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">100g</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Full</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full" selected>Full</option>
+                <option value="Half">Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-pantry-category-title ty-ghost text-secondary">Quick Items</div>
+        <!-- 37. Bread -->
+        <div class="c-pantry-row" data-categories="quick" id="row-quick-bread">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/bread-emoji.png" alt="Bread" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Bread</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <div class="c-stepper">
+              <button class="c-stepper__btn">-</button>
+              <span class="c-stepper__val">1</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 38. Instant noodles -->
+        <div class="c-pantry-row" data-categories="quick" id="row-quick-instant-noodles">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/steaming-bowl-emoji.png" alt="Instant noodles" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Instant noodles</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <div class="c-stepper">
+              <button class="c-stepper__btn">-</button>
+              <span class="c-stepper__val">2</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 39. Frozen paratha -->
+        <div class="c-pantry-row" data-categories="quick" id="row-quick-frozen-paratha">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/flatbread-emoji.png" alt="Frozen paratha" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Frozen paratha</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <div class="c-stepper">
+              <button class="c-stepper__btn">-</button>
+              <span class="c-stepper__val">4</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 40. Peanut butter -->
+        <div class="c-pantry-row" data-categories="quick" id="row-quick-peanut-butter">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/peanuts-emoji.png" alt="Peanut butter" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Peanut butter</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <span class="c-static-badge">1 jar</span>
+            <div class="c-pantry-dropdown">
+              <span class="c-pantry-dropdown__label">Half</span>
+              <span class="c-pantry-dropdown__arrow">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="var(--color-text-secondary)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select class="c-pantry-dropdown__select">
+                <option value="Full">Full</option>
+                <option value="Half" selected>Half</option>
+                <option value="More than half">More than half</option>
+                <option value="Less than half">Less than half</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 41. Biscuits -->
+        <div class="c-pantry-row" data-categories="quick" id="row-quick-biscuits">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/cookie-emoji.png" alt="Biscuits" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Biscuits</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <div class="c-stepper">
+              <button class="c-stepper__btn">-</button>
+              <span class="c-stepper__val">1</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 42. Ready-to-eat soup -->
+        <div class="c-pantry-row" data-categories="quick" id="row-quick-ready-to-eat-soup">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/bowl-with-spoon-emoji.png" alt="Ready-to-eat soup" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Ready-to-eat soup</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <div class="c-stepper">
+              <button class="c-stepper__btn">-</button>
+              <span class="c-stepper__val">2</span>
+              <button class="c-stepper__btn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 43. Frozen snacks -->
+        <div class="c-pantry-row" data-categories="quick" id="row-quick-frozen-snacks">
+          <div class="c-pantry-row__left">
+
+            <div class="c-checkbox">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img src="https://img.icons8.com/emoji/96/dumpling-emoji.png" alt="Frozen snacks" class="c-pantry-row__img">
+            <span class="c-pantry-row__label">Frozen snacks</span>
+          </div>
+          <div class="c-pantry-row__right">
+            <div class="c-stepper">
+              <button class="c-stepper__btn">-</button>
+              <span class="c-stepper__val">1</span>
+              <button class="c-stepper__btn">+</button>
             </div>
           </div>
         </div>

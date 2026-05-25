@@ -595,9 +595,35 @@ function initPantryInteractivity() {
 
   const rows = Array.from(pantryList.querySelectorAll('.c-pantry-row'));
 
+  rows.forEach(row => {
+    row.querySelectorAll('.c-static-badge').forEach(badge => {
+      if (badge.querySelector('.c-static-badge__input')) return;
+
+      const value = badge.textContent.trim();
+      const match = value.match(/^([\d.]+)\s*(.*)$/);
+      const amount = match ? match[1] : value;
+      const unit = match ? match[2] : '';
+
+      badge.innerHTML = `
+        <input class="c-static-badge__input" type="text" inputmode="decimal" value="${amount}" aria-label="Quantity amount">
+        <span class="c-static-badge__unit">${unit}</span>
+      `;
+    });
+  });
+
+  function syncRowControls(row) {
+    const isSelected = row.classList.contains('is-selected');
+    row.querySelectorAll('.c-pantry-row__right select, .c-pantry-row__right button, .c-pantry-row__right input').forEach(control => {
+      control.disabled = !isSelected;
+      control.tabIndex = isSelected ? 0 : -1;
+    });
+  }
+
   function updatePantryState() {
     const checkedRows = rows.filter(row => row.classList.contains('is-selected'));
     const count = checkedRows.length;
+
+    rows.forEach(syncRowControls);
 
     if (counterText) {
       counterText.textContent = `${count} ${count === 1 ? 'item' : 'items'} checked`;
@@ -649,6 +675,22 @@ function initPantryInteractivity() {
       label.textContent = select.value;
     }
   });
+
+  pantryList.addEventListener('input', (e) => {
+    const input = e.target.closest('.c-static-badge__input');
+    if (!input) return;
+
+    input.value = input.value.replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1');
+    input.style.width = `${Math.max(2, Math.min(5, input.value.length || 1))}ch`;
+  });
+
+  pantryList.addEventListener('blur', (e) => {
+    const input = e.target.closest('.c-static-badge__input');
+    if (!input) return;
+
+    if (!input.value.trim()) input.value = '1';
+    input.style.width = `${Math.max(2, Math.min(5, input.value.length))}ch`;
+  }, true);
 
   // Stepper increment/decrement handler
   pantryList.addEventListener('click', (e) => {
@@ -709,6 +751,21 @@ function initPantryInteractivity() {
       } else {
         row.style.display = 'none';
       }
+    });
+
+    pantryList.querySelectorAll('.c-pantry-category-title').forEach(title => {
+      let hasVisibleRow = false;
+      let next = title.nextElementSibling;
+
+      while (next && !next.classList.contains('c-pantry-category-title')) {
+        if (next.classList.contains('c-pantry-row') && next.style.display !== 'none') {
+          hasVisibleRow = true;
+          break;
+        }
+        next = next.nextElementSibling;
+      }
+
+      title.style.display = hasVisibleRow ? 'block' : 'none';
     });
   }
 

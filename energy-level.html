@@ -16,28 +16,51 @@
   <!-- Responsive App Container fitting viewport height -->
   <div class="app-container c-energy-selection" id="app-container" data-page="energy-level">
     
-    <!-- Ambient Glow background shadow -->
-    <div class="c-energy-selection__glow"></div>
-
-    <!-- 1. Background Ellipses (Bubble Effect) -->
-    <a href="index.html" class="c-energy-bubble c-energy-bubble--exhausted js-energy-bubble" id="energy-exhausted">
-      <span class="c-energy-bubble__label">Exhausted</span>
-    </a>
-    
-    <a href="index.html" class="c-energy-bubble c-energy-bubble--okay js-energy-bubble" id="energy-okay">
-      <span class="c-energy-bubble__label">Okay</span>
-    </a>
-
-    <a href="index.html" class="c-energy-bubble c-energy-bubble--fine js-energy-bubble" id="energy-fine">
-      <span class="c-energy-bubble__label">Fine</span>
-    </a>
-
-    <!-- 2. Dynamic iPhone Status Bar Component -->
+    <!-- 1. Dynamic iPhone Status Bar Component -->
     <header data-component="status-bar" id="app-status-bar"></header>
 
-    <!-- 3. Foreground Header Area -->
-    <div class="c-energy-header">
-      <h1 class="ty-display text-primary">How's your energy<br/>tonight ?</h1>
+    <!-- 2. Foreground Header Area -->
+    <div class="c-energy-header-v2">
+      <div class="c-energy-time">5:00 PM &middot; Monday</div>
+      <h1 class="ty-display">How's your energy<br/>tonight?</h1>
+    </div>
+
+    <!-- 3. Stretched Column Zones -->
+    <div class="c-energy-zones">
+      
+      <!-- Zone 1: Exhausted -->
+      <button class="c-energy-zone c-energy-zone--exhausted js-energy-bubble" id="energy-exhausted" type="button">
+        <span class="c-energy-zone__label">Exhausted</span>
+      </button>
+
+      <!-- Wave Divider 1-2 -->
+      <div class="c-wave-divider c-wave-divider--1-2">
+        <svg width="390" height="60" viewBox="0 0 390 60" fill="none" preserveAspectRatio="none" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 5C97.6 -10 244 20 390.4 0V65H0V5Z" fill="var(--color-base)" />
+          <path d="M0 22.11C117.12 32.11 273.28 12.11 390.4 22.11V65H0V22.11Z" fill="var(--wave-zone-1)" />
+          <path d="M0 32.11C78.08 22.11 214.72 42.11 390.4 32.11V65H0V32.11Z" fill="var(--wave-zone-2)" />
+        </svg>
+      </div>
+
+      <!-- Zone 2: Okay -->
+      <button class="c-energy-zone c-energy-zone--okay js-energy-bubble" id="energy-okay" type="button">
+        <span class="c-energy-zone__label">Okay</span>
+      </button>
+
+      <!-- Wave Divider 2-3 -->
+      <div class="c-wave-divider c-wave-divider--2-3">
+        <svg width="390" height="60" viewBox="0 0 390 60" fill="none" preserveAspectRatio="none" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 12.11C78.08 2.11 214.72 22.11 390.4 12.11V65H0V12.11Z" fill="var(--color-base)" />
+          <path d="M0 22.11C97.6 12.11 292.8 32.11 390.4 22.11V65H0V22.11Z" fill="var(--wave-zone-2)" />
+          <path d="M0 29.19C117.12 14.19 273.28 34.19 390.4 24.19V65H0V29.19Z" fill="var(--wave-zone-3)" />
+        </svg>
+      </div>
+
+      <!-- Zone 3: Fine -->
+      <button class="c-energy-zone c-energy-zone--fine js-energy-bubble" id="energy-fine" type="button">
+        <span class="c-energy-zone__label">Fine</span>
+      </button>
+
     </div>
 
     <!-- 4. Reusable Home Indicator Component Placeholder -->

@@ -1058,6 +1058,7 @@ function initNotificationScreen() {
  * Initializes the Energy Level selection bubbles
  */
 function initEnergyLevel() {
+  const container = document.getElementById('app-container');
   const bubbles = document.querySelectorAll('.js-energy-bubble');
   bubbles.forEach(bubble => {
     bubble.addEventListener('click', (e) => {
@@ -1065,15 +1066,42 @@ function initEnergyLevel() {
       const selection = bubble.getAttribute('id');
       localStorage.setItem('saviour_selected_energy', selection);
 
-      if (selection === 'energy-okay' || selection === 'energy-fine') {
-        localStorage.setItem('saviour_notification_type', 'rajma_rice');
-        localStorage.setItem('saviour_selected_meal', 'Rajma Rice');
-        localStorage.removeItem('saviour_selected_meal_emoji');
-        window.location.href = 'notification-screen.html';
-      } else {
-        localStorage.setItem('saviour_notification_type', 'how_tired');
-        window.location.href = 'index.html';
+      if (container) {
+        const rect = container.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+
+        const ripple = document.createElement('div');
+        ripple.className = 'c-ripple-bubble';
+        
+        if (selection === 'energy-exhausted') {
+          ripple.classList.add('c-ripple-bubble--exhausted');
+        } else if (selection === 'energy-okay') {
+          ripple.classList.add('c-ripple-bubble--okay');
+        } else if (selection === 'energy-fine') {
+          ripple.classList.add('c-ripple-bubble--fine');
+        }
+
+        ripple.style.left = `${clickX}px`;
+        ripple.style.top = `${clickY}px`;
+        container.appendChild(ripple);
+
+        requestAnimationFrame(() => {
+          ripple.classList.add('is-expanded');
+        });
       }
+
+      setTimeout(() => {
+        if (selection === 'energy-okay' || selection === 'energy-fine') {
+          localStorage.setItem('saviour_notification_type', 'rajma_rice');
+          localStorage.setItem('saviour_selected_meal', 'Rajma Rice');
+          localStorage.removeItem('saviour_selected_meal_emoji');
+          window.location.href = 'notification-screen.html';
+        } else {
+          localStorage.setItem('saviour_notification_type', 'how_tired');
+          window.location.href = 'index.html';
+        }
+      }, 700);
     });
   });
 }
@@ -1109,21 +1137,32 @@ function initCookItem() {
   }
 
   if (mealEmojiEl) {
-    if (selectedMealEmoji) {
-      mealEmojiEl.innerHTML = `<img src="${selectedMealEmoji}" alt="${selectedMeal}" style="width: 60px; height: 60px; object-fit: contain;">`;
+    let imageFilename = '';
+    const mealLower = selectedMeal.toLowerCase();
+    if (mealLower.includes('sandwich')) imageFilename = 'Sandwich.png';
+    else if (mealLower.includes('egg toast') || mealLower.includes('egg-toast')) imageFilename = 'Egg Toast.png';
+    else if (mealLower.includes('dal chawal')) imageFilename = 'Dal Chawal.png';
+    else if (mealLower.includes('poha')) imageFilename = 'Poha.png';
+    else if (mealLower.includes('curd rice')) imageFilename = 'Curd Rice.png';
+    else if (mealLower.includes('bread omelette')) imageFilename = 'Bread Omelette.png';
+    else if (mealLower.includes('upma')) imageFilename = 'Upma.png';
+    else if (mealLower.includes('khichdi') || mealLower.includes('khichidi')) imageFilename = 'Khichidi.png';
+    else if (mealLower.includes('rajma rice')) imageFilename = 'Rajma Rice.png';
+    else if (mealLower.includes('paratha')) imageFilename = 'Paratha.png';
+    else if (mealLower.includes('fried rice')) imageFilename = 'Fried Rice.png';
+    else if (mealLower.includes('pasta')) imageFilename = 'Pasta.png';
+    else if (mealLower.includes('omelette')) imageFilename = 'Omelette.png';
+    else if (mealLower.includes('oats')) imageFilename = 'Oats.png';
+    else if (mealLower.includes('chole rice')) imageFilename = 'Chole Rice.png';
+    else if (mealLower.includes('lemon rice')) imageFilename = 'Lemon Rice.png';
+    else if (mealLower.includes('maggi')) imageFilename = 'Maggi.png';
+
+    if (imageFilename) {
+      mealEmojiEl.innerHTML = `<img src="Assets/Dishes/${encodeURIComponent(imageFilename)}" alt="${selectedMeal}" style="width: 90px; height: 90px; object-fit: contain;">`;
+    } else if (selectedMealEmoji) {
+      mealEmojiEl.innerHTML = `<img src="${selectedMealEmoji}" alt="${selectedMeal}" style="width: 90px; height: 90px; object-fit: contain;">`;
     } else {
-      let fallbackEmoji = '🍛';
-      if (selectedMeal.toLowerCase().includes('sandwich')) fallbackEmoji = '🥪';
-      else if (selectedMeal.toLowerCase().includes('toast')) fallbackEmoji = '🍳';
-      else if (selectedMeal.toLowerCase().includes('maggi')) fallbackEmoji = '🍜';
-      else if (selectedMeal.toLowerCase().includes('paratha')) fallbackEmoji = '🥞';
-      else if (selectedMeal.toLowerCase().includes('khichdi')) fallbackEmoji = '🍚';
-      else if (selectedMeal.toLowerCase().includes('curd')) fallbackEmoji = '🥣';
-      else if (selectedMeal.toLowerCase().includes('omelette')) fallbackEmoji = '🍳';
-      else if (selectedMeal.toLowerCase().includes('upma')) fallbackEmoji = '🥣';
-      else if (selectedMeal.toLowerCase().includes('poha')) fallbackEmoji = '🥗';
-      else if (selectedMeal.toLowerCase().includes('aloo')) fallbackEmoji = '🥔';
-      mealEmojiEl.textContent = fallbackEmoji;
+      mealEmojiEl.textContent = '🍛';
     }
   }
 
@@ -1316,25 +1355,28 @@ function initPrepTomorrow() {
     descTextEl.textContent = `Soaking cuts tomorrow's cook time from 45 min to 20 min.`;
   }
 
-  // Customize emoji if not Rajma Rice
-  if (mealEmojiEl && selectedMeal.toLowerCase() !== 'rajma rice') {
-    const selectedMealEmoji = localStorage.getItem('saviour_selected_meal_emoji') || '';
-    if (selectedMealEmoji) {
-      mealEmojiEl.innerHTML = `<img src="${selectedMealEmoji}" alt="${selectedMeal}" style="width: 60px; height: 60px; object-fit: contain;">`;
-    } else {
-      let fallbackEmoji = '🍛';
-      if (selectedMeal.toLowerCase().includes('sandwich')) fallbackEmoji = '🥪';
-      else if (selectedMeal.toLowerCase().includes('toast')) fallbackEmoji = '🍳';
-      else if (selectedMeal.toLowerCase().includes('maggi')) fallbackEmoji = '🍜';
-      else if (selectedMeal.toLowerCase().includes('paratha')) fallbackEmoji = '🥞';
-      else if (selectedMeal.toLowerCase().includes('khichdi')) fallbackEmoji = '🍚';
-      else if (selectedMeal.toLowerCase().includes('curd')) fallbackEmoji = '🥣';
-      else if (selectedMeal.toLowerCase().includes('omelette')) fallbackEmoji = '🍳';
-      else if (selectedMeal.toLowerCase().includes('upma')) fallbackEmoji = '🥣';
-      else if (selectedMeal.toLowerCase().includes('poha')) fallbackEmoji = '🥗';
-      else if (selectedMeal.toLowerCase().includes('aloo')) fallbackEmoji = '🥔';
-      mealEmojiEl.textContent = fallbackEmoji;
+  // Customize ingredient image dynamically
+  if (mealEmojiEl) {
+    let rawIngredientUrl = 'https://img.icons8.com/color/96/ingredients.png';
+    const mealLower = selectedMeal.toLowerCase();
+    
+    if (mealLower.includes('rajma')) {
+      rawIngredientUrl = 'https://img.icons8.com/color/96/soy.png';
+    } else if (mealLower.includes('dal') || mealLower.includes('chole')) {
+      rawIngredientUrl = 'https://img.icons8.com/color/96/soy.png';
+    } else if (mealLower.includes('rice')) {
+      rawIngredientUrl = 'https://img.icons8.com/color/96/rice-bowl.png';
+    } else if (mealLower.includes('oats') || mealLower.includes('poha')) {
+      rawIngredientUrl = 'https://img.icons8.com/color/96/cereal.png';
+    } else if (mealLower.includes('bread') || mealLower.includes('toast') || mealLower.includes('sandwich')) {
+      rawIngredientUrl = 'https://img.icons8.com/color/96/bread.png';
+    } else if (mealLower.includes('egg') || mealLower.includes('omelette')) {
+      rawIngredientUrl = 'https://img.icons8.com/color/96/eggs.png';
+    } else if (mealLower.includes('pasta') || mealLower.includes('maggi') || mealLower.includes('noodles') || mealLower.includes('vermicelli')) {
+      rawIngredientUrl = 'https://img.icons8.com/color/96/spaghetti.png';
     }
+    
+    mealEmojiEl.innerHTML = `<img src="${rawIngredientUrl}" alt="${selectedMeal}" style="width: 72px; height: 72px; object-fit: contain;">`;
   }
 
   // Bind actions
@@ -1488,8 +1530,9 @@ function initGrocery() {
       const checkbox = row.querySelector('.js-grocery-checkbox');
       const label = row.querySelector('.c-pantry-row__label');
       const isBought = boughtItems.includes(title);
+      const showAsChecked = isBought && (filter === 'buy');
 
-      if (isBought) {
+      if (showAsChecked) {
         if (checkbox) checkbox.classList.add('is-selected');
         row.classList.add('is-checked');
         row.style.opacity = '0.5';
@@ -1499,9 +1542,15 @@ function initGrocery() {
         row.classList.remove('is-checked');
         row.style.opacity = '1';
         if (label) label.style.textDecoration = 'none';
-        if (status === 'OUT' || status === 'LOW') {
-          needToBuyCount++;
-        }
+      }
+
+      if (!isBought && (status === 'OUT' || status === 'LOW')) {
+        needToBuyCount++;
+      }
+
+      // Hide checkboxes under "All Items" view
+      if (checkbox) {
+        checkbox.style.display = (filter === 'buy') ? 'flex' : 'none';
       }
 
       // Filter logic:

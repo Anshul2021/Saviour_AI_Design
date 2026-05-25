@@ -19,17 +19,17 @@
   <div class="app-container" id="app-container" data-page="grocery" style="background-color: var(--color-base);">
     
     <!-- Sticky Top Header (Beige Background) -->
-    <div style="background-color: var(--color-surface); z-index: 10; position: relative;">
+    <div style="background-color: var(--color-base); z-index: 10; position: relative;">
       <!-- 1. Dynamic iPhone Status Bar Component -->
       <header data-component="status-bar" id="app-status-bar"></header>
 
-      <!-- Top Brand Header and Notification Toggle -->
+     <!-- Top Brand Header and Notification Toggle -->
       <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 20px 12px;">
         <div class="ty-display text-primary"
           style="font-family: var(--font-display); font-size: 20px; font-weight: var(--font-weight-regular); letter-spacing: 0.5px; opacity: 0.8;">
-          Kitchen</div>
+          SAVIOUR</div>
         <a href="notifications.html"
-          style="width: 40px; height: 40px; background-color: var(--color-base); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer;">
+          style="width: 40px; height: 40px; background-color: var(--color-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer;">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M7.79642 17.5001C8.38401 18.0187 9.15593 18.3334 10.0013 18.3334C10.8467 18.3334 11.6185 18.0187 12.2061 17.5001M15.0013 6.66675C15.0013 5.34066 14.4745 4.0689 13.5368 3.13121C12.5991 2.19353 11.3273 1.66675 10.0013 1.66675C8.67518 1.66675 7.40343 2.19353 6.46575 3.13121C5.52806 4.0689 5.00128 5.34066 5.00128 6.66675C5.00128 9.24191 4.35167 11.0051 3.626 12.1712C3.01389 13.155 2.70783 13.6468 2.71905 13.7841C2.73148 13.936 2.76366 13.9939 2.88609 14.0847C2.99666 14.1667 3.49511 14.1667 4.49199 14.1667H15.5106C16.5074 14.1667 17.0059 14.1667 17.1164 14.0847C17.2389 13.9939 17.2711 13.936 17.2835 13.7841C17.2948 13.6468 16.9887 13.155 16.3766 12.1712C15.6508 11.0051 15.0013 9.24191 15.0013 6.66675Z"
@@ -59,12 +59,8 @@
 
         <!-- Filter Category Chips Bar -->
         <div class="c-filter-bar" id="grocery-filter-bar" style="margin-bottom: 4px; display: flex; gap: 8px;">
-          <button class="c-filter-chip is-selected" data-filter="buy"
-            style="padding: 6px 16px; border-radius: 999px; font-size: var(--font-size-body-small); font-weight: var(--font-weight-medium); transition: var(--transition-smooth);">Need
-            to Buy</button>
-          <button class="c-filter-chip" data-filter="all"
-            style="padding: 6px 16px; border-radius: 999px; font-size: var(--font-size-body-small); font-weight: var(--font-weight-medium); transition: var(--transition-smooth);">All
-            Items</button>
+          <button class="c-filter-chip is-selected" data-filter="buy">Need to Buy</button>
+          <button class="c-filter-chip" data-filter="all">All Items</button>
         </div>
 
         <!-- Scrollable list of items -->
@@ -83,6 +79,7 @@
                     stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </div>
+              <img src="https://img.icons8.com/color/96/soy.png" alt="Rajma" class="c-pantry-row__img">
               <span class="c-pantry-row__label" style="font-weight: var(--font-weight-medium);">Rajma (Red Kidney
                 Beans)</span>
             </div>
@@ -104,6 +101,7 @@
                     stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </div>
+              <img src="https://img.icons8.com/color/96/soy.png" alt="Dal toor" class="c-pantry-row__img">
               <span class="c-pantry-row__label" style="font-weight: var(--font-weight-medium);">Dal toor (Yellow
                 Lentils)</span>
             </div>
@@ -125,6 +123,7 @@
                     stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </div>
+              <img src="https://img.icons8.com/color/96/bread.png" alt="Bread" class="c-pantry-row__img">
               <span class="c-pantry-row__label" style="font-weight: var(--font-weight-medium);">Bread</span>
             </div>
             <div class="c-pantry-row__right" style="opacity: 1; pointer-events: auto;">
@@ -139,6 +138,13 @@
             data-title="Rice" data-status="OK" data-status-label="In stock" data-qty="5 kg"
             data-needed="Rajma Rice" data-also-used="Khichdi" data-category="Pantry">
             <div class="c-pantry-row__left">
+              <div class="c-checkbox js-grocery-checkbox">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <img src="https://img.icons8.com/color/96/rice-bowl.png" alt="Rice" class="c-pantry-row__img">
               <span class="c-pantry-row__label" style="font-weight: var(--font-weight-medium);">Rice</span>
             </div>
             <div class="c-pantry-row__right" style="opacity: 1; pointer-events: auto;">
@@ -153,6 +159,13 @@
             data-title="Onions" data-status="OK" data-status-label="In stock" data-qty="3 kg"
             data-needed="Rajma Rice" data-also-used="Poha" data-category="Vegetables">
             <div class="c-pantry-row__left">
+              <div class="c-checkbox js-grocery-checkbox">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <img src="https://img.icons8.com/color/96/onion.png" alt="Onions" class="c-pantry-row__img">
               <span class="c-pantry-row__label" style="font-weight: var(--font-weight-medium);">Onions</span>
             </div>
             <div class="c-pantry-row__right" style="opacity: 1; pointer-events: auto;">
@@ -167,6 +180,13 @@
             data-title="Tomatoes" data-status="OK" data-status-label="In stock" data-qty="2 kg"
             data-needed="Rajma Rice" data-also-used="Dal Fry" data-category="Vegetables">
             <div class="c-pantry-row__left">
+              <div class="c-checkbox js-grocery-checkbox">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <img src="https://img.icons8.com/color/96/tomato.png" alt="Tomatoes" class="c-pantry-row__img">
               <span class="c-pantry-row__label" style="font-weight: var(--font-weight-medium);">Tomatoes</span>
             </div>
             <div class="c-pantry-row__right" style="opacity: 1; pointer-events: auto;">
@@ -181,6 +201,13 @@
             data-title="Potatoes" data-status="OK" data-status-label="In stock" data-qty="4 kg"
             data-needed="Aloo Fry" data-also-used="Samosa" data-category="Vegetables">
             <div class="c-pantry-row__left">
+              <div class="c-checkbox js-grocery-checkbox">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.6663 3.5L5.24967 9.91667L2.33301 7" stroke="white" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <img src="https://img.icons8.com/color/96/potato.png" alt="Potatoes" class="c-pantry-row__img">
               <span class="c-pantry-row__label" style="font-weight: var(--font-weight-medium);">Potatoes</span>
             </div>
             <div class="c-pantry-row__right" style="opacity: 1; pointer-events: auto;">

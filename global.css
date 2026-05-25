@@ -572,20 +572,20 @@ hr {
 }
 .c-meal-option--show-more .c-meal-option__avatar {
   border: 1px dashed var(--color-text-ghost);
-  background-color: var(--color-surface);
+  background-color: transparent;
 }
 .c-meal-option--show-more .c-meal-option__avatar::after {
   content: "";
   position: absolute;
   inset: 8px;
   border-radius: 50%;
-  background-color: var(--color-base);
-  opacity: 0.58;
+  background-color: var(--color-surface);
+  opacity: 0;
   transition: var(--transition-smooth);
 }
 .c-meal-option--show-more:hover .c-meal-option__avatar::after {
-  transform: scale(0.9);
-  opacity: 0.74;
+  transform: scale(1.1);
+  opacity: 0.5;
 }
 .c-meal-option__show-more-text {
   position: relative;

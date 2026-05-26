@@ -117,6 +117,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (nextBtn) {
       nextBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        const selectedMeals = Array.from(document.querySelectorAll('.js-meal-option.is-selected:not(.c-meal-option--custom)'))
+          .map(el => {
+            const labelEl = el.querySelector('.c-meal-option__label');
+            return labelEl ? labelEl.textContent.trim() : '';
+          }).filter(name => name !== '');
+        localStorage.setItem('saviour_cooked_meals', JSON.stringify(selectedMeals));
         navigateTo('pantry.html');
       });
     }
@@ -1136,6 +1142,11 @@ function initCookItem() {
   const selectedMeal = localStorage.getItem('saviour_selected_meal') || 'Rajma Rice';
   const selectedMealEmoji = localStorage.getItem('saviour_selected_meal_emoji') || '';
 
+  // Load selected cooked meals list
+  const cookedMealsRaw = localStorage.getItem('saviour_cooked_meals');
+  const cookedMealsList = cookedMealsRaw ? JSON.parse(cookedMealsRaw) : [];
+  const cookedMealsKeys = cookedMealsList.map(m => m.toLowerCase().trim());
+
   // Recipes Database
   const recipes = {
     'rajma rice': {
@@ -1301,7 +1312,7 @@ function initCookItem() {
       break;
     }
   }
-  const currentRecipe = recipes[activeRecipeKey];
+  let currentRecipe = recipes[activeRecipeKey];
 
   if (mealTitleEl) {
     mealTitleEl.textContent = selectedMeal;
@@ -1389,9 +1400,33 @@ function initCookItem() {
         const row = document.createElement('div');
         row.className = 'c-cook-row';
         row.innerHTML = `
-          <span class="c-cook-row__name">${item.name}</span>
-          <span class="c-cook-row__qty">${formatQty(scaledQty, item.unit)}</span>
+          <div style="display: flex; align-items: center; min-width: 0; flex: 1; gap: 8px; flex-wrap: wrap;">
+            <span class="c-cook-row__name">${item.name}</span>
+            <span class="c-cook-row__missing-tag ty-label">Out of stock</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+            <span class="c-cook-row__qty">${formatQty(scaledQty, item.unit)}</span>
+            <button class="c-cook-row__toggle-btn" aria-label="Mark as missing">
+              <svg class="c-icon-unselected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+              </svg>
+              <svg class="c-icon-selected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <line x1="15" y1="9" x2="9" y2="15" stroke="var(--color-base)"></line>
+                <line x1="9" y1="9" x2="15" y2="15" stroke="var(--color-base)"></line>
+              </svg>
+            </button>
+          </div>
         `;
+        const toggleBtn = row.querySelector('.c-cook-row__toggle-btn');
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            row.classList.toggle('is-missing');
+          });
+        }
         ingredientsListEl.appendChild(row);
       });
     }
@@ -1426,6 +1461,160 @@ function initCookItem() {
       servingsOverlay.classList.remove('is-visible');
       servingsSheet.classList.remove('is-visible');
     }
+  }
+
+  // Change Dish logic
+  const changeDishBtn = document.getElementById('change-dish-btn');
+  const changeDishOverlay = document.getElementById('change-dish-overlay');
+  const changeDishSheet = document.getElementById('change-dish-sheet');
+  const changeDishList = document.getElementById('change-dish-list');
+  const cancelChangeDishBtn = document.getElementById('cancel-change-dish-btn');
+
+  function getMealImageOrEmoji(mealLower) {
+    let imageFilename = '';
+    if (mealLower.includes('sandwich')) imageFilename = 'Sandwich.png';
+    else if (mealLower.includes('egg toast') || mealLower.includes('egg-toast')) imageFilename = 'Egg Toast.png';
+    else if (mealLower.includes('dal chawal')) imageFilename = 'Dal Chawal.png';
+    else if (mealLower.includes('poha')) imageFilename = 'Poha.png';
+    else if (mealLower.includes('curd rice')) imageFilename = 'Curd Rice.png';
+    else if (mealLower.includes('bread omelette')) imageFilename = 'Bread Omelette.png';
+    else if (mealLower.includes('upma')) imageFilename = 'Upma.png';
+    else if (mealLower.includes('khichdi') || mealLower.includes('khichidi')) imageFilename = 'Khichidi.png';
+    else if (mealLower.includes('rajma rice')) imageFilename = 'Rajma Rice.png';
+    else if (mealLower.includes('paratha')) imageFilename = 'Paratha.png';
+    else if (mealLower.includes('fried rice')) imageFilename = 'Fried Rice.png';
+    else if (mealLower.includes('pasta')) imageFilename = 'Pasta.png';
+    else if (mealLower.includes('omelette')) imageFilename = 'Omelette.png';
+    else if (mealLower.includes('oats')) imageFilename = 'Oats.png';
+    else if (mealLower.includes('chole rice')) imageFilename = 'Chole Rice.png';
+    else if (mealLower.includes('lemon rice')) imageFilename = 'Lemon Rice.png';
+    else if (mealLower.includes('maggi')) imageFilename = 'Maggi.png';
+
+    if (imageFilename) {
+      return `<img src="Assets/Dishes/${encodeURIComponent(imageFilename)}" alt="" style="width: 24px; height: 24px; object-fit: contain;">`;
+    }
+    return '🍛';
+  }
+
+  function renderChangeDishList() {
+    if (!changeDishList) return;
+    changeDishList.innerHTML = '';
+
+    function capitalize(str) {
+      return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
+
+    for (const key in recipes) {
+      if (cookedMealsKeys.length > 0 && !cookedMealsKeys.includes(key) && activeRecipeKey !== key) {
+        continue;
+      }
+      const isSelected = activeRecipeKey === key;
+      const formattedName = capitalize(key);
+      const recipe = recipes[key];
+      
+      let imgHTML = '';
+      let imageFilename = '';
+      if (key.includes('sandwich')) imageFilename = 'Sandwich.png';
+      else if (key.includes('egg toast') || key.includes('egg-toast')) imageFilename = 'Egg Toast.png';
+      else if (key.includes('dal chawal')) imageFilename = 'Dal Chawal.png';
+      else if (key.includes('poha')) imageFilename = 'Poha.png';
+      else if (key.includes('curd rice')) imageFilename = 'Curd Rice.png';
+      else if (key.includes('bread omelette')) imageFilename = 'Bread Omelette.png';
+      else if (key.includes('upma')) imageFilename = 'Upma.png';
+      else if (key.includes('khichdi') || key.includes('khichidi')) imageFilename = 'Khichidi.png';
+      else if (key.includes('rajma rice')) imageFilename = 'Rajma Rice.png';
+      else if (key.includes('paratha')) imageFilename = 'Paratha.png';
+      else if (key.includes('fried rice')) imageFilename = 'Fried Rice.png';
+      else if (key.includes('pasta')) imageFilename = 'Pasta.png';
+      else if (key.includes('omelette')) imageFilename = 'Omelette.png';
+      else if (key.includes('oats')) imageFilename = 'Oats.png';
+      else if (key.includes('chole rice')) imageFilename = 'Chole Rice.png';
+      else if (key.includes('lemon rice')) imageFilename = 'Lemon Rice.png';
+      else if (key.includes('maggi')) imageFilename = 'Maggi.png';
+
+      if (imageFilename) {
+        imgHTML = `<img src="Assets/Dishes/${encodeURIComponent(imageFilename)}" alt="${formattedName}" class="c-meal-option__img">`;
+      } else {
+        imgHTML = `<span class="c-meal-option__img-placeholder">🍛</span>`;
+      }
+
+      const itemEl = document.createElement('div');
+      itemEl.className = `c-meal-option js-meal-option ${isSelected ? 'is-selected' : ''}`;
+      itemEl.innerHTML = `
+        <div class="c-meal-option__avatar-wrapper">
+          <div class="c-meal-option__avatar">
+            ${imgHTML}
+            <div class="c-meal-option__check">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <span class="c-meal-option__label">${formattedName}</span>
+      `;
+
+      itemEl.addEventListener('click', () => {
+        localStorage.setItem('saviour_selected_meal', formattedName);
+
+        const mealTitleEl = document.getElementById('cook-meal-title');
+        const mealEmojiEl = document.getElementById('cook-meal-emoji');
+        const mealTimeEl = document.getElementById('cook-meal-time');
+
+        if (mealTitleEl) mealTitleEl.textContent = formattedName;
+        if (mealTimeEl) mealTimeEl.textContent = `${recipe.time} Cook Time`;
+
+        if (mealEmojiEl) {
+          if (imageFilename) {
+            mealEmojiEl.innerHTML = `<img src="Assets/Dishes/${encodeURIComponent(imageFilename)}" alt="${formattedName}" style="width: 90px; height: 90px; object-fit: contain;">`;
+          } else {
+            mealEmojiEl.textContent = '🍛';
+          }
+        }
+
+        activeRecipeKey = key;
+        currentRecipe = recipe;
+        updateIngredientsUI();
+        closeChangeDishSheet();
+      });
+
+      changeDishList.appendChild(itemEl);
+    }
+  }
+
+  function openChangeDishSheet() {
+    renderChangeDishList();
+    if (changeDishOverlay && changeDishSheet) {
+      changeDishOverlay.classList.add('is-visible');
+      changeDishSheet.classList.add('is-visible');
+    }
+  }
+
+  function closeChangeDishSheet() {
+    if (changeDishOverlay && changeDishSheet) {
+      changeDishOverlay.classList.remove('is-visible');
+      changeDishSheet.classList.remove('is-visible');
+    }
+  }
+
+  if (changeDishBtn) {
+    changeDishBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openChangeDishSheet();
+    });
+  }
+
+  if (cancelChangeDishBtn) {
+    cancelChangeDishBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeChangeDishSheet();
+    });
+  }
+
+  if (changeDishOverlay) {
+    changeDishOverlay.addEventListener('click', (e) => {
+      closeChangeDishSheet();
+    });
   }
 
   // Initial render
@@ -1684,60 +1873,191 @@ function initPrepTomorrow() {
   const actionInstructionEl = document.getElementById('prep-action-instruction');
   const descTextEl = document.getElementById('prep-description-text');
   const mealEmojiEl = document.getElementById('prep-meal-emoji');
+  const prepDurationEl = document.getElementById('prep-duration');
 
   const soakingBtn = document.getElementById('its-soaking-btn');
   const skipBtn = document.getElementById('skip-prep-btn');
   const backBtn = document.getElementById('prep-back-btn');
 
+  const changePrepBtn = document.getElementById('change-prep-btn');
+  const prepOverlay = document.getElementById('prep-overlay');
+  const prepSheet = document.getElementById('prep-sheet');
+  const prepListEl = document.getElementById('prep-list');
+
+  // Prep Tasks Database
+  const preps = {
+    'soak chole': {
+      label: 'Soak chole',
+      icon: '🫘',
+      action: 'Soak &frac12; cup in water',
+      desc: "Soaking chickpeas cuts tomorrow's cook time from 45 min to 20 min.",
+      badge: '25 MIN SAVED',
+      context: 'For chole rice'
+    },
+    'soak rajma': {
+      label: 'Soak Rajma',
+      icon: '🥣',
+      action: 'Soak 1 cup in water',
+      desc: "Soaking rajma cuts tomorrow's cook time from 40 min to 20 min.",
+      badge: '20 MIN SAVED',
+      context: 'For rajma rice'
+    },
+    'boil eggs': {
+      label: 'Boil eggs',
+      icon: '🥚',
+      action: 'Boil 2 eggs & peel',
+      desc: "Pre-boiling eggs cuts tomorrow's prep time for Egg Toast or egg curry.",
+      badge: '10 MIN SAVED',
+      context: 'For egg toast'
+    },
+    'chop onion': {
+      label: 'Chop onion',
+      icon: '🧅',
+      action: 'Fine chop 2 onions',
+      desc: "Keeps onions chopped and ready to toss in tomorrow's tadka instantly.",
+      badge: '5 MIN SAVED',
+      context: 'For general tadka'
+    },
+    'boil rice': {
+      label: 'Boil rice',
+      icon: '🍚',
+      action: 'Cook 1 cup basmati rice',
+      desc: "Cool rice is perfect for tomorrow's quick Fried Rice.",
+      badge: '15 MIN SAVED',
+      context: 'For fried rice'
+    },
+    'soak chana': {
+      label: 'Soak chana',
+      icon: '🥣',
+      action: 'Soak 1 cup black chana',
+      desc: "Cuts tomorrow's boiling time for chana masala.",
+      badge: '20 MIN SAVED',
+      context: 'For chana masala'
+    }
+  };
+
   // Load selected meal from localStorage (fallback to Rajma Rice)
   const selectedMeal = localStorage.getItem('saviour_selected_meal') || 'Rajma Rice';
+  const mealLower = selectedMeal.toLowerCase().trim();
 
-  // Extract first word (e.g. "Rajma Rice" -> "rajma", "Sandwich" -> "sandwich")
-  const firstWord = selectedMeal.trim().split(' ')[0].toLowerCase();
-
-  if (headerTitleEl) {
-    headerTitleEl.textContent = `Tonight: soak ${firstWord}`;
+  // Smart selection for default active prep
+  let activePrepKey = 'soak rajma';
+  if (mealLower.includes('chole')) {
+    activePrepKey = 'soak chole';
+  } else if (mealLower.includes('rajma')) {
+    activePrepKey = 'soak rajma';
+  } else if (mealLower.includes('egg') || mealLower.includes('omelette')) {
+    activePrepKey = 'boil eggs';
+  } else if (mealLower.includes('fried rice')) {
+    activePrepKey = 'boil rice';
+  } else if (mealLower.includes('chana')) {
+    activePrepKey = 'soak chana';
+  } else if (mealLower.includes('sandwich') || mealLower.includes('upma') || mealLower.includes('poha')) {
+    activePrepKey = 'chop onion';
   }
 
-  if (mealNameEl) {
-    // If it's Rajma Rice, format as "Rajama" (Figma spelling) or capitalized first word
-    const capitalizedWord = firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
-    mealNameEl.textContent = capitalizedWord === 'Rajma' ? 'Rajama' : capitalizedWord;
-  }
+  function updatePrepUI() {
+    const prep = preps[activePrepKey];
+    if (!prep) return;
 
-  if (actionInstructionEl) {
-    actionInstructionEl.innerHTML = `Soak &frac12; cup in water`;
-  }
-
-  if (descTextEl) {
-    descTextEl.textContent = `Soaking cuts tomorrow's cook time from 45 min to 20 min.`;
-  }
-
-  // Customize ingredient image dynamically
-  if (mealEmojiEl) {
-    let rawIngredientUrl = 'https://img.icons8.com/color/96/ingredients.png';
-    const mealLower = selectedMeal.toLowerCase();
-    
-    if (mealLower.includes('rajma')) {
-      rawIngredientUrl = 'https://img.icons8.com/color/96/soy.png';
-    } else if (mealLower.includes('dal') || mealLower.includes('chole')) {
-      rawIngredientUrl = 'https://img.icons8.com/color/96/soy.png';
-    } else if (mealLower.includes('rice')) {
-      rawIngredientUrl = 'https://img.icons8.com/color/96/rice-bowl.png';
-    } else if (mealLower.includes('oats') || mealLower.includes('poha')) {
-      rawIngredientUrl = 'https://img.icons8.com/color/96/cereal.png';
-    } else if (mealLower.includes('bread') || mealLower.includes('toast') || mealLower.includes('sandwich')) {
-      rawIngredientUrl = 'https://img.icons8.com/color/96/bread.png';
-    } else if (mealLower.includes('egg') || mealLower.includes('omelette')) {
-      rawIngredientUrl = 'https://img.icons8.com/color/96/eggs.png';
-    } else if (mealLower.includes('pasta') || mealLower.includes('maggi') || mealLower.includes('noodles') || mealLower.includes('vermicelli')) {
-      rawIngredientUrl = 'https://img.icons8.com/color/96/spaghetti.png';
+    if (headerTitleEl) {
+      headerTitleEl.textContent = `Tonight: ${prep.label.toLowerCase()}`;
     }
-    
-    mealEmojiEl.innerHTML = `<img src="${rawIngredientUrl}" alt="${selectedMeal}" style="width: 72px; height: 72px; object-fit: contain;">`;
+
+    if (mealNameEl) {
+      // Format display name (e.g. "Soak rajma" -> "Rajma")
+      const words = prep.label.split(' ');
+      const nameOnly = words.slice(1).join(' ');
+      mealNameEl.textContent = nameOnly.charAt(0).toUpperCase() + nameOnly.slice(1);
+    }
+
+    if (actionInstructionEl) {
+      actionInstructionEl.innerHTML = prep.action;
+    }
+
+    if (descTextEl) {
+      descTextEl.textContent = prep.desc;
+    }
+
+    if (prepDurationEl) {
+      prepDurationEl.textContent = prep.context;
+    }
+
+    if (mealEmojiEl) {
+      mealEmojiEl.textContent = prep.icon;
+      mealEmojiEl.style.fontSize = '60px';
+      mealEmojiEl.style.display = 'flex';
+      mealEmojiEl.style.alignItems = 'center';
+      mealEmojiEl.style.justifyContent = 'center';
+    }
   }
 
-  // Bind actions
+  function renderPrepList() {
+    if (!prepListEl) return;
+    prepListEl.innerHTML = '';
+
+    for (const key in preps) {
+      const prep = preps[key];
+      const isSelected = activePrepKey === key;
+
+      const itemEl = document.createElement('div');
+      itemEl.className = `c-meal-option js-meal-option ${isSelected ? 'is-selected' : ''}`;
+
+      itemEl.innerHTML = `
+        <div class="c-meal-option__avatar-wrapper">
+          <div class="c-meal-option__avatar">
+            <span class="c-meal-option__emoji" style="font-size: 28px; display: flex; align-items: center; justify-content: center;">${prep.icon}</span>
+            <div class="c-meal-option__check">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <span class="c-meal-option__label" style="text-align: center; max-width: 78px; line-height: 1.2; display: block;">${prep.label}</span>
+      `;
+
+      itemEl.addEventListener('click', () => {
+        activePrepKey = key;
+        updatePrepUI();
+        closePrepSheet();
+      });
+
+      prepListEl.appendChild(itemEl);
+    }
+  }
+
+  function openPrepSheet() {
+    renderPrepList();
+    if (prepOverlay && prepSheet) {
+      prepOverlay.classList.add('is-visible');
+      prepSheet.classList.add('is-visible');
+    }
+  }
+
+  function closePrepSheet() {
+    if (prepOverlay && prepSheet) {
+      prepOverlay.classList.remove('is-visible');
+      prepSheet.classList.remove('is-visible');
+    }
+  }
+
+  // Bind Open/Close actions
+  if (changePrepBtn) {
+    changePrepBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openPrepSheet();
+    });
+  }
+
+  if (prepOverlay) {
+    prepOverlay.addEventListener('click', closePrepSheet);
+  }
+
+  // Initial draw
+  updatePrepUI();
+
+  // Bind footer actions
   if (soakingBtn) {
     soakingBtn.addEventListener('click', () => {
       showPrepSuccessOverlay();

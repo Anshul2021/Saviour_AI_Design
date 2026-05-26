@@ -35,11 +35,7 @@
       
       <!-- Info stack -->
       <div class="c-cook-info-stack">
-        <div class="Heading1MealNameTimeDetailsMargin" style="width: 149.15px; height: 35.60px; position: relative">
-          <div class="Heading1MealNameTimeDetails" style="left: 0px; top: -0.60px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: center; display: inline-flex">
-            <h1 class="c-cook-title" id="cook-meal-title">Rajma Rice</h1>
-          </div>
-        </div>
+        <h1 class="c-cook-title" id="cook-meal-title" style="text-align: center; width: 100%;">Rajma Rice</h1>
         
         <!-- Meta details -->
         <div class="c-cook-meta">
@@ -51,6 +47,9 @@
             <span id="cook-meal-time" style="font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 400; line-height: 22.40px;">35 min Cook Time</span>
           </div>
         </div>
+
+        <!-- Change dish link -->
+        <button class="c-cook-change-dish-link" id="change-dish-btn">Change dish</button>
       </div>
 
       <!-- Ingredients Drawer -->
@@ -74,30 +73,120 @@
 
           <div id="cook-ingredients-list" style="display: flex; flex-direction: column; gap: 8px; align-self: stretch;">
             <div class="c-cook-row">
-              <span class="c-cook-row__name">Red kidney beans (rajma)</span>
-              <span class="c-cook-row__qty">1 cup</span>
+              <div style="display: flex; align-items: center; min-width: 0; flex: 1; gap: 8px; flex-wrap: wrap;">
+                <span class="c-cook-row__name">Red kidney beans (rajma)</span>
+                <span class="c-cook-row__missing-tag ty-label">Out of stock</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+                <span class="c-cook-row__qty">1 cup</span>
+                <button class="c-cook-row__toggle-btn" aria-label="Mark as missing">
+                  <svg class="c-icon-unselected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                  </svg>
+                  <svg class="c-icon-selected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15" stroke="var(--color-base)"></line>
+                    <line x1="9" y1="9" x2="15" y2="15" stroke="var(--color-base)"></line>
+                  </svg>
+                </button>
+              </div>
             </div>
             <div class="c-cook-row">
-              <span class="c-cook-row__name">Basmati rice</span>
-              <span class="c-cook-row__qty">1 cup</span>
+              <div style="display: flex; align-items: center; min-width: 0; flex: 1; gap: 8px; flex-wrap: wrap;">
+                <span class="c-cook-row__name">Basmati rice</span>
+                <span class="c-cook-row__missing-tag ty-label">Out of stock</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+                <span class="c-cook-row__qty">1 cup</span>
+                <button class="c-cook-row__toggle-btn" aria-label="Mark as missing">
+                  <svg class="c-icon-unselected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                  </svg>
+                  <svg class="c-icon-selected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15" stroke="var(--color-base)"></line>
+                    <line x1="9" y1="9" x2="15" y2="15" stroke="var(--color-base)"></line>
+                  </svg>
+                </button>
+              </div>
             </div>
             <div class="c-cook-row">
-              <span class="c-cook-row__name">Onion & tomato</span>
-              <span class="c-cook-row__qty">1 large</span>
+              <div style="display: flex; align-items: center; min-width: 0; flex: 1; gap: 8px; flex-wrap: wrap;">
+                <span class="c-cook-row__name">Onion & tomato</span>
+                <span class="c-cook-row__missing-tag ty-label">Out of stock</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+                <span class="c-cook-row__qty">1 large</span>
+                <button class="c-cook-row__toggle-btn" aria-label="Mark as missing">
+                  <svg class="c-icon-unselected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                  </svg>
+                  <svg class="c-icon-selected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15" stroke="var(--color-base)"></line>
+                    <line x1="9" y1="9" x2="15" y2="15" stroke="var(--color-base)"></line>
+                  </svg>
+                </button>
+              </div>
             </div>
             <div class="c-cook-row">
-              <span class="c-cook-row__name">Ginger-garlic paste</span>
-              <span class="c-cook-row__qty">1 tbsp</span>
+              <div style="display: flex; align-items: center; min-width: 0; flex: 1; gap: 8px; flex-wrap: wrap;">
+                <span class="c-cook-row__name">Ginger-garlic paste</span>
+                <span class="c-cook-row__missing-tag ty-label">Out of stock</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+                <span class="c-cook-row__qty">1 tbsp</span>
+                <button class="c-cook-row__toggle-btn" aria-label="Mark as missing">
+                  <svg class="c-icon-unselected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                  </svg>
+                  <svg class="c-icon-selected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15" stroke="var(--color-base)"></line>
+                    <line x1="9" y1="9" x2="15" y2="15" stroke="var(--color-base)"></line>
+                  </svg>
+                </button>
+              </div>
             </div>
             <div class="c-cook-row">
-              <span class="c-cook-row__name">Spices (garam masala)</span>
-              <span class="c-cook-row__qty">1 tsp</span>
+              <div style="display: flex; align-items: center; min-width: 0; flex: 1; gap: 8px; flex-wrap: wrap;">
+                <span class="c-cook-row__name">Spices (garam masala)</span>
+                <span class="c-cook-row__missing-tag ty-label">Out of stock</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+                <span class="c-cook-row__qty">1 tsp</span>
+                <button class="c-cook-row__toggle-btn" aria-label="Mark as missing">
+                  <svg class="c-icon-unselected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                  </svg>
+                  <svg class="c-icon-selected" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15" stroke="var(--color-base)"></line>
+                    <line x1="9" y1="9" x2="15" y2="15" stroke="var(--color-base)"></line>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
           
           <!-- Staples note -->
           <div class="c-cook-drawer-note" style="margin-top: 4px;">
             Salt, oil, jeera, hing assumed at home.
+          </div>
+
+          <!-- Missing ingredient helper -->
+          <div class="c-cook-missing-helper" style="font-size: 11px; color: var(--color-text-secondary); margin-top: 12px; text-align: center; opacity: 0.8; font-style: italic; border-top: 1px dashed var(--color-divider); padding-top: 8px;">
+            Tap the outline icon next to any ingredient you don't have
           </div>
         </div>
       </div>
@@ -141,6 +230,28 @@
         <div style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 8px;">
           <button class="controls-area__btn" id="apply-servings-btn" style="height: 56px; border-radius: var(--radius-round);">Apply Servings</button>
           <button class="c-btn c-btn--outlined" id="cancel-servings-btn" style="height: 56px; border-radius: var(--radius-round); border: 1px solid var(--color-divider); display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: var(--font-size-body); font-weight: var(--font-weight-regular); background: transparent;">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Bottom Sheet Components for Changing Dish -->
+    <div class="c-bottomsheet-overlay" id="change-dish-overlay"></div>
+    <div class="c-bottomsheet" id="change-dish-sheet">
+      <div class="c-bottomsheet__handle-wrap">
+        <div class="c-bottomsheet__handle"></div>
+      </div>
+
+      <div style="width: 100%; display: flex; flex-direction: column; ">
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <h2 class="ty-display text-primary" style="font-size: 24px; font-family: var(--font-display);">Change Dish</h2>
+          <p class="ty-body text-secondary" style="font-size: 14px; margin-top: 2px;">
+            Choose a different meal to cook tonight.
+          </p>
+        </div>
+
+        <!-- Dishes Grid inside Bottom Sheet -->
+        <div class="c-change-dish-grid" id="change-dish-list">
+          <!-- Items will be generated dynamically or predefined -->
         </div>
       </div>
     </div>

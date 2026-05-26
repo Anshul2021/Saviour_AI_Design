@@ -35,7 +35,7 @@
       <div class="c-prep-title-stack">
         <div class="c-prep-label" id="prep-header-label">ONE THING BEFORE YOU SLEEP</div>
         <h1 class="c-prep-title" id="prep-header-title">Soak chole</h1>
-        <div class="c-prep-duration">For rajma rice</div>
+        <div class="c-prep-duration" id="prep-duration">For rajma rice</div>
       </div>
 
       <!-- Emoji and specific prep task stack below it (inverted from cook-item) -->
@@ -56,6 +56,9 @@
         <div class="c-prep-desc" id="prep-description-text">
           Soaking cuts tomorrow's cook time from 45 min to 20 min.
         </div>
+
+        <!-- See other prep tasks link -->
+        <button class="c-prep-change-link" id="change-prep-btn">See other prep tasks</button>
       </div>
     </div>
 
@@ -68,6 +71,27 @@
       <div data-component="home-indicator" id="app-home-indicator"></div>
     </footer>
 
+    <!-- 5. Bottom Sheet Components for Changing Prep Task -->
+    <div class="c-bottomsheet-overlay" id="prep-overlay"></div>
+    <div class="c-bottomsheet" id="prep-sheet">
+      <div class="c-bottomsheet__handle-wrap">
+        <div class="c-bottomsheet__handle"></div>
+      </div>
+
+      <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <h2 class="ty-display text-primary" style="font-size: 24px; font-family: var(--font-display);">Other Prep Tasks</h2>
+          <p class="ty-body text-secondary" style="font-size: 14px; margin-top: 2px;">
+            Choose a different task to prep tonight.
+          </p>
+        </div>
+
+        <!-- Prep Options Grid inside Bottom Sheet -->
+        <div class="c-change-dish-grid" id="prep-list">
+          <!-- Dynamic options will load here -->
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Standard non-module script link for offline CORS resilience -->

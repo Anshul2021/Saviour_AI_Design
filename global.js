@@ -325,12 +325,15 @@ function injectSkeletonLayout(container, pageType) {
       </div>
       <div class="app-content" style="display: flex; flex-direction: column; gap: 24px; overflow: hidden; box-sizing: border-box; background-color: #FFFFFF; padding: 24px 20px 24px; flex: 1;">
         <!-- Profile info shimmer -->
-        <div style="display: flex; align-items: center; gap: 16px;">
-          <div class="c-shimmer" style="height: 52px; width: 52px; border-radius: 50%;"></div>
-          <div style="display: flex; flex-direction: column; gap: 6px; flex: 1;">
-            <div class="c-shimmer" style="height: 20px; width: 100px; border-radius: var(--radius-sm);"></div>
-            <div class="c-shimmer" style="height: 14px; width: 200px; border-radius: var(--radius-sm);"></div>
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div class="c-shimmer" style="height: 52px; width: 52px; border-radius: 50%;"></div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div class="c-shimmer" style="height: 20px; width: 100px; border-radius: var(--radius-sm);"></div>
+              <div class="c-shimmer" style="height: 14px; width: 150px; border-radius: var(--radius-sm);"></div>
+            </div>
           </div>
+          <div class="c-shimmer" style="height: 48px; width: 48px; border-radius: 50%;"></div>
         </div>
         <!-- Stats card shimmer -->
         <div class="c-shimmer" style="height: 140px; border-radius: var(--radius-xl); width: 100%;"></div>
@@ -2071,6 +2074,12 @@ function initGrocery() {
  * Initializes the Saviour Profile preference toggles and account settings
  */
 function initProfile() {
+  // Update date overlay dynamically on top of the streak flame
+  const streakDateEl = document.getElementById('streak-date-overlay');
+  if (streakDateEl) {
+    streakDateEl.textContent = new Date().getDate();
+  }
+
   // Update notification badge dot dynamically based on unread items count
   const badgeEl = document.getElementById('profile-notification-badge');
   if (badgeEl) {

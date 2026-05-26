@@ -1092,7 +1092,7 @@ function initEnergyLevel() {
       }
 
       setTimeout(() => {
-        if (selection === 'energy-okay' || selection === 'energy-fine') {
+        if (selection === 'energy-okay' || selection === 'energy-fine' || selection === 'energy-exhausted') {
           localStorage.setItem('saviour_notification_type', 'rajma_rice');
           localStorage.setItem('saviour_selected_meal', 'Rajma Rice');
           localStorage.removeItem('saviour_selected_meal_emoji');
@@ -1119,6 +1119,7 @@ function navigateTo(url) {
 function initCookItem() {
   const mealTitleEl = document.getElementById('cook-meal-title');
   const mealEmojiEl = document.getElementById('cook-meal-emoji');
+  const mealTimeEl = document.getElementById('cook-meal-time');
   const startBtn = document.getElementById('start-cooking-btn');
   const cancelBtn = document.getElementById('not-tonight-btn');
   const backBtn = document.getElementById('cook-back-btn');
@@ -1132,13 +1133,183 @@ function initCookItem() {
   const selectedMeal = localStorage.getItem('saviour_selected_meal') || 'Rajma Rice';
   const selectedMealEmoji = localStorage.getItem('saviour_selected_meal_emoji') || '';
 
+  // Recipes Database
+  const recipes = {
+    'rajma rice': {
+      time: '35 min',
+      ingredients: [
+        { name: 'Red kidney beans (rajma)', qty: 1, unit: 'cup' },
+        { name: 'Basmati rice', qty: 1, unit: 'cup' },
+        { name: 'Onion & tomato', qty: 1, unit: 'large' },
+        { name: 'Ginger-garlic paste', qty: 1, unit: 'tbsp' },
+        { name: 'Spices (garam masala)', qty: 1, unit: 'tsp' }
+      ]
+    },
+    'maggi': {
+      time: '10 min',
+      ingredients: [
+        { name: 'Maggi noodles', qty: 1, unit: 'pack' },
+        { name: 'Maggi tastemaker', qty: 1, unit: 'pack' },
+        { name: 'Onion & carrot', qty: 0.5, unit: 'cup' },
+        { name: 'Water', qty: 1.5, unit: 'cup' }
+      ]
+    },
+    'egg toast': {
+      time: '10 min',
+      ingredients: [
+        { name: 'Bread slices', qty: 2, unit: 'slice' },
+        { name: 'Eggs', qty: 2, unit: 'pc' },
+        { name: 'Onion & green chili', qty: 0.25, unit: 'cup' },
+        { name: 'Butter', qty: 1, unit: 'tbsp' }
+      ]
+    },
+    'dal chawal': {
+      time: '25 min',
+      ingredients: [
+        { name: 'Yellow lentil (dal)', qty: 0.5, unit: 'cup' },
+        { name: 'Basmati rice', qty: 1, unit: 'cup' },
+        { name: 'Onion & tomato', qty: 0.5, unit: 'cup' },
+        { name: 'Ghee', qty: 1, unit: 'tbsp' }
+      ]
+    },
+    'poha': {
+      time: '15 min',
+      ingredients: [
+        { name: 'Flattened rice (poha)', qty: 1, unit: 'cup' },
+        { name: 'Onion & potato', qty: 0.5, unit: 'cup' },
+        { name: 'Peanuts', qty: 2, unit: 'tbsp' },
+        { name: 'Green chili & curry leaves', qty: 1, unit: 'tbsp' }
+      ]
+    },
+    'curd rice': {
+      time: '10 min',
+      ingredients: [
+        { name: 'Cooked rice', qty: 1.5, unit: 'cup' },
+        { name: 'Curd (yogurt)', qty: 0.5, unit: 'cup' },
+        { name: 'Milk', qty: 2, unit: 'tbsp' },
+        { name: 'Mustard seeds & ginger', qty: 1, unit: 'tsp' }
+      ]
+    },
+    'bread omelette': {
+      time: '10 min',
+      ingredients: [
+        { name: 'Bread slices', qty: 2, unit: 'slice' },
+        { name: 'Eggs', qty: 2, unit: 'pc' },
+        { name: 'Onion & green chili', qty: 0.25, unit: 'cup' },
+        { name: 'Butter', qty: 1, unit: 'tbsp' }
+      ]
+    },
+    'upma': {
+      time: '15 min',
+      ingredients: [
+        { name: 'Semolina (suji)', qty: 0.5, unit: 'cup' },
+        { name: 'Onion & carrot', qty: 0.5, unit: 'cup' },
+        { name: 'Water', qty: 1.5, unit: 'cup' },
+        { name: 'Ghee & mustard seeds', qty: 1, unit: 'tbsp' }
+      ]
+    },
+    'khichdi': {
+      time: '20 min',
+      ingredients: [
+        { name: 'Rice & lentils', qty: 1, unit: 'cup' },
+        { name: 'Onion & tomato', qty: 0.5, unit: 'cup' },
+        { name: 'Water', qty: 3, unit: 'cup' },
+        { name: 'Ghee & cumin seeds', qty: 1, unit: 'tbsp' }
+      ]
+    },
+    'sandwich': {
+      time: '5 min',
+      ingredients: [
+        { name: 'Bread slices', qty: 2, unit: 'slice' },
+        { name: 'Cucumber & tomato', qty: 4, unit: 'slice' },
+        { name: 'Cheese', qty: 1, unit: 'slice' },
+        { name: 'Butter', qty: 1, unit: 'tbsp' }
+      ]
+    },
+    'paratha': {
+      time: '20 min',
+      ingredients: [
+        { name: 'Whole wheat flour', qty: 0.5, unit: 'cup' },
+        { name: 'Potato / Paneer stuffing', qty: 0.5, unit: 'cup' },
+        { name: 'Ghee', qty: 2, unit: 'tbsp' }
+      ]
+    },
+    'fried rice': {
+      time: '15 min',
+      ingredients: [
+        { name: 'Cooked rice', qty: 1.5, unit: 'cup' },
+        { name: 'Mixed veggies', qty: 0.5, unit: 'cup' },
+        { name: 'Soy sauce & garlic', qty: 1, unit: 'tbsp' },
+        { name: 'Oil', qty: 1, unit: 'tbsp' }
+      ]
+    },
+    'pasta': {
+      time: '20 min',
+      ingredients: [
+        { name: 'Pasta (raw)', qty: 0.75, unit: 'cup' },
+        { name: 'Tomato pasta sauce', qty: 0.5, unit: 'cup' },
+        { name: 'Garlic & herbs', qty: 1, unit: 'tsp' },
+        { name: 'Cheese', qty: 2, unit: 'tbsp' }
+      ]
+    },
+    'omelette': {
+      time: '10 min',
+      ingredients: [
+        { name: 'Eggs', qty: 3, unit: 'pc' },
+        { name: 'Onion & tomato', qty: 0.5, unit: 'cup' },
+        { name: 'Oil/Butter', qty: 1, unit: 'tbsp' }
+      ]
+    },
+    'oats': {
+      time: '10 min',
+      ingredients: [
+        { name: 'Rolled oats', qty: 0.5, unit: 'cup' },
+        { name: 'Milk / Water', qty: 1, unit: 'cup' },
+        { name: 'Honey / Sugar', qty: 1, unit: 'tbsp' },
+        { name: 'Banana / fruits', qty: 0.5, unit: 'cup' }
+      ]
+    },
+    'chole rice': {
+      time: '35 min',
+      ingredients: [
+        { name: 'Chickpeas (chole)', qty: 1, unit: 'cup' },
+        { name: 'Basmati rice', qty: 1, unit: 'cup' },
+        { name: 'Onion & tomato', qty: 1, unit: 'large' },
+        { name: 'Chole masala', qty: 1, unit: 'tbsp' }
+      ]
+    },
+    'lemon rice': {
+      time: '15 min',
+      ingredients: [
+        { name: 'Cooked rice', qty: 1.5, unit: 'cup' },
+        { name: 'Lemon juice', qty: 1, unit: 'tbsp' },
+        { name: 'Peanuts & chana dal', qty: 1, unit: 'tbsp' },
+        { name: 'Turmeric & curry leaves', qty: 1, unit: 'tsp' }
+      ]
+    }
+  };
+
+  // Match active recipe
+  const mealLower = selectedMeal.toLowerCase().trim();
+  let activeRecipeKey = 'rajma rice';
+  for (const key in recipes) {
+    if (mealLower.includes(key)) {
+      activeRecipeKey = key;
+      break;
+    }
+  }
+  const currentRecipe = recipes[activeRecipeKey];
+
   if (mealTitleEl) {
     mealTitleEl.textContent = selectedMeal;
   }
 
+  if (mealTimeEl && currentRecipe) {
+    mealTimeEl.textContent = `${currentRecipe.time} Cook Time`;
+  }
+
   if (mealEmojiEl) {
     let imageFilename = '';
-    const mealLower = selectedMeal.toLowerCase();
     if (mealLower.includes('sandwich')) imageFilename = 'Sandwich.png';
     else if (mealLower.includes('egg toast') || mealLower.includes('egg-toast')) imageFilename = 'Egg Toast.png';
     else if (mealLower.includes('dal chawal')) imageFilename = 'Dal Chawal.png';
@@ -1166,6 +1337,150 @@ function initCookItem() {
     }
   }
 
+  // Stepper quantity formatting helper
+  function formatQty(val, unit) {
+    let rounded = Math.round(val * 100) / 100;
+    let fractionStr = '';
+    const whole = Math.floor(rounded);
+    const frac = rounded - whole;
+
+    if (Math.abs(frac - 0.5) < 0.01) {
+      fractionStr = (whole > 0 ? whole + ' ' : '') + '½';
+    } else if (Math.abs(frac - 0.25) < 0.01) {
+      fractionStr = (whole > 0 ? whole + ' ' : '') + '¼';
+    } else if (Math.abs(frac - 0.75) < 0.01) {
+      fractionStr = (whole > 0 ? whole + ' ' : '') + '¾';
+    } else {
+      fractionStr = rounded.toString();
+    }
+
+    let displayUnit = unit;
+    if (rounded > 1) {
+      if (unit === 'cup') displayUnit = 'cups';
+      else if (unit === 'pack') displayUnit = 'packs';
+      else if (unit === 'pc') displayUnit = 'pcs';
+      else if (unit === 'slice') displayUnit = 'slices';
+    }
+    return `${fractionStr} ${displayUnit}`;
+  }
+
+  // Stepper and ingredients logic
+  let servings = 1;
+  let tempServings = 1;
+
+  const servingsOverlay = document.getElementById('servings-overlay');
+  const servingsSheet = document.getElementById('servings-sheet');
+  const servingsVal = document.getElementById('servings-val');
+  const servingsDec = document.getElementById('servings-dec-btn');
+  const servingsInc = document.getElementById('servings-inc-btn');
+  const applyServingsBtn = document.getElementById('apply-servings-btn');
+  const cancelServingsBtn = document.getElementById('cancel-servings-btn');
+
+  const ingredientsListEl = document.getElementById('cook-ingredients-list');
+
+  function updateIngredientsUI() {
+    if (ingredientsListEl && currentRecipe) {
+      ingredientsListEl.innerHTML = '';
+      currentRecipe.ingredients.forEach(item => {
+        const scaledQty = item.qty * servings;
+        const row = document.createElement('div');
+        row.className = 'c-cook-row';
+        row.innerHTML = `
+          <span class="c-cook-row__name">${item.name}</span>
+          <span class="c-cook-row__qty">${formatQty(scaledQty, item.unit)}</span>
+        `;
+        ingredientsListEl.appendChild(row);
+      });
+    }
+  }
+
+  function updateBottomSheetStepperUI() {
+    if (servingsVal) {
+      servingsVal.textContent = tempServings;
+    }
+    if (servingsDec) {
+      if (tempServings <= 1) {
+        servingsDec.disabled = true;
+        servingsDec.style.opacity = '0.5';
+      } else {
+        servingsDec.disabled = false;
+        servingsDec.style.opacity = '1';
+      }
+    }
+  }
+
+  function openServingsSheet() {
+    tempServings = servings;
+    updateBottomSheetStepperUI();
+    if (servingsOverlay && servingsSheet) {
+      servingsOverlay.classList.add('is-visible');
+      servingsSheet.classList.add('is-visible');
+    }
+  }
+
+  function closeServingsSheet() {
+    if (servingsOverlay && servingsSheet) {
+      servingsOverlay.classList.remove('is-visible');
+      servingsSheet.classList.remove('is-visible');
+    }
+  }
+
+  // Initial render
+  updateIngredientsUI();
+
+  // Show servings adjuster bottom sheet dynamically
+  const showServingsLink = document.getElementById('show-servings-link');
+  if (showServingsLink) {
+    showServingsLink.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent collapsing the drawer card
+      openServingsSheet();
+    });
+  }
+
+  // Stepper Event Listeners inside bottom sheet
+  if (servingsDec) {
+    servingsDec.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (tempServings > 1) {
+        tempServings--;
+        updateBottomSheetStepperUI();
+      }
+    });
+  }
+
+  if (servingsInc) {
+    servingsInc.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tempServings++;
+      updateBottomSheetStepperUI();
+    });
+  }
+
+  // Apply Servings
+  if (applyServingsBtn) {
+    applyServingsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      servings = tempServings;
+      updateIngredientsUI();
+      closeServingsSheet();
+    });
+  }
+
+  // Cancel Servings
+  if (cancelServingsBtn) {
+    cancelServingsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeServingsSheet();
+    });
+  }
+
+  // Backdrop overlay click to dismiss
+  if (servingsOverlay) {
+    servingsOverlay.addEventListener('click', (e) => {
+      closeServingsSheet();
+    });
+  }
+
   // Toggle ingredients drawer visibility (collapsed by default)
   if (drawerBtn && drawerCard && drawerArrow && drawerText) {
     drawerBtn.addEventListener('click', () => {
@@ -1189,14 +1504,22 @@ function initCookItem() {
 
   if (cancelBtn) {
     cancelBtn.addEventListener('click', () => {
-      window.location.href = 'index.html';
+      const notCookingOverlay = document.getElementById('not-cooking-overlay');
+      if (notCookingOverlay) {
+        notCookingOverlay.classList.add('is-visible');
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 2500);
+      } else {
+        window.location.href = 'home.html';
+      }
     });
   }
 
   if (backBtn) {
     backBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.href = 'index.html';
+      window.history.back();
     });
   }
 }
@@ -1229,6 +1552,33 @@ function showCookingStartedOverlay(mealName) {
   setTimeout(() => {
     window.location.href = 'index.html';
   }, 2000);
+}
+
+function showCookingDoneOverlay(mealName) {
+  if (document.querySelector('.c-success-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'c-success-overlay';
+  overlay.innerHTML = `
+    <div class="c-success-card">
+      <div class="c-success-checkmark" style="background-color: var(--color-success-subtle); color: var(--color-success);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="c-success-title">Yum! Done Cooking</h2>
+      <p class="c-success-subtitle">Hope you enjoy your delicious <strong>${mealName}</strong>. Have a great, relaxing evening!</p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  requestAnimationFrame(() => {
+    overlay.classList.add('is-visible');
+  });
+
+  setTimeout(() => {
+    window.location.href = 'home.html';
+  }, 2500);
 }
 
 /**
@@ -1295,7 +1645,12 @@ function initCookingTime() {
     doneBtn.disabled = true; // initially disabled as per Figma opacity 0.5
     doneBtn.addEventListener('click', () => {
       clearInterval(timerInterval);
-      showCookingStartedOverlay(selectedMeal);
+      const energy = localStorage.getItem('saviour_selected_energy');
+      if (energy === 'energy-okay' || energy === 'energy-fine') {
+        window.location.href = 'prep-tomorrow.html';
+      } else {
+        showCookingDoneOverlay(selectedMeal);
+      }
     });
   }
 
@@ -1312,7 +1667,7 @@ function initCookingTime() {
     backBtn.addEventListener('click', (e) => {
       e.preventDefault();
       clearInterval(timerInterval);
-      window.location.href = 'cook-item.html';
+      window.history.back();
     });
   }
 }
@@ -1426,7 +1781,7 @@ function showPrepSuccessOverlay() {
   });
 
   setTimeout(() => {
-    window.location.href = 'index.html';
+    window.location.href = 'home.html';
   }, 2000);
 }
 
@@ -1744,36 +2099,32 @@ function initProfile() {
   }
 
   // Handle office leave time redirect & custom value display
-  const prefContainer = document.querySelector('.SingleGroupedCard') || document.querySelector('main.app-content div[style*="padding: 0 16px"]');
-  if (prefContainer) {
-    const prefRows = prefContainer.children;
-    if (prefRows && prefRows.length >= 4) {
-      // Row 0: Office leave time
-      const officeLeaveRow = prefRows[0];
-      const leaveTimeCaption = officeLeaveRow.querySelector('.ty-caption') || officeLeaveRow.querySelector('.30Pm');
-      const savedLeaveTime = localStorage.getItem('saviour_leave_time') || '7:30 PM';
-      if (leaveTimeCaption) {
-        leaveTimeCaption.textContent = savedLeaveTime;
-      }
-      officeLeaveRow.addEventListener('click', () => {
-        window.location.href = 'leave-office.html';
-      });
-
-      // Row 1: Diet preference
-      const dietRow = prefRows[1];
-      dietRow.addEventListener('click', () => {
-        window.location.href = 'index.html';
-      });
+  const leaveTimeRow = document.getElementById('leave-time-row');
+  if (leaveTimeRow) {
+    const leaveTimeText = leaveTimeRow.querySelector('.ty-body.text-secondary');
+    const savedLeaveTime = localStorage.getItem('saviour_leave_time') || '7:30 PM';
+    if (leaveTimeText) {
+      leaveTimeText.textContent = savedLeaveTime;
     }
+    leaveTimeRow.addEventListener('click', () => {
+      window.location.href = 'leave-office.html';
+    });
   }
 
-  // Delete account action
-  const deleteBtn = document.querySelector('main.app-content button[style*="text-decoration: underline"]');
-  if (deleteBtn) {
-    deleteBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to delete your account? This will clear all progress and choices.')) {
+  // Handle meal preference redirect
+  const mealPrefRow = document.getElementById('meal-preference-row');
+  if (mealPrefRow) {
+    mealPrefRow.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+  }
+
+  // Logout action
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to logout? This will reset your profile and selections.')) {
         localStorage.clear();
-        alert('Account data cleared successfully!');
         window.location.href = 'index.html';
       }
     });

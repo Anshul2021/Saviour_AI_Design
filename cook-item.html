@@ -48,48 +48,55 @@
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8.00065 3.99992V7.99992L10.6673 9.33325M14.6673 7.99992C14.6673 11.6818 11.6825 14.6666 8.00065 14.6666C4.31875 14.6666 1.33398 11.6818 1.33398 7.99992C1.33398 4.31802 4.31875 1.33325 8.00065 1.33325C11.6825 1.33325 14.6673 4.31802 14.6673 7.99992Z" stroke="var(--color-text-secondary)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span style="font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 400; line-height: 22.40px;">35 min</span>
+            <span id="cook-meal-time" style="font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 400; line-height: 22.40px;">35 min Cook Time</span>
           </div>
-          <div class="c-cook-meta__dot"></div>
-          <span class="c-cook-meta__tag">For one person</span>
         </div>
-        
-        <!-- Status success message -->
-        <div class="c-cook-status">Everything is at home</div>
       </div>
 
       <!-- Ingredients Drawer -->
       <div class="c-cook-ingredients-drawer">
         <button class="c-cook-drawer-trigger" id="ingredients-drawer-btn">
+          <span id="ingredients-drawer-arrow" style="margin-right: 4px;">↓</span>
           <span id="ingredients-drawer-text">Show ingredients</span>
-          <span id="ingredients-drawer-arrow">↓</span>
         </button>
         
         <!-- Collapsible Card -->
         <div class="c-cook-drawer-card" id="ingredients-drawer-card">
-          <div class="c-cook-row">
-            <span class="c-cook-row__name">Red kidney beans (rajma)</span>
-            <span class="c-cook-row__qty">1 cup</span>
+          <!-- Subtle servings baseline note -->
+          <div class="c-cook-servings-note">
+            <span>These ingredients are on the basis of single person meal.</span>
+            <button type="button" class="c-cook-servings-link" id="show-servings-link">Cook for more people?</button>
           </div>
-          <div class="c-cook-row">
-            <span class="c-cook-row__name">Basmati rice</span>
-            <span class="c-cook-row__qty">1 cup</span>
-          </div>
-          <div class="c-cook-row">
-            <span class="c-cook-row__name">Onion & tomato</span>
-            <span class="c-cook-row__qty">1 large</span>
-          </div>
-          <div class="c-cook-row">
-            <span class="c-cook-row__name">Ginger-garlic paste</span>
-            <span class="c-cook-row__qty">1 tbsp</span>
-          </div>
-          <div class="c-cook-row">
-            <span class="c-cook-row__name">Spices (garam masala)</span>
-            <span class="c-cook-row__qty">1 tsp</span>
+          
+
+          
+          <hr class="c-cook-divider">
+
+          <div id="cook-ingredients-list" style="display: flex; flex-direction: column; gap: 8px; align-self: stretch;">
+            <div class="c-cook-row">
+              <span class="c-cook-row__name">Red kidney beans (rajma)</span>
+              <span class="c-cook-row__qty">1 cup</span>
+            </div>
+            <div class="c-cook-row">
+              <span class="c-cook-row__name">Basmati rice</span>
+              <span class="c-cook-row__qty">1 cup</span>
+            </div>
+            <div class="c-cook-row">
+              <span class="c-cook-row__name">Onion & tomato</span>
+              <span class="c-cook-row__qty">1 large</span>
+            </div>
+            <div class="c-cook-row">
+              <span class="c-cook-row__name">Ginger-garlic paste</span>
+              <span class="c-cook-row__qty">1 tbsp</span>
+            </div>
+            <div class="c-cook-row">
+              <span class="c-cook-row__name">Spices (garam masala)</span>
+              <span class="c-cook-row__qty">1 tsp</span>
+            </div>
           </div>
           
           <!-- Staples note -->
-          <div class="c-cook-drawer-note">
+          <div class="c-cook-drawer-note" style="margin-top: 4px;">
             Salt, oil, jeera, hing assumed at home.
           </div>
         </div>
@@ -99,11 +106,57 @@
     <!-- 4. Absolute positioned Controls Area -->
     <footer class="c-cook-controls-area" id="app-footer">
       <button class="c-btn c-btn--primary" id="start-cooking-btn">Start Cooking</button>
-      <button class="c-btn c-btn--outlined" id="not-tonight-btn">Not Tonight</button>
+      <button class="c-btn c-btn--outlined" id="not-tonight-btn">Not Cooking Tonight</button>
       
       <!-- Reusable Home Indicator Component Placeholder -->
       <div data-component="home-indicator" id="app-home-indicator"></div>
     </footer>
+
+    <!-- 5. Bottom Sheet Components for Adjusting Servings -->
+    <div class="c-bottomsheet-overlay" id="servings-overlay"></div>
+    <div class="c-bottomsheet" id="servings-sheet">
+      <div class="c-bottomsheet__handle-wrap">
+        <div class="c-bottomsheet__handle"></div>
+      </div>
+
+      <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <h2 class="ty-display text-primary" style="font-size: 24px; font-family: var(--font-display);">Adjust Servings</h2>
+          <p class="ty-body text-secondary" style="font-size: 14px; margin-top: 2px;">
+            How many people are you cooking for? Ingredients will scale automatically.
+          </p>
+        </div>
+
+        <!-- Servings Stepper Row inside Bottom Sheet -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider);">
+          <span class="text-primary" style="font-weight: var(--font-weight-medium); font-size: 16px;">Number of Servings</span>
+          <div class="c-stepper">
+            <button class="c-stepper__btn" id="servings-dec-btn" type="button" style="width: 40px; height: 40px; font-size: 20px;">−</button>
+            <span class="c-stepper__val" id="servings-val" style="font-size: 18px; font-weight: var(--font-weight-medium); min-width: 32px; text-align: center;">1</span>
+            <button class="c-stepper__btn" id="servings-inc-btn" type="button" style="width: 40px; height: 40px; font-size: 20px;">+</button>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 8px;">
+          <button class="controls-area__btn" id="apply-servings-btn" style="height: 56px; border-radius: var(--radius-round);">Apply Servings</button>
+          <button class="c-btn c-btn--outlined" id="cancel-servings-btn" style="height: 56px; border-radius: var(--radius-round); border: 1px solid var(--color-divider); display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: var(--font-size-body); font-weight: var(--font-weight-regular); background: transparent;">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal Overlay for Not Cooking Tonight -->
+    <div class="c-success-overlay" id="not-cooking-overlay">
+      <div class="c-success-card">
+        <div class="c-success-checkmark">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="c-success-title">Okay, noted!</h2>
+        <p class="c-success-subtitle">We understand you don't want to cook today—that's completely fine. Take a rest, and we'll see you tomorrow!</p>
+      </div>
+    </div>
 
   </div>
 

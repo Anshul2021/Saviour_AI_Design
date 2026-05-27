@@ -2711,35 +2711,71 @@ body {
    BOTTOM SHEET STYLES
    ========================================================================== */
 
-/* Scribble Strike-through Styles */
+/* Checked Label Color Style */
 .c-pantry-row.is-checked .c-pantry-row__label {
-  position: relative;
   color: var(--color-text-ghost);
   transition: color 0.3s ease;
 }
 
-.c-pantry-row.is-checked .c-pantry-row__label::after {
-  content: '';
-  position: absolute;
-  left: -4px;
-  top: 50%;
-  height: 6px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M1,5 C15,3 35,7 50,4 C65,2 80,8 99,5' stroke='%23E07A55' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  transform: translateY(-50%) rotate(-0.5deg);
-  animation: scribble-strike 0.25s ease-out forwards;
-  pointer-events: none;
+
+/* Grocery Page specific right label overrides and transition out animation */
+.js-grocery-item .c-pantry-row__right {
+  max-width: 200px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: none !important;
 }
 
-@keyframes scribble-strike {
-  from {
-    width: 0;
-  }
+.js-grocery-item {
+  transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+  max-height: 100px;
+  overflow: hidden;
+}
 
-  to {
-    width: calc(100% + 8px);
-  }
+.js-grocery-item.js-transitioning-out {
+  opacity: 0 !important;
+  transform: translateX(20px) !important;
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  border: none !important;
+  pointer-events: none !important;
+}
+
+/* Smart Bottom Toast Notification */
+.c-toast {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(43, 39, 33, 0.95);
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-family: var(--font-interface);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  width: calc(100% - 40px);
+  max-width: 310px;
+  justify-content: center;
+}
+
+.c-toast.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* Bottom Sheet */

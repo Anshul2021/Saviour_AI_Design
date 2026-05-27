@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // 3. Conditional skeleton loading
-  const skeletonPages = ['meals', 'home', 'grocery', 'profile'];
+  const skeletonPages = ['meals'];
   if (skeletonPages.includes(pageType)) {
     // Hide actual content container initially
     appContainer.style.display = 'none';
@@ -1941,7 +1941,7 @@ function initCookingTime() {
     backBtn.addEventListener('click', (e) => {
       e.preventDefault();
       clearInterval(timerInterval);
-      window.history.back();
+      window.location.href = 'cook-item.html';
     });
   }
 }
@@ -2275,7 +2275,11 @@ function initGrocery() {
   const boughtBtn = document.getElementById('sheet-btn-bought');
   const filterChips = document.querySelectorAll('#grocery-filter-bar .c-filter-chip');
 
+  // Reset a few items in localStorage on load so that the "Need to buy" section is never empty for prototype
   let boughtItems = JSON.parse(localStorage.getItem('saviour_bought_items') || '[]');
+  const defaultNeedToBuy = ['Rajma', 'Dal toor', 'Bread', 'Eggs', 'Curd', 'Coriander', 'Maggi'];
+  boughtItems = boughtItems.filter(item => !defaultNeedToBuy.includes(item));
+  localStorage.setItem('saviour_bought_items', JSON.stringify(boughtItems));
 
   // Helper to update visual states of list and count summary
   function updateGroceryListUI() {
@@ -2288,20 +2292,44 @@ function initGrocery() {
       const title = row.getAttribute('data-title');
       const status = row.getAttribute('data-status'); // 'OUT', 'LOW', 'OK'
       const checkbox = row.querySelector('.js-grocery-checkbox');
-      const label = row.querySelector('.c-pantry-row__label');
       const isBought = boughtItems.includes(title);
-      const showAsChecked = isBought && (filter === 'buy');
+      const showAsChecked = isBought;
 
       if (showAsChecked) {
         if (checkbox) checkbox.classList.add('is-selected');
         row.classList.add('is-checked');
-        row.style.opacity = '0.5';
-        if (label) label.style.textDecoration = 'line-through';
+        row.style.opacity = '0.6';
       } else {
         if (checkbox) checkbox.classList.remove('is-selected');
         row.classList.remove('is-checked');
         row.style.opacity = '1';
-        if (label) label.style.textDecoration = 'none';
+      }
+
+      const rightLabelWrap = row.querySelector('.c-pantry-row__right');
+      if (rightLabelWrap) {
+        const labelSpan = rightLabelWrap.querySelector('.ty-label');
+        if (labelSpan) {
+          if (isBought) {
+            labelSpan.textContent = 'IN STOCK';
+            labelSpan.style.backgroundColor = 'var(--color-success-subtle)';
+            labelSpan.style.color = 'var(--color-success)';
+          } else {
+            // Restore original label and styles
+            if (status === 'OUT') {
+              labelSpan.textContent = 'OUT';
+              labelSpan.style.backgroundColor = 'var(--color-error-subtle)';
+              labelSpan.style.color = 'var(--color-error)';
+            } else if (status === 'LOW') {
+              labelSpan.textContent = 'LOW';
+              labelSpan.style.backgroundColor = 'var(--color-warning-subtle)';
+              labelSpan.style.color = 'var(--color-warning)';
+            } else {
+              labelSpan.textContent = 'IN STOCK';
+              labelSpan.style.backgroundColor = 'var(--color-success-subtle)';
+              labelSpan.style.color = 'var(--color-success)';
+            }
+          }
+        }
       }
 
       if (!isBought && (status === 'OUT' || status === 'LOW')) {
@@ -2315,8 +2343,9 @@ function initGrocery() {
 
       // Filter logic:
       if (filter === 'buy') {
-        // Under "Need to Buy", show all items that are OUT or LOW (whether bought/checked or not)
-        if (status === 'OUT' || status === 'LOW') {
+        // Under "Need to Buy", show all items that are OUT or LOW only if they are not bought yet
+        // (or if they are in the middle of transitioning/fading out)
+        if ((status === 'OUT' || status === 'LOW') && (!isBought || row.classList.contains('js-transitioning-out'))) {
           row.style.display = 'flex';
         } else {
           row.style.display = 'none';
@@ -2351,18 +2380,25 @@ function initGrocery() {
     sheet.setAttribute('data-current-item', title);
     document.getElementById('sheet-item-title').textContent = title;
 
+    const isBought = boughtItems.includes(title);
+    const isOriginalInStock = (status === 'OK');
+    const isNowInStock = isBought || isOriginalInStock;
+
     const statusEl = document.getElementById('sheet-item-status');
-    statusEl.textContent = statusLabel;
     statusEl.className = 'ty-label'; // reset classes
-    if (status === 'OUT') {
-      statusEl.style.backgroundColor = 'var(--color-error-subtle)';
-      statusEl.style.color = 'var(--color-error)';
-    } else if (status === 'LOW') {
-      statusEl.style.backgroundColor = 'var(--color-warning-subtle)';
-      statusEl.style.color = 'var(--color-warning)';
-    } else {
+    if (isNowInStock) {
+      statusEl.textContent = 'In stock';
       statusEl.style.backgroundColor = 'var(--color-success-subtle)';
       statusEl.style.color = 'var(--color-success)';
+    } else {
+      statusEl.textContent = statusLabel;
+      if (status === 'OUT') {
+        statusEl.style.backgroundColor = 'var(--color-error-subtle)';
+        statusEl.style.color = 'var(--color-error)';
+      } else if (status === 'LOW') {
+        statusEl.style.backgroundColor = 'var(--color-warning-subtle)';
+        statusEl.style.color = 'var(--color-warning)';
+      }
     }
     statusEl.style.padding = '4px 10px';
     statusEl.style.borderRadius = '8px';
@@ -2371,6 +2407,16 @@ function initGrocery() {
     document.getElementById('sheet-item-needed').textContent = needed;
     document.getElementById('sheet-item-also-used').textContent = alsoUsed;
     document.getElementById('sheet-item-category').textContent = category;
+
+    // Show/hide bottom sheet action buttons container based on whether it is In Stock
+    const actionButtonsContainer = boughtBtn.parentElement;
+    if (actionButtonsContainer) {
+      if (isNowInStock) {
+        actionButtonsContainer.style.display = 'none';
+      } else {
+        actionButtonsContainer.style.display = 'flex';
+      }
+    }
 
     if (boughtItems.includes(title)) {
       boughtBtn.textContent = 'Already Bought';
@@ -2406,15 +2452,39 @@ function initGrocery() {
 
         if (isSelected) {
           row.classList.add('is-checked');
-          if (!boughtItems.includes(title)) {
-            boughtItems.push(title);
+          
+          // Show toast message from the bottom smartly
+          showToast(`${title} marked as bought!`);
+
+          const activeChip = document.querySelector('#grocery-filter-bar .c-filter-chip.is-selected');
+          const filter = activeChip ? activeChip.getAttribute('data-filter') : 'buy';
+          
+          if (filter === 'buy') {
+            row.classList.add('js-transitioning-out');
+            setTimeout(() => {
+              if (row.classList.contains('is-checked')) {
+                if (!boughtItems.includes(title)) {
+                  boughtItems.push(title);
+                  localStorage.setItem('saviour_bought_items', JSON.stringify(boughtItems));
+                }
+                row.classList.remove('js-transitioning-out');
+                updateGroceryListUI();
+              }
+            }, 1000);
+          } else {
+            if (!boughtItems.includes(title)) {
+              boughtItems.push(title);
+              localStorage.setItem('saviour_bought_items', JSON.stringify(boughtItems));
+            }
+            updateGroceryListUI();
           }
         } else {
           row.classList.remove('is-checked');
+          row.classList.remove('js-transitioning-out');
           boughtItems = boughtItems.filter(item => item !== title);
+          localStorage.setItem('saviour_bought_items', JSON.stringify(boughtItems));
+          updateGroceryListUI();
         }
-        localStorage.setItem('saviour_bought_items', JSON.stringify(boughtItems));
-        updateGroceryListUI();
       });
     }
   });
@@ -2439,12 +2509,32 @@ function initGrocery() {
             checkbox.classList.add('is-selected');
             row.classList.add('is-checked');
           }
+          
+          showToast(`${title} marked as bought!`);
+
+          const activeChip = document.querySelector('#grocery-filter-bar .c-filter-chip.is-selected');
+          const filter = activeChip ? activeChip.getAttribute('data-filter') : 'buy';
+          
+          if (filter === 'buy') {
+            row.classList.add('js-transitioning-out');
+            setTimeout(() => {
+              if (row.classList.contains('is-checked')) {
+                if (!boughtItems.includes(title)) {
+                  boughtItems.push(title);
+                  localStorage.setItem('saviour_bought_items', JSON.stringify(boughtItems));
+                }
+                row.classList.remove('js-transitioning-out');
+                updateGroceryListUI();
+              }
+            }, 1000);
+          } else {
+            if (!boughtItems.includes(title)) {
+              boughtItems.push(title);
+              localStorage.setItem('saviour_bought_items', JSON.stringify(boughtItems));
+            }
+            updateGroceryListUI();
+          }
         }
-        if (!boughtItems.includes(title)) {
-          boughtItems.push(title);
-          localStorage.setItem('saviour_bought_items', JSON.stringify(boughtItems));
-        }
-        updateGroceryListUI();
       }
       closeBottomSheet();
     });
@@ -2470,6 +2560,42 @@ function initGrocery() {
 
   // Initial draw
   updateGroceryListUI();
+}
+
+/**
+ * Helper to display temporary toast message at the bottom of the screen
+ */
+function showToast(message) {
+  let toast = document.getElementById('app-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'app-toast';
+    toast.className = 'c-toast';
+    const appContainer = document.getElementById('app-container');
+    if (appContainer) {
+      appContainer.appendChild(toast);
+    } else {
+      document.body.appendChild(toast);
+    }
+  }
+
+  toast.innerHTML = `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+      <circle cx="8" cy="8" r="8" fill="var(--color-success)" />
+      <path d="M11 6L7 10L5 8" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>${message}</span>
+  `;
+
+  toast.classList.add('is-visible');
+
+  if (toast.timeoutId) {
+    clearTimeout(toast.timeoutId);
+  }
+
+  toast.timeoutId = setTimeout(() => {
+    toast.classList.remove('is-visible');
+  }, 2500);
 }
 
 /**

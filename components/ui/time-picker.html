@@ -68,54 +68,40 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      overflow: hidden;
+      overflow-y: scroll;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      height: 100%;
       font-family: 'Inter', sans-serif; /* MANUAL FONT: picker wheels use Inter */
       font-weight: 400;
     }
+    .c-time-picker__col::-webkit-scrollbar {
+      display: none;
+    }
 
-    /* Column Positioning */
+    /* Column Positioning (Widths and offsets only, paddings and gaps inherit from global.css) */
     .c-time-picker__col--hour {
       width: 120px;
       padding-left: 30px;
-      padding-top: 69px;
-      gap: 14px;
     }
     
     .c-time-picker__col--minute {
       width: 140px;
-      padding-top: 69px;
-      gap: 14px;
     }
     
     .c-time-picker__col--period {
       width: 115px;
       padding-right: 30px;
-      padding-top: 139px;
-      gap: 28px;
     }
 
     /* Item Styles & Transparency Scaling */
     .c-time-picker__item {
       text-align: center;
       user-select: none;
-    }
-
-    .c-time-picker__item--level-1 {
-      font-size: 22px;
-      color: rgba(0, 0, 0, 0.10);
-    }
-    .c-time-picker__item--level-2 {
-      font-size: 24px;
-      color: rgba(0, 0, 0, 0.18);
-    }
-    .c-time-picker__item--level-3 {
-      font-size: 26px;
-      color: rgba(0, 0, 0, 0.28);
-    }
-    .c-time-picker__item--active {
-      font-size: 28px;
-      color: var(--color-text-primary); /* #2E2A24 / black */
-      font-weight: 500;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Gradient Overlays for realistic 3D cylinder wheel effect */
@@ -145,7 +131,7 @@
 </head>
 <body>
 
-  <div class="showcase-container">
+  <div class="showcase-container" id="app-container" data-page="leave-office">
     <h1 class="ty-display">Time Picker</h1>
     <p class="ty-body">iOS-style wheel picker for selecting hours, minutes, and periods (AM/PM) with smooth gradient fade masks.</p>
 
@@ -157,33 +143,18 @@
         <!-- Wheel values -->
         <div class="c-time-picker__columns">
           <!-- Hour Column -->
-          <div class="c-time-picker__col c-time-picker__col--hour">
-            <div class="c-time-picker__item c-time-picker__item--level-1">5</div>
-            <div class="c-time-picker__item c-time-picker__item--level-2">6</div>
-            <div class="c-time-picker__item c-time-picker__item--level-3">7</div>
-            <div class="c-time-picker__item c-time-picker__item--active">8</div>
-            <div class="c-time-picker__item c-time-picker__item--level-3">9</div>
-            <div class="c-time-picker__item c-time-picker__item--level-2">10</div>
-            <div class="c-time-picker__item c-time-picker__item--level-1">11</div>
-            <div class="c-time-picker__item c-time-picker__item--level-1">12</div>
+          <div class="c-time-picker__col c-time-picker__col--hour" id="picker-hours">
+            <!-- Populated via JavaScript -->
           </div>
 
           <!-- Minute Column -->
-          <div class="c-time-picker__col c-time-picker__col--minute">
-            <div class="c-time-picker__item c-time-picker__item--level-1">57</div>
-            <div class="c-time-picker__item c-time-picker__item--level-2">58</div>
-            <div class="c-time-picker__item c-time-picker__item--level-3">59</div>
-            <div class="c-time-picker__item c-time-picker__item--active">00</div>
-            <div class="c-time-picker__item c-time-picker__item--level-3">01</div>
-            <div class="c-time-picker__item c-time-picker__item--level-2">02</div>
-            <div class="c-time-picker__item c-time-picker__item--level-1">03</div>
-            <div class="c-time-picker__item c-time-picker__item--level-1">04</div>
+          <div class="c-time-picker__col c-time-picker__col--minute" id="picker-minutes">
+            <!-- Populated via JavaScript -->
           </div>
 
           <!-- Period Column -->
-          <div class="c-time-picker__col c-time-picker__col--period">
-            <div class="c-time-picker__item c-time-picker__item--level-3">AM</div>
-            <div class="c-time-picker__item c-time-picker__item--active">PM</div>
+          <div class="c-time-picker__col c-time-picker__col--period" id="picker-period">
+            <!-- Populated via JavaScript -->
           </div>
         </div>
 
@@ -194,5 +165,8 @@
     </div>
   </div>
 
+  <!-- Standard non-module script links for offline CORS resilience -->
+  <script src="../../time-picker-audio.js?v=6"></script>
+  <script src="../../global.js?v=6"></script>
 </body>
 </html>

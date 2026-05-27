@@ -31,18 +31,6 @@
 
       <!-- Header Area -->
       <div class="onboarding-header">
-        <!-- Back Link Navigation -->
-        <div class="onboarding-back-link">
-          <a href="pantry.html" class="c-back-link">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7.00033 11.0834L2.91699 7.00008L7.00033 2.91675" stroke="var(--color-text-secondary)"
-                stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M11.0837 7H2.91699" stroke="var(--color-text-secondary)" stroke-width="1.2"
-                stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <span>Back</span>
-          </a>
-        </div>
 
         <!-- H1 Title -->
         <h1 class="ty-display">When do you usually leave office?</h1>
@@ -83,23 +71,32 @@
 
     <!-- 3. Fixed Bottom Controls Area with dynamic iOS Home Indicator -->
     <footer class="controls-area" id="app-footer">
-      <!-- Primary Action CTA Button -->
-      <button class="controls-area__btn" id="next-btn">
-        <span>Let's Go...!</span>
-        <!-- Arrow right SVG -->
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3.75 9H14.25M9 14.25L14.25 9L9 3.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
-      </button>
+      <div class="controls-area__actions">
+        <!-- Circular Back Button -->
+        <a href="pantry.html" class="c-btn--back" id="back-btn" aria-label="Go back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <!-- Primary Action CTA Button -->
+        <button class="controls-area__btn" id="next-btn">
+          <span>Let's Go...!</span>
+          <!-- Arrow right SVG -->
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.75 9H14.25M9 14.25L14.25 9L9 3.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
 
       <!-- Reusable Home Indicator Component Placeholder -->
       <div data-component="home-indicator" id="app-home-indicator"></div>
     </footer>
   </div>
 
-  <!-- Standard non-module script link for offline CORS resilience -->
-  <script src="global.js"></script>
+  <!-- Standard non-module script links for offline CORS resilience -->
+  <script src="time-picker-audio.js?v=6"></script>
+  <script src="global.js?v=6"></script>
 </body>
 
 </html>

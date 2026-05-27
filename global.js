@@ -202,7 +202,10 @@ function injectSkeletonLayout(container, pageType) {
     <!-- 3. Skeleton Bottom Controls Area -->
     <div class="controls-area" style="border-top: 1px solid var(--color-divider); box-sizing: border-box; flex-shrink: 0;">
       <div class="c-shimmer skeleton-counter-text"></div>
-      <div class="c-shimmer skeleton-btn"></div>
+      <div class="controls-area__actions">
+        <div class="c-shimmer skeleton-btn-circle"></div>
+        <div class="c-shimmer skeleton-btn" style="flex: 1;"></div>
+      </div>
       
       <!-- Home Indicator -->
       <div class="c-home-indicator" style="width: 100%; display: flex; justify-content: center; align-items: center; padding: 8px 0 0 0; box-sizing: border-box; flex-shrink: 0;">
@@ -217,8 +220,6 @@ function injectSkeletonLayout(container, pageType) {
       <!-- 2. Skeleton Scrollable Content (Pantry layout) -->
       <div class="app-content" style="display: flex; flex-direction: column; gap: 24px; overflow: hidden; box-sizing: border-box;">
         <div style="display: flex; flex-direction: column; gap: 12px; padding-top: 8px;">
-          <!-- Back button shimmer -->
-          <div class="c-shimmer" style="height: 16px; width: 60px; border-radius: var(--radius-sm);"></div>
           <!-- Title shimmer -->
           <div class="c-shimmer skeleton-title" style="width: 75%; height: 32px;"></div>
           <!-- Description shimmer -->
@@ -938,10 +939,42 @@ function initTimePicker() {
     });
   }
 
-  // Attach scroll listeners with requestAnimationFrame for hardware-accelerated smoothness
+  // Attach scroll listeners with requestAnimationFrame and dynamic Web Audio ticking sounds
   [hourCol, minuteCol, periodCol].forEach(col => {
     let ticking = false;
+    let lastScrollTop = col.scrollTop;
+    let lastScrollTime = performance.now();
+    let accumulatedDistance = 0;
+
     col.addEventListener('scroll', () => {
+      const currentScrollTop = col.scrollTop;
+      const currentTime = performance.now();
+      
+      const deltaScroll = Math.abs(currentScrollTop - lastScrollTop);
+      const deltaTime = Math.max(currentTime - lastScrollTime, 1); // Avoid division by zero
+      
+      // Speed in pixels per millisecond
+      const scrollSpeed = deltaScroll / deltaTime;
+      
+      // Smooth velocity curve matching clock-tick-test.html
+      const vel = Math.min(1, 0.15 + Math.pow(scrollSpeed, 0.6) * 1.5);
+      accumulatedDistance += deltaScroll;
+
+      // Item height is 40px in our layout
+      const itemHeight = 40;
+      let n = Math.floor(accumulatedDistance / itemHeight);
+      accumulatedDistance = accumulatedDistance % itemHeight;
+      n = Math.min(n, 3); // cap ticks per event
+
+      if (n > 0 && window.timePickerAudio) {
+        for (let i = 0; i < n; i++) {
+          window.timePickerAudio.playTick(vel);
+        }
+      }
+
+      lastScrollTop = currentScrollTop;
+      lastScrollTime = currentTime;
+
       if (!ticking) {
         window.requestAnimationFrame(() => {
           updateWheelOpacity(col);
@@ -949,7 +982,17 @@ function initTimePicker() {
         });
         ticking = true;
       }
-    });
+    }, { passive: true });
+
+    // Enable/resume AudioContext on first interaction
+    const unlockAudio = () => {
+      if (window.timePickerAudio) {
+        window.timePickerAudio.init();
+        window.timePickerAudio.resume();
+      }
+    };
+    col.addEventListener('touchstart', unlockAudio, { passive: true });
+    col.addEventListener('mousedown', unlockAudio);
   });
 
   // Set default initial value of 8:00 PM

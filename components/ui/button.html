@@ -144,6 +144,38 @@
       font-weight: var(--font-weight-regular); /* 400 */
       /* Note: Styled as outline in design system, but original CSS shows transparent with no outline */
     }
+
+    /* --- Type: Back (Circular) --- */
+    .c-btn--back {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: var(--color-surface-raised);
+      color: var(--color-text-secondary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    
+    .c-btn--back:hover {
+      background-color: var(--color-surface);
+      color: var(--color-text-primary);
+    }
+    
+    .c-btn--back:active {
+      background-color: var(--color-disabled);
+      transform: scale(0.96);
+    }
+
+    .c-btn--back svg {
+      width: 24px;
+      height: 24px;
+    }
   </style>
 </head>
 <body>
@@ -208,6 +240,21 @@
         <div class="btn-group">
           <span class="state-label">Default</span>
           <button class="c-btn c-btn--outlined">Not Tonight</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back Buttons Section -->
+    <div class="showcase-section">
+      <h2 class="ty-heading showcase-title">Back Button</h2>
+      <div class="grid">
+        <div class="btn-group">
+          <span class="state-label">Default</span>
+          <button class="c-btn--back">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
       </div>
     </div>

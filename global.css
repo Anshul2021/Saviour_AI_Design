@@ -789,6 +789,51 @@ hr {
   stroke: currentColor !important;
 }
 
+.controls-area__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  align-self: stretch;
+}
+
+.controls-area__actions .controls-area__btn {
+  flex: 1;
+  align-self: auto;
+}
+
+/* Circular back button styling matching the user's design image */
+.c-btn--back {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-surface-raised); /* #EDE3D4 - light beige/cream */
+  color: var(--color-text-secondary); /* #8C7E6A */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.c-btn--back:hover {
+  background-color: var(--color-surface); /* #F0E9DE - slightly darker beige */
+  color: var(--color-text-primary); /* #2E2A24 */
+}
+
+.c-btn--back:active {
+  background-color: var(--color-disabled); /* #DDD4C8 */
+  transform: scale(0.96);
+}
+
+.c-btn--back svg {
+  width: 24px;
+  height: 24px;
+}
+
 /* ==========================================================================
    DESKTOP BACKGROUND / SCREEN SIZE ADAPTATIONS
    ========================================================================== */
@@ -915,6 +960,13 @@ body {
   align-self: stretch;
   height: 56px;
   border-radius: 999px;
+}
+
+.skeleton-btn-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
@@ -1221,7 +1273,7 @@ body {
   background-color: var(--color-base);
   color: var(--color-text-secondary);
   font-family: var(--font-interface);
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-body);
   white-space: nowrap;
   cursor: pointer;
   transition: var(--transition-smooth);

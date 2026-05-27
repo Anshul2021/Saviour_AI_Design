@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clock Tick Sound — Test</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f12;
+    color: #e8e8e8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 32px;
+    padding: 24px;
+  }
+
+  h1 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #666;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .picker-card {
+    background: #1a1a20;
+    border: 0.5px solid #2e2e38;
+    border-radius: 20px;
+    padding: 24px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 320px;
+  }
+
+  .picker-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #555;
+    text-transform: uppercase;
+  }
+
+  .drums {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .sep {
+    font-size: 32px;
+    font-weight: 300;
+    color: #444;
+    padding: 0 2px;
+    user-select: none;
+  }
+
+  .col-wrap {
+    position: relative;
+    width: 76px;
+    height: 152px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #111116;
+    border: 0.5px solid #2a2a32;
+  }
+
+  .col-wrap::before,
+  .col-wrap::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 44px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .col-wrap::before { top: 0;    background: linear-gradient(#111116, transparent); }
+  .col-wrap::after  { bottom: 0; background: linear-gradient(transparent, #111116); }
+
+  .col-wrap .highlight {
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 44px;
+    transform: translateY(-50%);
+    background: rgba(99,102,241,0.12);
+    border-top: 0.5px solid rgba(99,102,241,0.35);
+    border-bottom: 0.5px solid rgba(99,102,241,0.35);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .col-scroll {
+    height: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .col-scroll::-webkit-scrollbar { display: none; }
+
+  .pad { height: 54px; }
+
+  .item {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 300;
+    color: #444;
+    scroll-snap-align: center;
+    cursor: pointer;
+    transition: color 0.15s;
+    user-select: none;
+  }
+  .item.active { color: #e8e8e8; font-weight: 400; }
+
+  .badge-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .badge {
+    font-size: 11px;
+    color: #555;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .vel-bar-bg {
+    width: 100px;
+    height: 4px;
+    background: #222;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .vel-bar {
+    height: 100%;
+    width: 0%;
+    background: #6366f1;
+    border-radius: 2px;
+    transition: width 0.1s;
+  }
+
+  /* status pill */
+  #status {
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: #1e1e28;
+    border: 0.5px solid #333;
+    color: #555;
+    letter-spacing: 0.05em;
+  }
+  #status.ready { color: #4ade80; border-color: #4ade8044; }
+
+  #unlock {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.80);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    z-index: 999;
+  }
+  #unlock p { font-size: 14px; color: #888; }
+  #unlock .btn {
+    background: #6366f1;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+  #unlock .btn:active { transform: scale(0.97); }
+
+  .time-display {
+    font-size: 42px;
+    font-weight: 200;
+    letter-spacing: 0.04em;
+    color: #e8e8e8;
+  }
+  .time-display span { color: #6366f1; }
+
+  .hint { font-size: 12px; color: #3a3a45; text-align: center; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div id="unlock">
+  <p>Tap once to unlock audio</p>
+  <button class="btn" id="startBtn">▶&nbsp; Enable Sound</button>
+</div>
+
+<h1>Clock Knob — Tick Sound Test</h1>
+
+<div class="picker-card">
+  <div class="picker-label">Set time</div>
+
+  <div class="drums">
+    <div class="col-wrap">
+      <div class="highlight"></div>
+      <div class="col-scroll" id="scroll-hour" data-tick-pixels="44"></div>
+    </div>
+    <div class="sep">:</div>
+    <div class="col-wrap">
+      <div class="highlight"></div>
+      <div class="col-scroll" id="scroll-min" data-tick-pixels="44"></div>
+    </div>
+    <div class="sep" style="font-size:18px;color:#3a3a45;">·</div>
+    <div class="col-wrap" style="width:58px;">
+      <div class="highlight"></div>
+      <div class="col-scroll" id="scroll-ampm" data-tick-pixels="44"></div>
+    </div>
+  </div>
+
+  <div class="time-display" id="time-out">12<span>:</span>00 <span>AM</span></div>
+
+  <div class="badge-row">
+    <span class="badge">Speed</span>
+    <div class="vel-bar-bg"><div class="vel-bar" id="vel-bar"></div></div>
+  </div>
+
+  <div id="status">audio locked</div>
+</div>
+
+<p class="hint">Scroll any column — mouse wheel or touch drag.<br>Sound reacts to your scroll speed.</p>
+
+<script>
+/* ═══════════════════════════════════════════════
+   AUDIO ENGINE
+═══════════════════════════════════════════════ */
+let AC = null;          // AudioContext
+let audioReady = false;
+
+function initAudio() {
+  if (AC) return;
+  AC = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+function resumeAudio() {
+  if (AC && AC.state === 'suspended') AC.resume();
+}
+
+/* ── fire one elegant tick ── */
+let alt = false;
+
+function tick(vel) {
+  if (!AC || !audioReady) return;
+  resumeAudio();
+
+  vel      = Math.max(0.12, Math.min(1.0, vel));
+  alt      = !alt;
+  const p  = alt ? 1.0 : 0.92;   // slight pitch alternation
+  const t  = AC.currentTime;
+
+  // ── 1. Click layer: shaped noise through bandpass ──────────────────
+  const SR     = AC.sampleRate;
+  const nLen   = Math.floor(SR * 0.025);
+  const nBuf   = AC.createBuffer(1, nLen, SR);
+  const nData  = nBuf.getChannelData(0);
+  for (let i = 0; i < nLen; i++) {
+    // envelope baked in: sharp attack, smooth exponential tail
+    const env  = Math.exp(-i / (nLen * 0.22));
+    nData[i]   = (Math.random() * 2 - 1) * env;
+  }
+
+  const nSrc = AC.createBufferSource();
+  nSrc.buffer = nBuf;
+
+  const bp   = AC.createBiquadFilter();
+  bp.type    = 'bandpass';
+  bp.frequency.value = 2400 * p;
+  bp.Q.value         = 2.0;
+
+  const hp   = AC.createBiquadFilter();
+  hp.type    = 'highpass';
+  hp.frequency.value = 700;
+
+  const nGain = AC.createGain();
+  nGain.gain.setValueAtTime(0, t);
+  nGain.gain.linearRampToValueAtTime(0.30 * vel, t + 0.0007);
+  nGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.024);
+
+  nSrc.connect(bp);
+  bp.connect(hp);
+  hp.connect(nGain);
+  nGain.connect(AC.destination);
+  nSrc.start(t);
+  nSrc.stop(t + 0.028);
+
+  // ── 2. Tonal body: two detuned sines = warm, smooth ring ───────────
+  [880 * p, 886 * p].forEach((freq, i) => {
+    const o   = AC.createOscillator();
+    o.type    = 'sine';
+    o.frequency.value = freq;
+
+    const lp  = AC.createBiquadFilter();
+    lp.type   = 'lowpass';
+    lp.frequency.value = 2800;
+
+    const g   = AC.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(0.09 * vel, t + 0.0005);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.040);   // gentle ring
+
+    o.connect(lp);
+    lp.connect(g);
+    g.connect(AC.destination);
+    o.start(t);
+    o.stop(t + 0.045);
+  });
+
+  // ── 3. Soft thunk: quick sine pitch-drop ───────────────────────────
+  const thk  = AC.createOscillator();
+  thk.type   = 'sine';
+  thk.frequency.setValueAtTime(320 * p, t);
+  thk.frequency.exponentialRampToValueAtTime(100 * p, t + 0.020);
+
+  const tg   = AC.createGain();
+  tg.gain.setValueAtTime(0, t);
+  tg.gain.linearRampToValueAtTime(0.14 * vel, t + 0.0015);
+  tg.gain.exponentialRampToValueAtTime(0.0001, t + 0.022);
+
+  thk.connect(tg);
+  tg.connect(AC.destination);
+  thk.start(t);
+  thk.stop(t + 0.025);
+}
+
+/* ═══════════════════════════════════════════════
+   UNLOCK BUTTON
+═══════════════════════════════════════════════ */
+document.getElementById('startBtn').addEventListener('click', () => {
+  initAudio();
+  AC.resume().then(() => {
+    audioReady = true;
+    document.getElementById('unlock').style.display = 'none';
+    document.getElementById('status').textContent   = 'audio ready';
+    document.getElementById('status').classList.add('ready');
+    // fire a test tick so user hears it immediately
+    setTimeout(() => tick(0.5), 80);
+  });
+});
+
+/* ═══════════════════════════════════════════════
+   SCROLL → TICK ENGINE
+═══════════════════════════════════════════════ */
+const velBar  = document.getElementById('vel-bar');
+let velTimer  = null;
+
+function showVel(v) {
+  velBar.style.width = Math.round(v * 100) + '%';
+  clearTimeout(velTimer);
+  velTimer = setTimeout(() => velBar.style.width = '0%', 350);
+}
+
+function attachScroll(el) {
+  const PX = parseFloat(el.dataset.tickPixels) || 44;
+  let lastTop  = el.scrollTop;
+  let lastTime = performance.now();
+  let accum    = 0;
+
+  el.addEventListener('scroll', () => {
+    const now   = performance.now();
+    const dt    = Math.max(now - lastTime, 1);
+    const delta = Math.abs(el.scrollTop - lastTop);
+    const speed = delta / dt;   // px/ms
+
+    // smooth velocity curve
+    const vel = Math.min(1, 0.15 + Math.pow(speed, 0.6) * 1.5);
+    showVel(vel);
+
+    accum += delta;
+    let n  = Math.floor(accum / PX);
+    accum  = accum % PX;
+    n      = Math.min(n, 3);   // cap ticks per event
+
+    for (let i = 0; i < n; i++) tick(vel);
+
+    lastTop  = el.scrollTop;
+    lastTime = now;
+  }, { passive: true });
+
+  // touch support
+  let ty = 0, tt = 0;
+  el.addEventListener('touchstart', e => {
+    ty = e.touches[0].clientY;
+    tt = performance.now();
+  }, { passive: true });
+  el.addEventListener('touchmove', e => {
+    const now = performance.now();
+    const dy  = Math.abs(e.touches[0].clientY - ty);
+    const vel = Math.min(1, 0.15 + Math.pow(dy / Math.max(now - tt, 1), 0.6) * 1.5);
+    showVel(vel);
+    ty = e.touches[0].clientY;
+    tt = now;
+  }, { passive: true });
+}
+
+/* ═══════════════════════════════════════════════
+   BUILD COLUMNS
+═══════════════════════════════════════════════ */
+function buildCol(el, items, startIdx) {
+  const p1 = document.createElement('div'); p1.className = 'pad';
+  el.appendChild(p1);
+  items.forEach((v, i) => {
+    const d = document.createElement('div');
+    d.className = 'item' + (i === startIdx ? ' active' : '');
+    d.textContent = v;
+    el.appendChild(d);
+  });
+  const p2 = document.createElement('div'); p2.className = 'pad';
+  el.appendChild(p2);
+
+  requestAnimationFrame(() => el.scrollTop = startIdx * 44);
+  attachScroll(el);
+
+  // active highlight
+  let tid = null;
+  el.addEventListener('scroll', () => {
+    clearTimeout(tid);
+    tid = setTimeout(() => {
+      const idx = Math.round(el.scrollTop / 44);
+      el.querySelectorAll('.item').forEach((d, i) =>
+        d.classList.toggle('active', i === idx));
+      updateTime();
+    }, 40);
+  }, { passive: true });
+}
+
+buildCol(document.getElementById('scroll-hour'),
+  Array.from({length:12}, (_,i) => String(i+1).padStart(2,'0')), 11);
+
+buildCol(document.getElementById('scroll-min'),
+  Array.from({length:60}, (_,i) => String(i).padStart(2,'0')), 0);
+
+buildCol(document.getElementById('scroll-ampm'), ['AM','PM'], 0);
+
+/* ═══════════════════════════════════════════════
+   LIVE TIME DISPLAY
+═══════════════════════════════════════════════ */
+function getSel(el) {
+  const idx   = Math.round(el.scrollTop / 44);
+  const items = el.querySelectorAll('.item');
+  return items[Math.max(0, Math.min(idx, items.length - 1))]?.textContent || '';
+}
+
+function updateTime() {
+  const h = getSel(document.getElementById('scroll-hour'));
+  const m = getSel(document.getElementById('scroll-min'));
+  const a = getSel(document.getElementById('scroll-ampm'));
+  document.getElementById('time-out').innerHTML =
+    `${h}<span>:</span>${m} <span>${a}</span>`;
+}
+updateTime();
+</script>
+</body>
+</html>

@@ -1112,6 +1112,27 @@ function initNotificationScreen() {
 function initEnergyLevel() {
   const container = document.getElementById('app-container');
   const bubbles = document.querySelectorAll('.js-energy-bubble');
+
+  // Update current time & date in the header
+  const timeEl = document.getElementById('live-time');
+  if (timeEl) {
+    const updateTime = () => {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 should be 12
+      
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const dayName = days[now.getDay()];
+      
+      timeEl.innerHTML = `${hours}:${minutes} ${ampm} &middot; ${dayName}`;
+    };
+    updateTime();
+    setInterval(updateTime, 60000);
+  }
+
   bubbles.forEach(bubble => {
     bubble.addEventListener('click', (e) => {
       e.preventDefault();
@@ -1120,31 +1141,49 @@ function initEnergyLevel() {
 
       if (container) {
         const rect = container.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const clickY = e.clientY - rect.top;
+        
+        // Find center coordinates of the clicked button
+        const btnRect = bubble.getBoundingClientRect();
+        const clickX = (btnRect.left + btnRect.width / 2) - rect.left;
+        const clickY = (btnRect.top + btnRect.height / 2) - rect.top;
+
+        // Toggle state classes for card and container transitions
+        const listEl = bubble.closest('.c-energy-button-list');
+        if (listEl) {
+          listEl.classList.add('has-clicked-child');
+        }
+        bubble.classList.add('is-clicked');
 
         const ripple = document.createElement('div');
         ripple.className = 'c-ripple-bubble';
         
         if (selection === 'energy-exhausted') {
           ripple.classList.add('c-ripple-bubble--exhausted');
-        } else if (selection === 'energy-okay') {
-          ripple.classList.add('c-ripple-bubble--okay');
-        } else if (selection === 'energy-fine') {
-          ripple.classList.add('c-ripple-bubble--fine');
+        } else if (selection === 'energy-tired') {
+          ripple.classList.add('c-ripple-bubble--tired');
+        } else if (selection === 'energy-energetic') {
+          ripple.classList.add('c-ripple-bubble--energetic');
         }
 
+        // Set initial card dimensions and position on the ripple
         ripple.style.left = `${clickX}px`;
         ripple.style.top = `${clickY}px`;
+        ripple.style.width = `${btnRect.width}px`;
+        ripple.style.height = `${btnRect.height}px`;
+        ripple.style.borderRadius = '24px';
+        
         container.appendChild(ripple);
 
+        // Morph to cover the entire screen in the next frame
         requestAnimationFrame(() => {
-          ripple.classList.add('is-expanded');
+          ripple.style.width = '1200px';
+          ripple.style.height = '1200px';
+          ripple.style.borderRadius = '50%';
         });
       }
 
       setTimeout(() => {
-        if (selection === 'energy-okay' || selection === 'energy-fine' || selection === 'energy-exhausted') {
+        if (selection === 'energy-tired' || selection === 'energy-energetic' || selection === 'energy-exhausted') {
           localStorage.setItem('saviour_notification_type', 'rajma_rice');
           localStorage.setItem('saviour_selected_meal', 'Rajma Rice');
           localStorage.removeItem('saviour_selected_meal_emoji');
@@ -1881,7 +1920,7 @@ function initCookingTime() {
     doneBtn.addEventListener('click', () => {
       clearInterval(timerInterval);
       const energy = localStorage.getItem('saviour_selected_energy');
-      if (energy === 'energy-okay' || energy === 'energy-fine') {
+      if (energy === 'energy-tired' || energy === 'energy-energetic') {
         window.location.href = 'prep-tomorrow.html';
       } else {
         showCookingDoneOverlay(selectedMeal);

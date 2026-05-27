@@ -624,8 +624,8 @@ hr {
 }
 
 .c-meal-option__img {
-  width: 56px;
-  height: 56px;
+  width: 47px;
+  height: 47px;
   object-fit: contain;
   transition: var(--transition-smooth);
 }
@@ -1762,156 +1762,299 @@ body {
   font-weight: 400;
 }
 
-.c-energy-zones {
+.c-energy-button-list {
   position: absolute;
-  left: 0;
-  top: 198px;
-  bottom: 0;
-  width: 100%;
+  left: 20px;
+  right: 20px;
+  top: 200px;
+  bottom: 60px;
   display: flex;
   flex-direction: column;
+  gap: 16px;
+  justify-content: center;
   z-index: 2;
-  overflow: hidden;
 }
 
-.c-energy-zone {
-  flex: 1;
+.c-energy-card-btn {
   width: 100%;
+  height: 156px;
+  padding: 20px 24px;
+  border-radius: 24px;
+  border: 1.5px solid transparent;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  border: none;
-  outline: none;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: var(--transition-smooth);
-  color: var(--color-text-primary);
+  text-align: left;
+  outline: none;
+  background-color: transparent;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              background-color 0.25s ease, 
+              border-color 0.25s ease;
+  box-shadow: 0 4px 16px rgba(46, 42, 36, 0.02);
 }
 
-.c-energy-zone--exhausted {
-  background-color: var(--color-surface);
+.c-energy-card-btn:active {
+  transform: scale(0.97);
 }
 
-.c-energy-zone--okay {
-  background-color: var(--color-surface-raised);
-}
-
-.c-energy-zone--fine {
-  background-color: var(--color-surface);
-}
-
-.c-energy-zone--exhausted:hover {
-  background-color: var(--color-action-subtle);
-  color: var(--color-action);
-}
-
-.c-energy-zone--okay:hover {
-  background-color: var(--color-accent-subtle);
-  color: var(--color-warning);
-}
-
-.c-energy-zone--fine:hover {
-  background-color: var(--color-success-subtle);
-  color: #6B9E73;
-}
-
-.c-energy-zone__label {
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 36px;
-  color: inherit;
-  text-align: center;
-  transition: var(--transition-smooth);
-  user-select: none;
-}
-
-.c-energy-zone:hover .c-energy-zone__label {
-  transform: scale(1.1);
-}
-
-.c-energy-zones {
-  position: absolute;
-  left: 0;
-  top: 198px;
-  bottom: 0;
-  width: 100%;
+.c-energy-card-btn__left {
   display: flex;
   flex-direction: column;
-  z-index: 2;
-  overflow: hidden;
-  --wave-zone-1: var(--color-surface);
-  --wave-zone-2: var(--color-surface-raised);
-  --wave-zone-3: var(--color-surface);
-}
-
-.c-energy-zones:has(.c-energy-zone--exhausted:hover) {
-  --wave-zone-1: var(--color-action-subtle);
-}
-
-.c-energy-zones:has(.c-energy-zone--okay:hover) {
-  --wave-zone-2: var(--color-accent-subtle);
-}
-
-.c-energy-zones:has(.c-energy-zone--fine:hover) {
-  --wave-zone-3: var(--color-success-subtle);
-}
-
-.c-wave-divider {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  pointer-events: none;
-  z-index: 3;
-}
-
-.c-wave-divider--1-2 {
-  top: calc(33.33% - 30px);
-}
-
-.c-wave-divider--2-3 {
-  top: calc(66.67% - 30px);
-}
-
-.c-wave-divider svg {
-  width: 100%;
   height: 100%;
-  display: block;
-  overflow: visible;
+  justify-content: space-between;
+  min-width: 0;
+  flex: 1;
 }
 
-.c-wave-divider path {
-  transition: fill var(--transition-smooth);
+.c-energy-card-btn__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-/* Click Ripple Bubble Animation */
+.c-energy-card-btn__title {
+  font-family: var(--font-interface);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.c-energy-card-btn__subtitle {
+  font-family: var(--font-interface);
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.c-energy-card-btn__arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, color 0.2s, transform 0.2s;
+  box-shadow: 0 2px 6px rgba(46, 42, 36, 0.08);
+}
+
+.c-energy-card-btn:hover .c-energy-card-btn__arrow {
+  transform: scale(1.1) translateX(2px);
+}
+
+/* Individual Semantic Colorings (Subtle Red, Yellow, Green backdrops) */
+.c-energy-card-btn--exhausted {
+  background-color: #FDF2F2;
+  border-color: rgba(196, 90, 90, 0.12);
+  color: #2E2A24;
+}
+
+@media (hover: hover) {
+  .c-energy-card-btn--exhausted:hover {
+    background-color: #FCE8E8;
+    border-color: rgba(196, 90, 90, 0.3);
+    box-shadow: 0 12px 32px rgba(196, 90, 90, 0.08);
+    transform: translateY(-3px);
+  }
+}
+
+.c-energy-card-btn--exhausted .c-energy-card-btn__subtitle {
+  color: #8C7E6A;
+}
+
+.c-energy-card-btn--exhausted .c-energy-card-btn__arrow {
+  background-color: #C45A5A;
+  color: #FFFFFF;
+}
+
+.c-energy-card-btn--tired {
+  background-color: #FEF9EB;
+  border-color: rgba(196, 132, 74, 0.12);
+  color: #2E2A24;
+}
+
+@media (hover: hover) {
+  .c-energy-card-btn--tired:hover {
+    background-color: #FDF2D5;
+    border-color: rgba(196, 132, 74, 0.3);
+    box-shadow: 0 12px 32px rgba(196, 132, 74, 0.08);
+    transform: translateY(-3px);
+  }
+}
+
+.c-energy-card-btn--tired .c-energy-card-btn__subtitle {
+  color: #8C7E6A;
+}
+
+.c-energy-card-btn--tired .c-energy-card-btn__arrow {
+  background-color: #C4844A;
+  color: #FFFFFF;
+}
+
+.c-energy-card-btn--energetic {
+  background-color: #F1FAF3;
+  border-color: rgba(107, 158, 115, 0.18);
+  color: #2E2A24;
+}
+
+@media (hover: hover) {
+  .c-energy-card-btn--energetic:hover {
+    background-color: #E6F5EB;
+    border-color: rgba(107, 158, 115, 0.35);
+    box-shadow: 0 12px 32px rgba(107, 158, 115, 0.08);
+    transform: translateY(-3px);
+  }
+}
+
+.c-energy-card-btn--energetic .c-energy-card-btn__subtitle {
+  color: #8C7E6A;
+}
+
+.c-energy-card-btn--energetic .c-energy-card-btn__arrow {
+  background-color: #6B9E73;
+  color: #FFFFFF;
+}
+
+/* Avatar Image Styling */
+.c-energy-card-btn__avatar-wrapper {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+
+.c-energy-card-btn__avatar {
+  width: 106px;
+  height: 106px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(46, 42, 36, 0.12));
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+}
+
+/* Scale animations (pulse / breathing) for each avatar */
+.c-energy-card-btn--exhausted .c-energy-card-btn__avatar {
+  animation: avatar-breathe-slow 5s infinite ease-in-out;
+}
+
+.c-energy-card-btn--tired .c-energy-card-btn__avatar {
+  animation: avatar-breathe-med 4s infinite ease-in-out;
+}
+
+.c-energy-card-btn--energetic .c-energy-card-btn__avatar {
+  animation: avatar-breathe-fast 3s infinite ease-in-out;
+}
+
+@keyframes avatar-breathe-slow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03) translateY(-1px); }
+}
+
+@keyframes avatar-breathe-med {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05) translateY(-2px); }
+}
+
+@keyframes avatar-breathe-fast {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.07) translateY(-3px); }
+}
+
+/* Hover effects */
+.c-energy-card-btn:hover .c-energy-card-btn__avatar {
+  transform: scale(1.1) translateY(-4px);
+  filter: drop-shadow(0 10px 24px rgba(46, 42, 36, 0.18));
+}
+
+.c-energy-card-btn--energetic:hover .c-energy-card-btn__avatar {
+  animation: energetic-jump 0.6s infinite alternate ease-out;
+}
+
+@keyframes energetic-jump {
+  0% { transform: translateY(0) scale(1.06); }
+  100% { transform: translateY(-10px) scale(1.12); }
+}
+
+/* Mobile Pressed Active States */
+.c-energy-card-btn:active {
+  transform: scale(0.96) translateY(0) !important;
+  box-shadow: 0 4px 10px rgba(46, 42, 36, 0.04) !important;
+  transition: transform 0.1s ease, box-shadow 0.1s ease !important;
+}
+
+.c-energy-card-btn:active .c-energy-card-btn__avatar {
+  transform: scale(0.95) !important;
+  transition: transform 0.1s ease !important;
+}
+
+/* Click Transitions & Container Hiding States */
+.c-energy-button-list.has-clicked-child .c-energy-card-btn:not(.is-clicked) {
+  opacity: 0;
+  transform: scale(0.9) translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.c-energy-card-btn.is-clicked {
+  transform: scale(1.02);
+  box-shadow: 0 16px 40px rgba(46, 42, 36, 0.12);
+  pointer-events: none;
+}
+
+/* Arrow swipe out effect */
+.c-energy-card-btn.is-clicked .c-energy-card-btn__arrow {
+  transform: translateX(200px);
+  opacity: 0;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              opacity 0.4s ease;
+}
+
+/* Info text slide out */
+.c-energy-card-btn.is-clicked .c-energy-card-btn__info {
+  transform: translateX(-200px);
+  opacity: 0;
+  transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              opacity 0.4s ease;
+}
+
+/* Avatar spin & expand out */
+.c-energy-card-btn.is-clicked .c-energy-card-btn__avatar {
+  transform: scale(1.5) rotate(360deg);
+  opacity: 0;
+  filter: drop-shadow(0 15px 30px rgba(46, 42, 36, 0));
+  transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              opacity 0.5s ease;
+}
+
+/* Click Ripple Bubble Animation - morphing from button rectangle to full screen */
 .c-ripple-bubble {
   position: absolute;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 99;
-  transition: width 0.7s cubic-bezier(0.1, 0.8, 0.3, 1), height 0.7s cubic-bezier(0.1, 0.8, 0.3, 1);
-}
-
-.c-ripple-bubble.is-expanded {
-  width: 1200px;
-  height: 1200px;
+  transition: width 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              height 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              border-radius 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .c-ripple-bubble--exhausted {
   background-color: var(--color-action);
 }
 
-.c-ripple-bubble--okay {
+.c-ripple-bubble--tired {
   background-color: var(--color-warning);
 }
 
-.c-ripple-bubble--fine {
+.c-ripple-bubble--energetic {
   background-color: var(--color-success);
 }
 

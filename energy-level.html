@@ -16,49 +16,76 @@
   <!-- Responsive App Container fitting viewport height -->
   <div class="app-container c-energy-selection" id="app-container" data-page="energy-level">
     
+    <!-- Ambient Backdrop Glow -->
+    <div class="ambient-glow"></div>
+    
     <!-- 1. Dynamic iPhone Status Bar Component -->
     <header data-component="status-bar" id="app-status-bar"></header>
 
     <!-- 2. Foreground Header Area -->
     <div class="c-energy-header-v2">
-      <div class="c-energy-time">5:00 PM &middot; Monday</div>
+      <div class="c-energy-time" id="live-time">5:00 PM &middot; Monday</div>
       <h1 class="ty-display">How's your energy<br/>tonight?</h1>
     </div>
 
-    <!-- 3. Stretched Column Zones -->
-    <div class="c-energy-zones">
+    <!-- 3. Block Buttons Stack -->
+    <div class="c-energy-button-list">
       
-      <!-- Zone 1: Exhausted -->
-      <button class="c-energy-zone c-energy-zone--exhausted js-energy-bubble" id="energy-exhausted" type="button">
-        <span class="c-energy-zone__label">Exhausted</span>
+      <!-- Button 1: Exhausted -->
+      <button class="c-energy-card-btn c-energy-card-btn--exhausted js-energy-bubble" id="energy-exhausted" type="button">
+        <div class="c-energy-card-btn__left">
+          <div class="c-energy-card-btn__info">
+            <span class="c-energy-card-btn__title">Exhausted</span>
+            <span class="c-energy-card-btn__subtitle">Tired & low energy</span>
+          </div>
+          <div class="c-energy-card-btn__arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </div>
+        <div class="c-energy-card-btn__avatar-wrapper">
+          <img src="Assets/Energy-Avatar/exhausted.png" alt="Exhausted avatar" class="c-energy-card-btn__avatar">
+        </div>
       </button>
 
-      <!-- Wave Divider 1-2 -->
-      <div class="c-wave-divider c-wave-divider--1-2">
-        <svg width="390" height="60" viewBox="0 0 390 60" fill="none" preserveAspectRatio="none" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 5C97.6 -10 244 20 390.4 0V65H0V5Z" fill="var(--color-base)" />
-          <path d="M0 22.11C117.12 32.11 273.28 12.11 390.4 22.11V65H0V22.11Z" fill="var(--wave-zone-1)" />
-          <path d="M0 32.11C78.08 22.11 214.72 42.11 390.4 32.11V65H0V32.11Z" fill="var(--wave-zone-2)" />
-        </svg>
-      </div>
-
-      <!-- Zone 2: Okay -->
-      <button class="c-energy-zone c-energy-zone--okay js-energy-bubble" id="energy-okay" type="button">
-        <span class="c-energy-zone__label">Okay</span>
+      <!-- Button 2: Tired -->
+      <button class="c-energy-card-btn c-energy-card-btn--tired js-energy-bubble" id="energy-tired" type="button">
+        <div class="c-energy-card-btn__left">
+          <div class="c-energy-card-btn__info">
+            <span class="c-energy-card-btn__title">Tired</span>
+            <span class="c-energy-card-btn__subtitle">Feeling steady</span>
+          </div>
+          <div class="c-energy-card-btn__arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </div>
+        <div class="c-energy-card-btn__avatar-wrapper">
+          <img src="Assets/Energy-Avatar/Normal.png" alt="Tired avatar" class="c-energy-card-btn__avatar">
+        </div>
       </button>
 
-      <!-- Wave Divider 2-3 -->
-      <div class="c-wave-divider c-wave-divider--2-3">
-        <svg width="390" height="60" viewBox="0 0 390 60" fill="none" preserveAspectRatio="none" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 12.11C78.08 2.11 214.72 22.11 390.4 12.11V65H0V12.11Z" fill="var(--color-base)" />
-          <path d="M0 22.11C97.6 12.11 292.8 32.11 390.4 22.11V65H0V22.11Z" fill="var(--wave-zone-2)" />
-          <path d="M0 29.19C117.12 14.19 273.28 34.19 390.4 24.19V65H0V29.19Z" fill="var(--wave-zone-3)" />
-        </svg>
-      </div>
-
-      <!-- Zone 3: Fine -->
-      <button class="c-energy-zone c-energy-zone--fine js-energy-bubble" id="energy-fine" type="button">
-        <span class="c-energy-zone__label">Fine</span>
+      <!-- Button 3: Energetic -->
+      <button class="c-energy-card-btn c-energy-card-btn--energetic js-energy-bubble" id="energy-energetic" type="button">
+        <div class="c-energy-card-btn__left">
+          <div class="c-energy-card-btn__info">
+            <span class="c-energy-card-btn__title">Energetic</span>
+            <span class="c-energy-card-btn__subtitle">Charged & ready</span>
+          </div>
+          <div class="c-energy-card-btn__arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </div>
+        <div class="c-energy-card-btn__avatar-wrapper">
+          <img src="Assets/Energy-Avatar/energetic.png" alt="Energetic avatar" class="c-energy-card-btn__avatar">
+        </div>
       </button>
 
     </div>

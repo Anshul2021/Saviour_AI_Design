@@ -1139,6 +1139,25 @@ function initEnergyLevel() {
       const selection = bubble.getAttribute('id');
       localStorage.setItem('saviour_selected_energy', selection);
 
+      // Determine details based on selected card
+      let energyClass = '';
+      let avatarSrc = '';
+      let phraseSubtitle = '';
+
+      if (selection === 'energy-exhausted') {
+        energyClass = 'exhausted';
+        avatarSrc = 'Assets/Energy-Avatar/exhausted.png';
+        phraseSubtitle = "Relax, we'll take care of tonight.";
+      } else if (selection === 'energy-tired') {
+        energyClass = 'tired';
+        avatarSrc = 'Assets/Energy-Avatar/Normal.png';
+        phraseSubtitle = "Let's keep things steady and easy.";
+      } else if (selection === 'energy-energetic') {
+        energyClass = 'energetic';
+        avatarSrc = 'Assets/Energy-Avatar/energetic.png';
+        phraseSubtitle = "Charged up and ready to roll!";
+      }
+
       if (container) {
         const rect = container.getBoundingClientRect();
         
@@ -1154,6 +1173,7 @@ function initEnergyLevel() {
         }
         bubble.classList.add('is-clicked');
 
+        // Tactile button ripple
         const ripple = document.createElement('div');
         ripple.className = 'c-ripple-bubble';
         
@@ -1174,7 +1194,7 @@ function initEnergyLevel() {
         
         container.appendChild(ripple);
 
-        // Morph to cover the entire screen in the next frame
+        // Morph button ripple to cover screen
         requestAnimationFrame(() => {
           ripple.style.width = '1200px';
           ripple.style.height = '1200px';
@@ -1182,6 +1202,35 @@ function initEnergyLevel() {
         });
       }
 
+      // Show gorgeous fullscreen overlay after a small delay for tactile feedback
+      setTimeout(() => {
+        const transitionOverlay = document.createElement('div');
+        transitionOverlay.className = `c-energy-transition-overlay c-energy-transition-overlay--${energyClass}`;
+        transitionOverlay.innerHTML = `
+          <div class="c-energy-transition-ripple"></div>
+          <div class="c-energy-transition-content">
+            <div class="c-energy-transition-avatar-wrapper">
+              <img src="${avatarSrc}" alt="${energyClass} avatar" class="c-energy-transition-avatar">
+            </div>
+            <div class="c-energy-transition-text">
+              <div class="c-energy-transition-title">Yo! We got you.</div>
+              <div class="c-energy-transition-subtitle">${phraseSubtitle}</div>
+            </div>
+          </div>
+        `;
+        if (container) {
+          container.appendChild(transitionOverlay);
+        } else {
+          document.body.appendChild(transitionOverlay);
+        }
+
+        // Animate overlay visible
+        requestAnimationFrame(() => {
+          transitionOverlay.classList.add('is-visible');
+        });
+      }, 150);
+
+      // Redirect after showing the beautiful bubble & avatar anim
       setTimeout(() => {
         if (selection === 'energy-tired' || selection === 'energy-energetic' || selection === 'energy-exhausted') {
           localStorage.setItem('saviour_notification_type', 'rajma_rice');
@@ -1192,7 +1241,7 @@ function initEnergyLevel() {
           localStorage.setItem('saviour_notification_type', 'how_tired');
           window.location.href = 'index.html';
         }
-      }, 700);
+      }, 3000);
     });
   });
 }

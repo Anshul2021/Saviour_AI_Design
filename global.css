@@ -1359,12 +1359,13 @@ body {
   height: 280px;
   position: relative;
   overflow: hidden;
-  align-self: center;
+  display: block;
+  margin: 32px auto;
 }
 
 /* Central Selection Highlight Bar */
 .c-time-picker__highlight {
-  width: 310px;
+  width: calc(100% - 40px);
   height: 40px;
   position: absolute;
   left: 20px;
@@ -1777,7 +1778,7 @@ body {
 
 .c-energy-card-btn {
   width: 100%;
-  height: 156px;
+  height: 176px;
   padding: 20px 24px;
   border-radius: 24px;
   border: 1.5px solid transparent;
@@ -1786,7 +1787,7 @@ body {
   align-items: center;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   text-align: left;
   outline: none;
   background-color: transparent;
@@ -1921,18 +1922,18 @@ body {
 /* Avatar Image Styling */
 .c-energy-card-btn__avatar-wrapper {
   position: relative;
-  width: 110px;
-  height: 110px;
+  width: 145px;
+  height: 145px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-right: 4px;
+  margin-right: -10px;
 }
 
 .c-energy-card-btn__avatar {
-  width: 106px;
-  height: 106px;
+  width: 140px;
+  height: 140px;
   object-fit: contain;
   filter: drop-shadow(0 6px 12px rgba(46, 42, 36, 0.12));
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
@@ -3591,4 +3592,174 @@ body {
 
 .c-change-dish-grid::-webkit-scrollbar {
   display: none; /* Hide scrollbar for Chrome, Safari, Opera */
+}
+
+/* ==========================================================================
+   ENERGY SELECTION FULLSCREEN TRANSITION SCREEN
+   ========================================================================== */
+.c-energy-transition-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
+}
+
+.c-energy-transition-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Background gradients for smooth transition matching the semantic colors */
+.c-energy-transition-overlay--exhausted {
+  background: radial-gradient(circle at center, #FFF5F5 0%, #FCE8E8 100%);
+}
+.c-energy-transition-overlay--tired {
+  background: radial-gradient(circle at center, #FFFDF5 0%, #FDF2D5 100%);
+}
+.c-energy-transition-overlay--energetic {
+  background: radial-gradient(circle at center, #F6FCF8 0%, #E6F5EB 100%);
+}
+
+/* Dynamic Ripple effect expanding from center of the page */
+.c-energy-transition-ripple {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  opacity: 0.25;
+  animation: central-ripple-expand 1.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+.c-energy-transition-overlay--exhausted .c-energy-transition-ripple {
+  background-color: #E35D5D;
+}
+.c-energy-transition-overlay--tired .c-energy-transition-ripple {
+  background-color: #E6A129;
+}
+.c-energy-transition-overlay--energetic .c-energy-transition-ripple {
+  background-color: #4CAF50;
+}
+
+@keyframes central-ripple-expand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    width: 250vmax;
+    height: 250vmax;
+    opacity: 0;
+  }
+}
+
+/* Content Container */
+.c-energy-transition-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+  gap: 28px;
+}
+
+/* Big Avatar Container */
+.c-energy-transition-avatar-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+  animation: avatar-bubble-pop 1.2s cubic-bezier(0.34, 1.75, 0.64, 1) forwards;
+  filter: drop-shadow(0 16px 36px rgba(46, 42, 36, 0.16));
+}
+
+@keyframes avatar-bubble-pop {
+  0% {
+    transform: scale(0) rotate(-30deg);
+  }
+  50% {
+    transform: scale(1.25) rotate(15deg);
+  }
+  75% {
+    transform: scale(0.95) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1.1) rotate(0); /* slightly larger for premium highlight */
+  }
+}
+
+.c-energy-transition-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: avatar-float 3.5s infinite ease-in-out 1.2s;
+}
+
+@keyframes avatar-float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.03);
+  }
+}
+
+/* Text slide up / fade in */
+.c-energy-transition-text {
+  font-family: var(--font-interface);
+  opacity: 0;
+  transform: translateY(24px);
+  animation: transition-text-up 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+  max-width: 340px;
+}
+
+.c-energy-transition-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 850;
+  color: #2E2A24;
+  margin-bottom: 12px;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.c-energy-transition-subtitle {
+  font-size: 17px;
+  color: #726A5E;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+@keyframes transition-text-up {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

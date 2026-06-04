@@ -18,29 +18,24 @@
   <!-- Responsive App Container fitting viewport height -->
   <div class="app-container" id="app-container" data-page="notifications" style="background-color: var(--color-base);">
     
-    <!-- Sticky Top Header (Transparent Background) -->
-    <div style="z-index: 10; position: relative;">
+    <!-- Sticky Top Header (Beige Background) -->
+    <div style="background-color: var(--color-base); z-index: 10; position: relative;">
       <!-- 1. Dynamic iPhone Status Bar Component -->
       <header data-component="status-bar" id="app-status-bar"></header>
+      
+      <!-- Brand Header with Back Button -->
+      <div style="display: flex; align-items: center; gap: 12px; padding: 8px 20px 20px;">
+        <a href="home.html" style="color: var(--color-text-primary); display: flex; align-items: center; justify-content: center; text-decoration: none;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <h1 class="ty-display text-primary" style="font-family: var(--font-display); font-size: 20px; font-weight: var(--font-weight-regular); letter-spacing: 0.5px; margin: 0; line-height: 1.2;">Notifications</h1>
+      </div>
     </div>
 
     <!-- 2. Scrollable Body Content (White Background) -->
-    <main class="app-content" style="background-color: #FFFFFF; padding: 24px 20px 24px; flex: 1; overflow-y: auto; display: flex; flex-direction: column;">
-
-      <!-- Title / Greeting Area -->
-      <div class="c-greeting" style="margin-bottom: 16px;">
-        <div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <a href="home.html" style="color: var(--color-text-primary); display: flex; align-items: center; justify-content: center; text-decoration: none;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-            <h1 class="ty-heading text-primary" style="margin: 0;">Notifications</h1>
-          </div>
-          <p class="ty-body text-secondary" id="notifications-summary"style="padding-left: 32px;">Keep track of updates and alerts.</p>
-        </div>
-      </div>
+    <main class="app-content" style="background-color: #FFFFFF; padding: 0px 20px 24px; flex: 1; overflow-y: auto; display: flex; flex-direction: column;">
 
       <!-- Notifications List Container -->
       <div id="notifications-list-container" class="c-notifications-list" style="display: flex; flex-direction: column; gap: 8px;">

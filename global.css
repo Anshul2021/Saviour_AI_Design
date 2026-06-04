@@ -477,15 +477,16 @@ hr {
 .onboarding-header {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   margin-bottom: 16px;
 }
 
 .onboarding-header__description-group {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 
 /* Veg Only Toggle Switch styling */
@@ -1229,7 +1230,7 @@ body {
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   /* 8px bottom spacing */
 }
 
@@ -1384,6 +1385,7 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
+  justify-content: center;
   z-index: 2;
 }
 
@@ -1408,19 +1410,22 @@ body {
 
 /* Column widths and top/bottom padding to scroll first/last item into selection area */
 .c-time-picker__col--hour {
-  width: 120px;
+  flex: 1;
+  max-width: 120px;
   padding-top: 120px;
   padding-bottom: 120px;
 }
 
 .c-time-picker__col--minute {
-  width: 120px;
+  flex: 1;
+  max-width: 120px;
   padding-top: 120px;
   padding-bottom: 120px;
 }
 
 .c-time-picker__col--period {
-  width: 110px;
+  flex: 1;
+  max-width: 110px;
   padding-top: 120px;
   padding-bottom: 120px;
 }
@@ -3762,4 +3767,14 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Page Specific: Leave Office layout centering */
+.app-content--leave-office {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content--leave-office .c-time-picker {
+  margin: auto;
 }

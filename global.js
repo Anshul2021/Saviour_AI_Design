@@ -966,9 +966,14 @@ function initTimePicker() {
       accumulatedDistance = accumulatedDistance % itemHeight;
       n = Math.min(n, 3); // cap ticks per event
 
-      if (n > 0 && window.timePickerAudio) {
-        for (let i = 0; i < n; i++) {
-          window.timePickerAudio.playTick(vel);
+      if (n > 0) {
+        if (window.timePickerAudio) {
+          for (let i = 0; i < n; i++) {
+            window.timePickerAudio.playTick(vel);
+          }
+        }
+        if (typeof navigator !== 'undefined' && navigator.vibrate) {
+          navigator.vibrate(10); // 10ms short vibration pulse for haptic dial tick
         }
       }
 

@@ -1085,7 +1085,7 @@ function initNotificationScreen() {
     if (clockEl) clockEl.textContent = '6:30';
 
     // Update notification card details
-    if (titleEl) titleEl.textContent = 'Tonight: Rajma Rice';
+    if (titleEl) titleEl.textContent = 'Rajma Rice for tonight';
     if (descEl) descEl.textContent = 'Ready in 35min. Everything is at home.';
     if (notifTimeEl) notifTimeEl.textContent = '6:30 PM';
 
@@ -1098,8 +1098,8 @@ function initNotificationScreen() {
   } else {
     // Default flow
     if (clockEl) clockEl.textContent = '5:30';
-    if (titleEl) titleEl.textContent = 'How tired are you ?';
-    if (descEl) descEl.textContent = 'Tell us your energy level';
+    if (titleEl) titleEl.textContent = 'How’s your energy today?';
+    if (descEl) descEl.textContent = 'Tell us how you feel right now';
     if (notifTimeEl) notifTimeEl.textContent = '5:30 PM';
 
     // Redirect to energy level selection
@@ -1141,6 +1141,12 @@ function initEnergyLevel() {
   bubbles.forEach(bubble => {
     bubble.addEventListener('click', (e) => {
       e.preventDefault();
+      
+      // Haptic feedback vibration on option select
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        navigator.vibrate(15);
+      }
+
       const selection = bubble.getAttribute('id');
       localStorage.setItem('saviour_selected_energy', selection);
 

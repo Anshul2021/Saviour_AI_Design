@@ -2,6 +2,62 @@ document.addEventListener('DOMContentLoaded', async () => {
   const appContainer = document.getElementById('app-container');
   if (!appContainer) return;
 
+  // --- Splash Screen Handling ---
+  const splash = document.getElementById('saviour-splash');
+  if (splash) {
+    const bubblesContainer = document.getElementById('splash-bubbles-container');
+    
+    // Auto-ripple at center (logo position) on start
+    setTimeout(() => {
+      const rect = splash.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2 - 40; // slightly above center where logo sits
+      
+      triggerSplashRipple(centerX, centerY, splash);
+      triggerSplashShockwave(centerX, centerY, splash);
+      triggerSplashBubbles(centerX, centerY, bubblesContainer || splash);
+      
+      // Subtle haptic double tick vibration
+      if (navigator.vibrate) {
+        navigator.vibrate([15, 20, 10]);
+      }
+    }, 400);
+
+    // Subsequent automated secondary ripples
+    setTimeout(() => {
+      const rect = splash.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2 - 40;
+      triggerSplashRipple(centerX, centerY, splash);
+      if (navigator.vibrate) navigator.vibrate(8);
+    }, 1000);
+
+    // Interactive ripples on click/tap
+    splash.addEventListener('click', (e) => {
+      const rect = splash.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      triggerSplashRipple(x, y, splash);
+      triggerSplashShockwave(x, y, splash);
+      triggerSplashBubbles(x, y, bubblesContainer || splash);
+      
+      // Subtle single mechanical haptic tick on mobile devices
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    });
+    
+    // Transition out after 2500ms
+    setTimeout(() => {
+      splash.classList.add('is-leaving');
+      
+      setTimeout(() => {
+        splash.remove();
+      }, 650);
+    }, 2500);
+  }
+
   // Seed default notifications in localStorage if they don't exist
   if (!localStorage.getItem('saviour_notifications')) {
     const defaultNotifications = [
@@ -68,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // 3. Conditional skeleton loading
-  const skeletonPages = ['meals'];
+  const skeletonPages = [];
   if (skeletonPages.includes(pageType)) {
     // Hide actual content container initially
     appContainer.style.display = 'none';
@@ -2837,4 +2893,84 @@ function initNotifications() {
   }
 
   renderNotifications();
+}
+
+/**
+ * Creates a liquid ripple wave expanding from the given coordinates
+ */
+function triggerSplashRipple(x, y, container) {
+  const ripple = document.createElement('div');
+  ripple.className = 'c-splash__ripple';
+  ripple.style.left = `${x}px`;
+  ripple.style.top = `${y}px`;
+  container.appendChild(ripple);
+  
+  // Clean up ripple element
+  setTimeout(() => ripple.remove(), 1000);
+}
+
+/**
+ * Creates a high-velocity shockwave ring expanding from given coordinates
+ */
+function triggerSplashShockwave(x, y, container) {
+  const shockwave = document.createElement('div');
+  shockwave.className = 'c-splash__shockwave';
+  shockwave.style.left = `${x}px`;
+  shockwave.style.top = `${y}px`;
+  container.appendChild(shockwave);
+  
+  // Clean up shockwave element
+  setTimeout(() => shockwave.remove(), 700);
+}
+
+/**
+ * Creates floating physics-based bubble particles shooting out from given coordinates
+ */
+function triggerSplashBubbles(x, y, container) {
+  // Spawn 6 to 9 bubbles for a subtle, elegant look
+  const bubbleCount = 6 + Math.floor(Math.random() * 4);
+  const bubbleColors = [
+    'rgba(224, 122, 85, 0.6)',   // Translucent Action (Orange)
+    'rgba(245, 201, 122, 0.6)',  // Translucent Accent (Yellow)
+    'rgba(163, 196, 168, 0.6)',  // Translucent Success (Green)
+    'rgba(240, 233, 222, 0.7)',  // Translucent Surface Cream
+    'rgba(255, 255, 255, 0.7)'   // Translucent White
+  ];
+  
+  for (let i = 0; i < bubbleCount; i++) {
+    const bubble = document.createElement('div');
+    bubble.className = 'c-splash__bubble';
+    
+    // Choose random color
+    const color = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
+    bubble.style.backgroundColor = color;
+    
+    // Mix of tiny micro-particles and small regular bubbles
+    const isMicro = Math.random() < 0.4;
+    const size = isMicro ? (3 + Math.floor(Math.random() * 3)) : (7 + Math.floor(Math.random() * 6));
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+    
+    // Position
+    bubble.style.left = `${x}px`;
+    bubble.style.top = `${y}px`;
+    
+    // Tight expansion coordinates to stay confined inside screen bounds
+    const angle = Math.random() * Math.PI * 2;
+    const maxDist = isMicro ? 50 : 30;
+    const distance = 15 + Math.random() * maxDist;
+    const dx = Math.cos(angle) * distance;
+    const dy = Math.sin(angle) * distance;
+    
+    const scale = isMicro ? (0.6 + Math.random() * 0.4) : (1.0 + Math.random() * 0.3);
+    
+    bubble.style.setProperty('--dx', `${dx}px`);
+    bubble.style.setProperty('--dy', `${dy}px`);
+    bubble.style.setProperty('--scale', scale);
+    
+    container.appendChild(bubble);
+    
+    // Clean up bubble element
+    setTimeout(() => bubble.remove(), 900);
+  }
 }

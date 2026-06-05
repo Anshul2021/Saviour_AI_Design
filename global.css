@@ -888,6 +888,214 @@ body {
   z-index: 9999;
 }
 
+/* Saviour Splash Screen Styles */
+.c-splash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-base);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: pointer; /* Tapping encourages interactive bubble pops */
+}
+
+/* Ambient backdrop glow that breathes softly */
+.c-splash__ambient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, var(--color-action-subtle) 0%, transparent 70%);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 1;
+  animation: splash-ambient-breathe 8s ease-in-out infinite;
+}
+
+.c-splash__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none; /* Let taps pass through to the container */
+}
+
+/* Logo animation: pop in, float, and warm glow pulse */
+.c-splash__logo-wrap {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-surface);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4), 0 8px 20px rgba(46, 42, 36, 0.05);
+  margin-bottom: 20px;
+  animation: splash-logo-enter 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, splash-logo-float 5s ease-in-out infinite 1s, splash-logo-glow 3s ease-in-out infinite;
+}
+
+.c-splash__logo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.c-splash__wordmark {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: splash-text-fade-in 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.3s;
+}
+
+.c-splash__tagline {
+  margin-top: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: splash-text-fade-in 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.5s;
+  color: var(--color-text-secondary);
+  letter-spacing: 1.5px;
+  font-size: var(--font-size-caption);
+}
+
+/* Subtle, Elegant Ripple Effect */
+.c-splash__ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(224, 122, 85, 0.04) 0%, transparent 70%);
+  border: 1px solid rgba(224, 122, 85, 0.2);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 2;
+  animation: splash-ripple-out 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* High-velocity micro secondary shockwave ring */
+.c-splash__shockwave {
+  position: absolute;
+  border-radius: 50%;
+  background: transparent;
+  border: 0.5px dashed rgba(245, 201, 122, 0.3);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 2;
+  animation: splash-shockwave-out 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Splash bubble container */
+.c-splash__bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Delicate floating bubble style */
+.c-splash__bubble {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  pointer-events: none;
+  opacity: 0.8;
+  animation: splash-bubble-float 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Transition Out Animation: cinematic zoom into the app content */
+.c-splash.is-leaving {
+  opacity: 0 !important;
+  transform: scale(1.06) !important;
+  filter: blur(4px) !important;
+}
+
+/* Keyframe Animations */
+@keyframes splash-logo-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes splash-logo-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes splash-logo-glow {
+  0%, 100% {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4), 0 8px 20px rgba(46, 42, 36, 0.05), 0 0 0 0px var(--color-action-subtle);
+  }
+  50% {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4), 0 8px 20px rgba(46, 42, 36, 0.05), 0 0 12px 4px var(--color-action-subtle);
+  }
+}
+
+@keyframes splash-text-fade-in {
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes splash-ripple-out {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3.5);
+    opacity: 0;
+  }
+}
+
+@keyframes splash-shockwave-out {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes splash-bubble-float {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(var(--scale));
+    opacity: 0;
+  }
+}
+
+@keyframes splash-ambient-breathe {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.08);
+  }
+}
+
 /* ==========================================================================
    MANUAL SKELETON LOADERS & SHIMMER PULSE
    ========================================================================== */
